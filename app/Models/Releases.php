@@ -1,0 +1,29 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Releases extends Model
+{
+    use HasFactory;
+
+    protected $fillable = ['name', 'cnpj', 'franchising_id', 'status_id', 'charge_id', 'agreement_id', 'account', 'issue_date', 'due_date', 'parcel', 'emp_tp_processo',
+        'month', 'amount', 'amount_corrected', 'amount_paid', 'recurrent', 'imported', 'franchisee', 'notes'];
+
+    public function franchising()
+    {
+        return $this->belongsTo(Franchisings::class);
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(ReleaseStatuses::class);
+    }
+
+    public function agreement()
+    {
+        return $this->belongsTo(Agreement::class);
+    }
+}
