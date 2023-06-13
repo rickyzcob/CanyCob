@@ -7,7 +7,7 @@
             <th>CNPJ</th>
             <th>Valor Devido</th>
             <th>Correção</th>
-            <th>Status</th>
+            <th>Statuses</th>
             <div class="justify-items-center">
                 <th>Açoes</th>
             </div>
