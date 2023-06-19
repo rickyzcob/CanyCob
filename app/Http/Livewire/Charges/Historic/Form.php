@@ -10,6 +10,7 @@ use App\Repositories\FranchisingRepository;
 use App\Repositories\PartnersRepository;
 use Livewire\Component;
 use WireUi\Traits\Actions;
+use Carbon\Carbon;
 
 class Form extends Component
 {
@@ -20,6 +21,7 @@ class Form extends Component
         'answered' => '',
         'phone' => '',
         'partner_id' => '',
+        'date_schedule' => '',
         'type' => 'Unidade',
         'origin' => 'Ativo'
     ];
@@ -35,7 +37,7 @@ class Form extends Component
             $this->charge = $chargeFranchisingReturnDB;
 
             $franchisingRepository = new FranchisingRepository();
-            $this->franchising  = $franchisingRepository->view($this->charge['franchising_id'])['data'];
+            $this->franchising  = $franchisingRepository->show($this->charge['franchising_id'])['data'];
 
             if($this->state['type'] == 'Unidade') {
                 $this->state['phone'] = $this->franchising['phone01'];
@@ -51,6 +53,17 @@ class Form extends Component
         }
     }
 
+    public function updatedStateSuccess()
+    {
+        $current = carbon::now();
+
+        if($this->state['success'] == 'Não'){
+            $this->state['date_schedule'] = $current->addDays(2);
+        } else {
+            $this->state['date_schedule'] = '';
+        }
+    }
+
     public function updatedStatePartnerId()
     {
         $this->state['phone'] = $this->getPartnerbyID($this->state['partner_id'])['phone'];
@@ -58,10 +71,13 @@ class Form extends Component
 
     public function updatedStateAnswered()
     {
+        $current = carbon::now();
+
         if($this->state['answered'] == 'Sim'){
             $this->state['success'] = '';
         } else if($this->state['answered'] == 'Não'){
             $this->state['success'] = 'Não';
+            $this->state['date_schedule'] = $current->addDays(1);
         }
     }
 

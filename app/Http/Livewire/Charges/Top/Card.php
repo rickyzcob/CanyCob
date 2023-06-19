@@ -6,6 +6,7 @@ use App\Http\Traits\WithModal;
 use App\Repositories\ChargesFranchisingRepository;
 use App\Repositories\ChargeStatusRepository;
 
+use App\Repositories\ConfigurationRepository;
 use Livewire\Component;
 use WireUi\Traits\Actions;
 
@@ -15,6 +16,7 @@ class Card extends Component
 
     public $reference;
     public $charge;
+    public $configuration;
 
     protected $listeners = ['refreshCardTop' => '$refresh'];
 
@@ -26,6 +28,9 @@ class Card extends Component
             $franchisingRepository = new ChargesFranchisingRepository();
             $this->charge = $franchisingRepository->showByReference($this->reference)['data'];
         }
+
+        $configurationRepository = new ConfigurationRepository();
+        $this->configuration = $configurationRepository->getConfiguration();
     }
 
     public function getChargeByFranchising()
@@ -36,10 +41,17 @@ class Card extends Component
         return $franchisingReturnDB;
     }
 
-    public function getStatusByCharge()
+    public function getStatusByChargeAgreement()
     {
         $chargeStatusRepository = new ChargeStatusRepository();
-        $chargeStatusReturnDB = $chargeStatusRepository->getSelectStatusCharge();
+        $chargeStatusReturnDB = $chargeStatusRepository->getSelectStatusChargeByAgreement($this->charge->status_id);
+
+        return $chargeStatusReturnDB;
+    }
+    public function getStatusByChargeComum()
+    {
+        $chargeStatusRepository = new ChargeStatusRepository();
+        $chargeStatusReturnDB = $chargeStatusRepository->getSelectStatusChargeComum($this->charge->status_id);
 
         return $chargeStatusReturnDB;
     }
@@ -75,7 +87,8 @@ class Card extends Component
     public function render()
     {
         $response = new \stdClass();
-        $response->status = $this->getStatusByCharge();
+        $response->status = $this->getStatusByChargeAgreement();
+        $response->statusComum = $this->getStatusByChargeComum();
         $response->charge = $this->getChargeByFranchising();
 
         return view('livewire.charges.top.card', ['response' => $response]);

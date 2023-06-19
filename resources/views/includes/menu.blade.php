@@ -3,7 +3,7 @@
  class="flex items-center hover:bg-white hover:text-sky-700 gap-1 p-2 h-14 cursor-point
  {{ request()->is('dashboard') ? 'bg-white text-sky-800 ' : 'text-white' }}">
 
-    <span class="material-icons text-base self-center mb-0">home</span>
+    <span class="material-icons text-base self-center mb-0">bar_chart</span>
              Dashboard
     </a>
     @can('view_charges')
@@ -21,7 +21,7 @@
        class="flex items-center hover:bg-white hover:text-sky-700 gap-1 p-2 h-14 cursor-point
         {{ Request::routeIs('agreement.index')  ? 'bg-white text-sky-800 ' : 'text-white' }}">
 
-        <span class="material-icons text-base ">handshake</span>
+            <span class="material-icons text-base ">handshake</span>
         Acordos
     </a>
     @endcan

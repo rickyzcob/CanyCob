@@ -3,12 +3,12 @@
         <div class="flex items-start justify-between border-b-2 mb-2">
             <h1 class="text-base text-gray-600 font-semibold py-2">Unidade : {{$charge['franchising']['name']}}</h1>
             @if($charge['agreement'] == 0)
-            <div>
+            <div class="flex gap-2">
                 @can('add_historic_charges')
                 <x-button wire:click="openModal('charges.historic.form', {'id': {{$charge['id']}} })" positive sm icon="annotation" label="Cobrar"/>
                 @endcan
                 @can('whatsapp_proposal_charges')
-                <x-button wire:click="openModal('charges.whatsapp.form', {'id': {{$charge['id']}} })" teal sm icon="phone-outgoing" label="Whatsapp"/>
+                <x-button class="fa fa-whatsapp" wire:click="openModal('charges.whatsapp.form', {'id': {{$charge['id']}} })" teal sm label="Whatsapp"/>
                 @endcan
                 @can('simulation_charges')
                 <x-button wire:click="openModal('charges.simulation.form', {'id': {{$charge['id']}} })" blue sm icon="refresh" label="Simular"/>
@@ -19,7 +19,7 @@
         <table class="tables">
             <thead>
             <tr>
-                <th width="300px">Nome</th>
+                <th width="250px">Nome</th>
                 <th>Vencimento</th>
                 <th>Valor</th>
                 <th>Correção</th>
@@ -39,5 +39,18 @@
             @endforeach
             </tbody>
         </table>
+        <div class="flex justify-between text-black gap-2 py-5 text-gray-600 text-sm">
+            <div class="flex items-center gap-2">
+                Mostrando  <x-native-select
+                    :options="['10', '15', '20', '30']"
+                    wire:model="pageSize"
+                />
+                de {{ $response->releases->total() }}
+                itens
+            </div>
+            <div>
+                {{ $response->releases->links() }}
+            </div>
+        </div>
     </x-card>
 </div>

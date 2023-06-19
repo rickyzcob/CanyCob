@@ -14,27 +14,29 @@ class Table extends Component
     use WithModal, Actions;
 
     public $charge;
+    public $pageSize = 10;
 
     protected $listeners = [
         'refreshTableChargesReleases' => '$refresh',
     ];
 
-
     public function mount($reference = null, $charge_id = null)
     {
-//        $this->charge_id = $charge_id;
 
         $chargeFranchisingRepository = new ChargesFranchisingRepository();
-        $chargeFranchisingReturnDB = $chargeFranchisingRepository->showByReference($reference)['data'];
+        if($reference){
+            $chargeFranchisingReturnDB = $chargeFranchisingRepository->showByReference($reference)['data'];
+        } elseif ($charge_id){
+            $chargeFranchisingReturnDB = $chargeFranchisingRepository->show($charge_id)['data'];
+        }
 
         $this->charge = $chargeFranchisingReturnDB;
-
 
     }
     public function getChargesFranchising()
     {
         $franchisingRepository = new ChargesReleasesRepository();
-        $franchisingReturnDB = $franchisingRepository->getReleasesForCharge($this->charge['id'])['data'];
+        $franchisingReturnDB = $franchisingRepository->getReleasesForCharge($this->charge->id, $this->pageSize,)['data'];
 
         return $franchisingReturnDB;
     }

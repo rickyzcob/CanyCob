@@ -9,12 +9,13 @@
         <div class="p-2">
             @foreach($response->users as $key => $itemUser)
             <div class="flex items-center justify-normal mt-3">
-                <div class="relative px-2">
+                <div class="relative px-2.5'1 ">
                     @if ($itemUser['image'] != null)
                         <img class="w-10 h-10 rounded-full" src="{{ url('storage/'.$itemUser['image']) }}" alt="Imagem Perfil">
                     @else
                         <img class="w-10 h-10 rounded-full"  src="{{ url('img/user-default.png') }}" alt="Imagem Perfil" >
                      @endif
+
                     <span class="bottom-0 left-7 absolute w-5 h-5 bg-green-400 border-2 border-white dark:border-gray-800 rounded-full text-center text-xs text-white">{{$key += 1}}</span>
                 </div>
                 <div class="w-32">

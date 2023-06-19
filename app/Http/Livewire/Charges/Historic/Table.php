@@ -20,14 +20,15 @@ class Table extends Component
 
     public $franchising;
 
-    public function mount($reference = null)
+    public function mount($reference = null, $charge_id = null)
     {
-        if ($reference){
-            $chargeFranchisingRepository = new ChargesFranchisingRepository();
+        $chargeFranchisingRepository = new ChargesFranchisingRepository();
+        if($reference){
             $chargeFranchisingReturnDB = $chargeFranchisingRepository->showByReference($reference)['data'];
-
-            $this->charge = $chargeFranchisingReturnDB;
+        } elseif ($charge_id){
+            $chargeFranchisingReturnDB = $chargeFranchisingRepository->show($charge_id)['data'];
         }
+        $this->charge = $chargeFranchisingReturnDB;
     }
 
     public function getHistoricCharges()

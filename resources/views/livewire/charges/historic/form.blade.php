@@ -50,19 +50,14 @@
                             <div class="text-red-800 text-sm p-1">{{ $message }}</div>
                             @enderror
                         </div>
-
-
                     @else
-
                         <div class="md:col-span-8 col-span-12">
                             <x-input icon="user" wire:model.defer="state.name" label="Com quem Falou"/>
                             @error('name')
                             <div class="text-red-800 text-sm p-1">{{ $message }}</div>
                             @enderror
                         </div>
-
                     @endif
-
                     <div class="md:col-span-4 col-span-12">
                         <x-inputs.maskable
                             icon="phone-outgoing"
@@ -74,8 +69,17 @@
                         <div class="text-red-800 text-sm p-1">{{ $message }}</div>
                         @enderror
                     </div>
-
-                    <div class="md:col-span-2 col-span-12">
+                    <div class="md:col-span-4 col-span-12">
+                        <x-select
+                            label="Origem ?"
+                            :options="['Ativo', 'Receptivo']"
+                            wire:model.defer="state.origin"
+                        />
+                        @error('origin')
+                        <div class="text-red-800 text-sm p-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="md:col-span-4 col-span-12">
                         <x-select
                             label="Atendeu ?"
                             :options="['Sim', 'Não']"
@@ -86,27 +90,30 @@
                         @enderror
                     </div>
 
-                    <div class="md:col-span-3 col-span-12">
-                        <x-select
-                            label="Origem ?"
-                            :options="['Ativo', 'Receptivo']"
-                            wire:model.defer="state.origin"
-                        />
-                        @error('origin')
-                        <div class="text-red-800 text-sm p-1">{{ $message }}</div>
-                        @enderror
-                    </div>
+
 
                     <div class="md:col-span-3 col-span-12">
                         <x-select
                             label="Sucesso ?"
                             :options="['Sim', 'Não']"
-                            wire:model.defer="state.success"
+                            wire:model="state.success"
                         />
                         @error('success')
                         <div class="text-red-800 text-sm p-1">{{ $message }}</div>
                         @enderror
                     </div>
+                    @if($state['success'] == 'Não')
+                    <div class="md:col-span-5 col-span-12">
+                        <x-datetime-picker
+                            label="Reagendar"
+                            parse-format="YYYY-MM-DD HH:mm"
+                            wire:model.defer="state.date_schedule"
+                        />
+                        @error('success')
+                        <div class="text-red-800 text-sm p-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    @endif
 
                     <div class="md:col-span-12 col-span-12">
                         <x-textarea wire:model="state.description" label="Descrição" />

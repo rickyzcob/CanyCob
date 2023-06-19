@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\ChargeStatus;
+use App\Models\Configurations;
 use App\Requests\ChargeStatusRequest;
 use PHPUnit\Exception;
 
@@ -138,7 +139,22 @@ class ChargeStatusRepository
 
     public function getSelectStatusCharge()
     {
+
         $ChargeStatusDB = ChargeStatus::query()->get()->toarray();
         return $ChargeStatusDB;
     }
+
+    public function getSelectStatusChargeByAgreement($id = null)
+    {
+        $ChargeStatusDB = ChargeStatus::query()->whereNot("id", $id)->whereNotIn('id', [17])->get()->toarray();
+        return $ChargeStatusDB;
+    }
+
+    public function getSelectStatusChargeComum($id = null)
+    {
+        $ChargeStatusDB = ChargeStatus::query()->whereNot("id", $id)->whereNotIn('id', [12,13,14,16])->orderBy('name', 'ASC')->get()->toarray();
+        return $ChargeStatusDB;
+    }
+
+
 }

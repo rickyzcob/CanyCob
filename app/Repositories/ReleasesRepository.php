@@ -89,14 +89,19 @@ class ReleasesRepository
                 ->groupBy('releases.cnpj')
                 ->get();
 
+
             foreach ($selectImportedDinscinctReleasesDB as $itemFranchisingn) {
-                $createChargeForReleases = Charges::query()->create([
-                    'franchising_id' => $itemFranchisingn->franch_id,
-                    'attendant_id' => $itemFranchisingn->attendant_id,
-                    'reference' => $reference,
-                    'total_amount' => 0,
-                    'total_amount_corrected' => 0
-                ]);
+                $chargeDB = Charges::query()->where('franchising_id', $itemFranchisingn->franch_id)->first();
+                if(!$chargeDB || $chargeDB->agreement == 1){
+                    $createChargeForReleases = Charges::query()->create([
+                        'franchising_id' => $itemFranchisingn->franch_id,
+                        'attendant_id' => $itemFranchisingn->attendant_id,
+                        'reference' => $reference,
+                        'status_id' => 9,
+                        'total_amount' => 0,
+                        'total_amount_corrected' => 0
+                    ]);
+                }
             }
 
             $selectFeesAutomaticByMonth = Fees::query()->whereStatus('Ativo')->where('automatic', 'Sim')->where('type', 'Month')->first();
@@ -145,12 +150,11 @@ class ReleasesRepository
                 $itemChargeRelease->update();
             }
 
-            $selectChargesToUpdateAmounts = Charges::query()->with('releases')->where('imported', 'Not')->get();
+            $selectChargesToUpdateAmounts = Charges::query()->with('releases')->where('status_id', 9)->get();
 
             foreach ($selectChargesToUpdateAmounts as $itemUpdateAmount){
                 $itemUpdateAmount->total_amount = $itemUpdateAmount->releases->sum('amount');
                 $itemUpdateAmount->total_amount_corrected = $itemUpdateAmount->releases->sum('amount_corrected');
-                $itemUpdateAmount->status_id = 3;
                 $itemUpdateAmount->imported = 'Yes';
                 $itemUpdateAmount->update();
             }

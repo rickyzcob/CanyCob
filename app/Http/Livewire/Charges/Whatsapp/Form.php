@@ -30,7 +30,7 @@ class Form extends Component
             $this->charge = $chargeFranchisingReturnDB;
 
             $franchisingRepository = new FranchisingRepository();
-            $franchisingReturnDB = $franchisingRepository->view($chargeFranchisingReturnDB['franchising_id'])['data'];
+            $franchisingReturnDB = $franchisingRepository->show($chargeFranchisingReturnDB['franchising_id'])['data'];
 
             $this->franchising = $franchisingReturnDB;
         }

@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Charges\ProposalAccept;
 
 use App\Http\Traits\WithModal;
 use App\Repositories\ChargesFranchisingRepository;
+use App\Repositories\ConfigurationRepository;
 use App\Repositories\ProposalAcceptRepository;
 use Livewire\Component;
 use WireUi\Traits\Actions;
@@ -14,6 +15,8 @@ class Card extends Component
 
     public $reference;
     public $proposalAccept;
+    public $charge;
+    public $configuration;
 
     protected $listeners = [
         'refreshCardProposalComercial' => '$refresh',
@@ -23,14 +26,19 @@ class Card extends Component
     public function mount($reference = null)
     {
         if ($reference){
-            $this->reference = $reference;
+            $chargeFranchisingRepository = new ChargesFranchisingRepository();
+            $chargeFranchisingReturnDB = $chargeFranchisingRepository->showByReference($reference)['data'];
+            $this->charge = $chargeFranchisingReturnDB;
         }
+
+        $configurationRepository = new ConfigurationRepository();
+        $this->configuration = $configurationRepository->getConfiguration();
     }
 
     public function delete($id = null)
     {
         $proposalRepository = new ProposalAcceptRepository();
-        $proposalReturnDB = $proposalRepository->delete($id, $this->charge_id);
+        $proposalReturnDB = $proposalRepository->delete($id, $this->charge->id);
 
         if($proposalReturnDB['status'] == 'success') {
 

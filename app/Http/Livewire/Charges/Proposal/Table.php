@@ -21,18 +21,18 @@ class Table extends Component
 
     public $charge;
 
-    public function mount($reference = null)
+    public function mount($reference = null, $charge_id = null)
     {
-        if ($reference){
-            $chargeFranchisingRepository = new ChargesFranchisingRepository();
-            $chargeFranchisingReturnDB = $chargeFranchisingRepository->showByReference($reference)['data'];
-            $this->charge = $chargeFranchisingReturnDB;
 
-//            $franchisingRepository = new FranchisingRepository();
-//            $franchisingReturnDB = $franchisingRepository->view($chargeFranchisingReturnDB->franchising_id)['data'];
-//
-//            $this->franchising = $franchisingReturnDB;
+        $chargeFranchisingRepository = new ChargesFranchisingRepository();
+        if($reference){
+            $chargeFranchisingReturnDB = $chargeFranchisingRepository->showByReference($reference)['data'];
+        } elseif ($charge_id){
+            $chargeFranchisingReturnDB = $chargeFranchisingRepository->show($charge_id)['data'];
         }
+
+        $this->charge = $chargeFranchisingReturnDB;
+
     }
 
     public function delete($id = null)

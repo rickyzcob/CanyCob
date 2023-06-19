@@ -8,6 +8,7 @@
 
     <link href="{{ url('css/style.css') }}" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -46,6 +47,6 @@
 </html>
 
 @stack('body-scripts')
+
 <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-
-
+<script src="{{url('js/sortable.js')}}"></script>

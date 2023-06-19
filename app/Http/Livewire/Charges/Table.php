@@ -20,7 +20,7 @@ class Table extends Component
     public $pageSize = 10;
 
     public $order = [
-        'column' => 'name',
+        'column' => 'created_at',
         'order' => 'ASC'
     ];
 
@@ -29,6 +29,14 @@ class Table extends Component
         'confirmDelete' => 'delete',
         'filterTableChargesFranchising'
     ];
+
+    public function sortBy($column)
+    {
+        dd($column);
+        $this->order['column'] = $column;
+        $this->order['order'] = $this->order['order'] == 'asc' ? 'desc' : 'asc';
+        dd($this->order);
+    }
 
     public function filterTableChargesFranchising($filterData = null)
     {

@@ -258,18 +258,18 @@ class UserRepository
     public function getSelectAttendantsActive()
     {
         try {
-            $attendantsDB = User::query()->with('tenant')->whereStatus('Ativo')->get()->toArray();
+            $attendantsDB = User::query()->whereStatus('Ativo')->whereType('Colaborador')->orderBy('name', 'asc')->get()->toArray();
 
             return [
                 'status' => 'success',
                 'data' => $attendantsDB,
-                'code' => 202,
+                'code' => 200,
             ];
 
         }catch (\Exception $exception) {
             return [
                 'status' => 'error',
-                'code' => 200,
+                'code' => 400,
             ];
         }
     }

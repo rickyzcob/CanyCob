@@ -11,9 +11,15 @@
                     <x-slot name="trigger">
                         <x-button teal sm icon="information-circle" label="Alterar Status" />
                     </x-slot>
+                    @if($response->charge['total_amount_corrected'] > $configuration ['value_agreement'])
                     @foreach($response->status as $itemStatus)
                         <x-dropdown.item wire:click="changeStatus({{ $itemStatus['id'] }})" label="{{ $itemStatus['name'] }}" />
                     @endforeach
+                    @else
+                        @foreach($response->statusComum as $itemStatus)
+                            <x-dropdown.item wire:click="changeStatus({{ $itemStatus['id'] }})" label="{{ $itemStatus['name'] }}" />
+                        @endforeach
+                    @endif
                 </x-dropdown>
                 @endif
 

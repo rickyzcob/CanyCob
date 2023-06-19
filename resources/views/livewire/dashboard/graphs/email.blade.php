@@ -1,31 +1,34 @@
 <div>
     <div class=" justify-center items-center">
-        <div class="ml-4" id="proposals"> </div>
+        <div class="ml-4" id="chargesEmail"> </div>
     </div>
 </div>
+{{--@dd($response)--}}
 @push('body-scripts')
     @once
         <script>
 
-            var days =  {{ Js::from($response->chart['day']) }};
-            var count = {{ Js::from($response->chart['count']) }};
+            var days =  {{ Js::from($response->chargeEmail['day']) }};
+            var countEmail = {{ Js::from($response->chargeEmail['totalEmail']) }};
+            {{--var countEmails = {{ Js::from($response->chargeEmail['totalEmail']) }};/s/--}}
+            {{--var countWhatsapp = {{ Js::from($response->chargeEmail['totalWhatsapp']) }};--}}
 
 
             var options = {
                 series: [
                     {
-                        name: "Propostas",
-                        data: count
-                    },
+                        name: "Emails Enviados",
+                        data: countEmail
+                    }
                     // {
-                    //     name: "Low - 2013",
-                    //     data: [12, 11, 14, 18, 17, 13, 13]
+                    //     name: "Whatsapp",
+                    //     data: countWhatsapp
                     // }
                 ],
                 chart: {
                     toolbar: false,
-                    height: 250,
-                    type: 'line',
+                    height: 169,
+                    type: 'bar',
                     stacked: false,
                     dropShadow: {
                         enabled: true,
@@ -39,7 +42,7 @@
                         show: false
                     }
                 },
-                colors: ['#77B6EA', '#545454'],
+                colors: ['#f59e0b', '#15803d'],
 
                 dataLabels: {
                     enabled: false,
@@ -89,8 +92,8 @@
                 }
             };
 
-            var chartProposals = new ApexCharts(document.querySelector("#proposals"), options);
-            chartProposals.render();
+            var chartChargesEmail = new ApexCharts(document.querySelector("#chargesEmail"), options);
+            chartChargesEmail.render();
 
         </script>
     @endonce

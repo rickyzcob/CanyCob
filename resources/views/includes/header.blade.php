@@ -11,8 +11,8 @@
             </button>
 
             <a href="#" class="flex items-center">
-                <img src="https://flowbite.com/docs/images/logo.svg" class="h-6 mr-3 sm:h-10" alt="Flowbite Logo" />
-                <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white text-white">Cobrança Fácil</span>
+                <img src="{{ asset('img/logo/logo_cany_2.png') }} " class="h-6 mr-3 sm:h-10" alt="Flowbite Logo" />
+{{--                <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white text-white">Cobrança Fácil</span>/s--}}
             </a>
     @include('includes.menu')
     @include('includes.mobile_menu')
@@ -20,7 +20,7 @@
                 @livewire('notifications.button', ['visible' => true])
 
                 <div x-data="{ open: false }"  class="relative">
-                    <div  @click="open = true" class="flex items-center text-white hover:bg-white hover:text-sky-700 p-4 h-14 w-14 cursor-pointer
+                    <div  @click="open = true" class="flex items-center justify-center text-white hover:bg-white hover:text-sky-700 h-14 w-14 cursor-pointer
             {{ request()->is('configuracoes*') ? 'text-sky-800 bg-white' : 'text-white' }}"
                           :class="{ 'text-sky-800 bg-white': open, 'text-white' : !open  }">
                         <span class="material-icons text-3xl text-center">account_box</span>
@@ -39,11 +39,15 @@
                                     <img src="{{ url('img/user-default.png') }}" class="border-2 rounded-full w-20 h-20" alt="{{ auth()->user()->image }}" >
                                 @endif
                             </div>
-                            <p class="p-5 text-lg text-center">
+                            <div class="p-5">
+                                <p class="text-lg text-center">
+                                    {{ auth()->user()->name }}
+                                </p>
+                                <p class="text-base text-center">
+                                    {{ auth()->user()->role->name }}
+                                </p>
+                            </div>
 
-                                {{ auth()->user()->name }}
-
-                            </p>
 
                         </div>
 
@@ -61,11 +65,9 @@
                         </form>
                     </div>
                 </div>
-
-
                 @canany(['view_configuration', 'view_permission', 'view_user'])
                     <div x-data="{ open: false }"  class="relative">
-                        <div  @click="open = true" class="flex items-center hover:bg-white hover:text-sky-700 p-4 h-14 w-14 cursor-pointer
+                        <div  @click="open = true" class="flex items-center justify-center   hover:bg-white hover:text-sky-700 h-14 w-14 cursor-pointer
                             {{ request()->is('configuracoes*') ? 'text-sky-800 bg-white' : 'text-white' }}"
                               :class="{ 'text-sky-800 bg-white': open, 'text-white' : !open  }">
                             <span class="material-icons text-3xl ">settings_applications</span>

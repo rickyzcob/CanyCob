@@ -1,20 +1,20 @@
-<div style="overflow-x:auto;">
+<div x-data="data()" style="overflow-x:auto;">
     <table class="tables">
         <thead>
         <tr>
-            <th>Nome</th>
-            <th>Unidade</th>
+            <th @click="sortByColumn" class="cursor-pointer select-none">Nome</th>
+            <th @click="sortByColumn" class="cursor-pointer select-none">Unidade</th>
             <th>CNPJ</th>
-            <th>Valor</th>
-            <th>Valor Corrigido</th>
-            <th>Vencimento</th>
+            <th @click="sortByColumn" class="cursor-pointer select-none">Valor</th>
+            <th @click="sortByColumn" class="cursor-pointer select-none">Valor Corrigido</th>
+            <th @click="sortByColumn" class="cursor-pointer select-none">Vencimento</th>
             <div class="justify-items-center">
                 <th>Açoes</th>
             </div>
         </tr>
         </thead>
 
-        <tbody>
+        <tbody x-ref="tbody">
         @foreach($response->releases as $itemRelease)
             <tr>
                 <td> {{ $itemRelease['name'] }} </td>

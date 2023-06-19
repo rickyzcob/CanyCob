@@ -1,6 +1,6 @@
 <div>
     <div class=" justify-center items-center">
-        <div class="ml-4" id="charges"> </div>
+        <div class="ml-4" id="chargesPhone"> </div>
     </div>
 </div>
 {{--@dd($response)--}}
@@ -8,9 +8,9 @@
     @once
         <script>
 
-            var days =  {{ Js::from($response->chargeEmail['day']) }};
-            var countPhones = {{ Js::from($response->chargeEmail['totalPhone']) }};
-            {{--var countEmails = {{ Js::from($response->chargeEmail['totalEmail']) }};--}}
+            var days =  {{ Js::from($response->chargePhones['day']) }};
+            var countPhones = {{ Js::from($response->chargePhones['totalPhone']) }};
+            {{--var countEmails = {{ Js::from($response->chargeEmail['totalEmail']) }};/s/--}}
             {{--var countWhatsapp = {{ Js::from($response->chargeEmail['totalWhatsapp']) }};--}}
 
 
@@ -21,17 +21,13 @@
                         data: countPhones
                     }
                     // {
-                    //     name: "Emails",
-                    //     data: countEmails
-                    // },
-                    // {
                     //     name: "Whatsapp",
                     //     data: countWhatsapp
                     // }
                 ],
                 chart: {
                     toolbar: false,
-                    height: 200,
+                    height: 169,
                     type: 'bar',
                     stacked: false,
                     dropShadow: {
@@ -46,7 +42,7 @@
                         show: false
                     }
                 },
-                colors: ['#075985', '#dc2626', '#15803d'],
+                colors: ['#b91c1c', '#dc2626', '#15803d'],
 
                 dataLabels: {
                     enabled: false,
@@ -96,10 +92,9 @@
                 }
             };
 
-            var chartCharges = new ApexCharts(document.querySelector("#charges"), options);
-            chartCharges.render();
+            var chartChargesPhone = new ApexCharts(document.querySelector("#chargesPhone"), options);
+            chartChargesPhone.render();
 
         </script>
     @endonce
 @endpush
-

@@ -14,9 +14,6 @@ class Filter extends Component
     public function submit()
     {
         $request = $this->state;
-        $teste = [1,2,3,4];
-
-//        dd($teste);
         $this->emit('filterTableChargesFranchising', $request);
 
     }

@@ -13,7 +13,6 @@ class FranchisingRepository
 
     public function index($filterData = null, $pageSize, $orderBy)
     {
-
         try {
             $franchisingDB = Franchisings::query()->with('statusFran', 'attendant');
 
@@ -115,11 +114,11 @@ class FranchisingRepository
         }
     }
 
-    public function view($id)
+    public function show($id)
     {
         try {
 
-            $franchisingDB = Franchisings::query()->with('partners.partner')->find($id)->toArray();
+            $franchisingDB = Franchisings::query()->with('partners.partner')->find($id);
 
             return [
                 'status' => 'success',

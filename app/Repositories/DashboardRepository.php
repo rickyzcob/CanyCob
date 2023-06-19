@@ -44,29 +44,47 @@ class DashboardRepository
 
     public function getChargesByPhone()
     {
+            $date = \Carbon\Carbon::today()->subDays(10);
+        $mytime = Carbon::now();
+
         $chargesDB = ChargeHistoric::select(
+            'id',
+            'datetime',
+            'phone',
+            'email',
             'created_at as date',
+            'type as type',
+            'tosum',
+
             DB::raw("COUNT(id) as count"),
+
+//            DB::raw('(SELECT COUNT(DISTINCT id) FROM charge_historics WHERE type = "Phone" GROUP BY created_at) AS countPhone'),
+//            DB::raw('(SELECT COUNT(*) FROM charge_historics WHERE type = "Email") AS countEmail'),
+//            DB::raw('(SELECT COUNT(*) FROM charge_historics WHERE type = "WhatsApp") AS countWhatsApp'),
+
             DB::raw("MONTHNAME(created_at) as month_name"),
             DB::raw("DAY(created_at) as day"))
-            ->whereType('Phone')
+            ->where('type', 'phone')
 
-            ->whereYear('created_at', date('Y'))
+            ->whereBetween('datetime', [$date, $mytime])
 
-            ->groupBy(DB::raw("day"))
-            ->orderBy('month_name','DESC')
+            ->groupBy('day')
+            ->orderBy('created_at','asc')
             ->get();
-//            ->pluck('count', 'day');
-//        dd($users);
+
+        $chargesDB = json_decode($chargesDB,true);
+//        dd($chargesDB);
 
         $return = [];
 
         foreach ($chargesDB as $key => $itemCharge){
-            $return['day'][$key] = formatDate($itemCharge['date']) ;
-            $return['count'][$key] = $itemCharge['count'];
+            $return['totalPhone'][$key] = 0;
+            $return['day'][$key] = formatDate($itemCharge['datetime']) ;
+
+            $return['totalPhone'][$key] += $itemCharge['count'];
+
         }
 
-//        dd($return);
         return $return;
 
     }
@@ -85,82 +103,84 @@ class DashboardRepository
             'type as type',
             'tosum',
 
-            DB::raw("COUNT(*) as count"),
+            DB::raw("COUNT(id) as count"),
 
-//            DB::raw('(SELECT COUNT(DISTINCT id) FROM charge_historics WHERE type = "Phone" GROUP BY date) AS countPhone'),
+//            DB::raw('(SELECT COUNT(DISTINCT id) FROM charge_historics WHERE type = "Phone" GROUP BY created_at) AS countPhone'),
 //            DB::raw('(SELECT COUNT(*) FROM charge_historics WHERE type = "Email") AS countEmail'),
 //            DB::raw('(SELECT COUNT(*) FROM charge_historics WHERE type = "WhatsApp") AS countWhatsApp'),
 
             DB::raw("MONTHNAME(created_at) as month_name"),
             DB::raw("DAY(created_at) as day"))
+            ->where('type', 'Email')
 
             ->whereBetween('datetime', [$date, $mytime])
 
-            ->groupBy('datetime')
+            ->groupBy('day')
             ->orderBy('created_at','asc')
             ->get();
-//            ->pluck('count', 'day');
 
         $chargesDB = json_decode($chargesDB,true);
+//        dd($chargesDB);
 
         $return = [];
 
         foreach ($chargesDB as $key => $itemCharge){
-            $return['totalPhone'][$itemCharge['day']] = 0;
-            $return['totalEmail'][$itemCharge['day']] = 0;
-//
-            $return['day'][$itemCharge['day']] = formatDate($itemCharge['datetime']) ;
-            if($itemCharge['type'] == 'Phone') {
-                $return['totalPhone'][$itemCharge['day']] = $itemCharge['count'];
-            }
-//            $return['totalEmail'][$key] = $itemCharge['countEmail'] ? $itemCharge['countEmail'] : 0;
-//            $return['totalWhatsapp'][$key] = $itemCharge['countWhatsApp'] ? $itemCharge['countWhatsApp'] : 0;
+            $return['totalEmail'][$key] = 0;
+            $return['day'][$key] = formatDate($itemCharge['datetime']) ;
 
-//            if($itemCharge['type'] = 'Phone'){
-//
-//                $return['totalPhone'] += 1;
-//            }
-//            if($itemCharge['type'] == 'Email'){
-//                $return['totalEmail'][$key] += 1;
-//            }
-//
-//            if ($itemCharge['type'] == 'WhatsApp'){
-//                dd('caiu');
-//                $return['totalWhatsapp'][$key] ++;
-//            }
-//            $return['teste'][] = $itemCharge['count'] ? $itemCharge['count'] : 0;
+                $return['totalEmail'][$key] += $itemCharge['count'];
+
         }
 
-//        dd($return);
         return $return;
     }
 
     public function getChargesByWhatsapp()
     {
+        $date = \Carbon\Carbon::today()->subDays(10);
+        $mytime = Carbon::now();
+
         $chargesDB = ChargeHistoric::select(
+            'id',
+            'datetime',
+            'phone',
+            'email',
             'created_at as date',
+            'type as type',
+            'tosum',
+
             DB::raw("COUNT(id) as count"),
-            DB::raw("COUNT(Type) as countPhone"),
+
+//            DB::raw('(SELECT COUNT(DISTINCT id) FROM charge_historics WHERE type = "Phone" GROUP BY created_at) AS countPhone'),
+//            DB::raw('(SELECT COUNT(*) FROM charge_historics WHERE type = "Email") AS countEmail'),
+//            DB::raw('(SELECT COUNT(*) FROM charge_historics WHERE type = "WhatsApp") AS countWhatsApp'),
+
             DB::raw("MONTHNAME(created_at) as month_name"),
             DB::raw("DAY(created_at) as day"))
-            ->whereType('Whatsapp')
+            ->where('type', 'WhatsApp')
 
-            ->whereYear('created_at', date('Y'))
+//            ->whereBetween('datetime', [$date, $mytime])
 
-            ->groupBy(DB::raw("day"))
-            ->orderBy('month_name','DESC')
+            ->groupBy('day')
+            ->orderBy('created_at','asc')
             ->get();
-//            ->pluck('count', 'day');
-//        dd($users);
+
+        $chargesDB = json_decode($chargesDB,true);
+//        dd($chargesDB);
 
         $return = [];
 
         foreach ($chargesDB as $key => $itemCharge){
-            $return['day'][$key] = formatDate($itemCharge['date']) ;
-            $return['count'][$key] = $itemCharge['count'] ? $itemCharge['count'] : 0;
+            $return['totalWhatsapp'][$key] = 0;
+            $return['day'][$key] = null;
+            $return['day'][$key] = formatDate($itemCharge['datetime']) ;
+
+            $return['totalWhatsapp'][$key] += $itemCharge['count'];
+
         }
 
 //        dd($return);
+
         return $return;
 
     }

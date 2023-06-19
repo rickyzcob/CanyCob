@@ -9,7 +9,7 @@ class ChargeHistoric extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['charge_id', 'partner_id',  'name', 'datetime', 'phone', 'email', 'type', 'success', 'description', 'origin'];
+    protected $fillable = ['charge_id', 'partner_id',  'name', 'datetime', 'phone', 'email', 'type', 'success', 'description', 'origin', 'date_schedule'];
 
     public function charge()
     {

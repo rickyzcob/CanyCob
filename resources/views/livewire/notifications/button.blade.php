@@ -1,7 +1,7 @@
 <div>
     @if($visible)
     <div x-data="{ open: false }" class="relative">
-        <div  @click="open = true" class="flex items-center text-white hover:bg-white hover:text-sky-700 p-4 h-14 w-14 cursor-pointer">
+        <div  @click="open = true" class="flex items-center justify-center text-white hover:bg-white hover:text-sky-700 h-14 w-14 cursor-pointer">
             <div
                 class="absolute bottom-auto left-auto right-3 top-5 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 whitespace-nowrap rounded-full bg-red-500 px-2 py-1 text-center align-baseline text-xs font-bold leading-none text-white">
                 {{ $this->count }}

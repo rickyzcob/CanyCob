@@ -1,10 +1,9 @@
 <div class="page-title-box">
     <div class="container xl justify-center items-center min-h-[640px]">
-        <nav class="py-5">
-            <ol class="list-reset flex">
-                <li><a href="#" class="text-whites hover:text-blue-700">Lançamentos</a></li>
-                <li><span class="text-white mx-2"> / </span></li>
-                <li class="text-gray-100">Importar Lançamento</li>
+        <nav class="p-4">
+            <ol class="list-reset flex gap-2">
+                <span class="material-icons text-base self-center mb-0">price_change</span>
+                <li class="text-gray-100">lançamentos</li>
             </ol>
         </nav>
         <div class="card p-5 gap-5 p-2">

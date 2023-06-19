@@ -3,13 +3,16 @@
 namespace App\Repositories;
 
 use App\Models\Agreements;
+use App\Models\AgreementStatus;
 use App\Models\Charges;
+use App\Models\ChargeStatus;
 use App\Models\Partners;
 use App\Models\Releases;
 use App\Requests\AgreementRequest;
 use App\Services\ClickSignService;
 use App\Services\ReferenceService;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use PHPUnit\Exception;
 
 class AgreementRepository
@@ -194,6 +197,25 @@ class AgreementRepository
         }
     }
 
+    public function getAgreementsByUser()
+    {
+        try {
+            $agreementsDB = Agreements::query()->with('status', 'franchising')->where('user_id', Auth::user()->id)->get()->toArray();
+
+            return [
+                'status' => 'success',
+                'data' => $agreementsDB,
+                'code' => 200,
+            ];
+        }catch (Exception $exception){
+            return [
+                'status' => 'error',
+                'code' => 400,
+                'message' => 'Erro ao buscar o Produto'
+            ];
+        }
+    }
+
     public function generateDocument($id = null)
     {
         try {
@@ -208,7 +230,11 @@ class AgreementRepository
                 Partners::query()->where(['id' => $agreementDB['partner']['id']])->update(['json_document' => $signatory]);
             }
 
+
             $document = json_encode($returnClickSignService, true);
+            $agreementDB->update([
+                'json_document' => $document,
+            ]);
 
             $decodeDocumentKey = json_decode($agreementDB['json_document'], true);
             $document_key = $decodeDocumentKey['document']['key'];
@@ -220,7 +246,6 @@ class AgreementRepository
             $signatoryByDocument = json_encode($addSignatoryByDocument, true);
 
             $agreementDB->update([
-                'json_document' => $document,
                 'generate_document' => 1,
                 'signatory_document' => $signatoryByDocument,
                 'status_id' => 2
@@ -235,6 +260,7 @@ class AgreementRepository
             ];
 
         } catch (\Exception $exception) {
+
             return [
                 'status' => 'error',
                 'code' => 400,
@@ -271,6 +297,10 @@ class AgreementRepository
             ];
         }
     }
-
+    public function getSelectStatusCharge()
+    {
+        $agreementStatusDB = AgreementStatus::query()->get()->toarray();
+        return $agreementStatusDB;
+    }
 
 }

@@ -17,7 +17,7 @@
         <tbody>
         @foreach($response->franchisings as $itemPaymentFranchising)
             <tr>
-                <td>{{ $itemPaymentFranchising['name'] }}</td>
+                <td>{{ $itemPaymentFranchising['id'] }} - {{ $itemPaymentFranchising['name'] }}</td>
                 <td> {{ $itemPaymentFranchising['attendant'] ? $itemPaymentFranchising['attendant']['name'] : 'Sem Atendente' }}</td>
                 <td>Sim</td>
                 <td>{{ $itemPaymentFranchising['phone01'] }}</td>

@@ -27,13 +27,18 @@ class ChargesReleasesRepository
 
     }
 
-    public function getReleasesForCharge($id)
+    public function getReleasesForCharge($id, $pageSize)
     {
         try {
             $releasesDB = Releases::query()->with('status')
                 ->where('charge_id', $id)
-                ->orderBy('created_at', 'DESC')
-                ->get();
+                ->orderBy('created_at', 'DESC');
+
+             if($pageSize) {
+                 $releasesDB = $releasesDB->paginate($pageSize);
+             } else {
+                 $releasesDB = $releasesDB->get();
+             }
 
             return [
                 'status' => 'success',

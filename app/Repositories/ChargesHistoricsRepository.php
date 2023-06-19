@@ -191,7 +191,7 @@ class ChargesHistoricsRepository
                     'datetime' => Carbon::now(),
                     'charge_id' => $proposalDB['charge_id'],
                     'partner_id' => $proposalDB['partner_id'],
-                    'success' => 'Sim',
+                    'success' => 'Não',
                     'email' => $proposalDB['partner']['email']
                 ]);
 

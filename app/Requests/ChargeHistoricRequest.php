@@ -3,6 +3,7 @@
 namespace App\Requests;
 
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class ChargeHistoricRequest
 {
@@ -15,6 +16,7 @@ class ChargeHistoricRequest
             'partner_id' => 'required_if:type,Sócio',
             'answered' => 'required',
             'success' => 'required',
+            'date_schedule' => Rule::requiredIf($request['success'] == 'Não'),
             'datetime' => 'sometimes',
             'type' => 'sometimes',
             'description' => 'required',
