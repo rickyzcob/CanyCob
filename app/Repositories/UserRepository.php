@@ -2,12 +2,12 @@
 
 namespace App\Repositories;
 
-use App\Requests\UserRequest;
 use App\Models\User;
+use App\Requests\UserRequest;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithPagination;
 use PHPUnit\Exception;
-use Illuminate\Support\Facades\DB;
 
 class UserRepository
 {
@@ -105,7 +105,8 @@ class UserRepository
                 'message' => 'Categoria atualizada com sucesso !'
             ];
 
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
+
             return [
                 'status' => 'error',
                 'code' => 200,
@@ -223,7 +224,6 @@ class UserRepository
                 'message' => 'Erro ao buscar a Categoria'
             ];
         }
-
     }
 
     public function delete($id = null)

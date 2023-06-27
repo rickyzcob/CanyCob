@@ -15,8 +15,19 @@
 
 {{--    @yield('scripts')--}}
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
+    <script src="{{url('js/iro.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/iro-dynamic-css/dist/iro-dynamic-css.min.js"></script>
+
 
     @livewireStyles
+
+    <style>
+        :root{
+            --user-primary-color: hsl({{ session('tenant')['color'] }});
+            --text-primary-color: hsl({{ session('tenant')['text_color'] }});
+        }
+    </style>
 
 </head>
 
@@ -28,7 +39,7 @@
 <x-notifications/>
 <x-dialog z-index="z-50" blur="md" align="center" />
 @include('includes.header')
-
+{{--@dd(session('tenant'))--}}
 @yield('content')
 
 @include('includes.footer')
@@ -49,4 +60,8 @@
 @stack('body-scripts')
 
 <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
 <script src="{{url('js/sortable.js')}}"></script>
+
+

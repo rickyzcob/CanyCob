@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\CoinsRepository;
-use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
@@ -13,6 +12,6 @@ class DashboardController extends Controller
         $coinsRepository = new CoinsRepository();
         $coinsReturnDB = $coinsRepository->getLastCoinByHumor();
 
-        return view('dashboard.index',compact('coinsReturnDB'));
+        return view('tenant.dashboard.index',compact('coinsReturnDB'));
     }
 }

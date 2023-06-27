@@ -225,8 +225,11 @@ return [
         'template_proposal_id' => 'template',
         'type' => 'tipo',
         'inflow' => 'entrada',
-        'role_id' => 'permissão'
-
+        'role_id' => 'permissão',
+        'goals_coins' => 'coins',
+        'value_agreement' => 'valor para acordo',
+        'state.humor' => 'humor',
+        'state.description' => 'descrição'
     ],
 
 ];

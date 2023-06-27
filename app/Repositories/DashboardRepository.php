@@ -4,11 +4,8 @@ namespace App\Repositories;
 
 use App\Models\ChargeHistoric;
 use App\Models\ProposalAccept;
-use App\Models\Proposals;
-use App\Models\User;
 use Carbon\Carbon;
-use \Illuminate\Support\Facades\DB;
-use function Symfony\Component\Translation\t;
+use Illuminate\Support\Facades\DB;
 
 class DashboardRepository
 {

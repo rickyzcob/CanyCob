@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Observers\Tenant\Traits\TenantTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Agreements extends Model
 {
-    use HasFactory;
+    use HasFactory, TenantTrait;
 
     protected $fillable = ['reference', 'user_id', 'franchising_id', 'partner_id', 'status_id', 'generate_document', 'agreements_amount', 'inflow', 'balance', 'installment_value', 'due_date', 'installments', 'fine', 'json_document', 'signatory_document', 'sent', 'traffic_ticket'];
 

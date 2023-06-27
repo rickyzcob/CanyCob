@@ -7,16 +7,16 @@ use Illuminate\Http\Request;
 
 class ProposalChargesController extends Controller
 {
-    public function show($reference = null)
+    public function show(Request $request)
     {
-        $proposal = Proposals::query()->where('reference', $reference)->first();
+        $proposal = Proposals::query()->where('reference', $request->reference)->first();
 
         if(request()->getHost() == 'projeto-cobranca'){
-            $proposalUpdate = Proposals::query()->where('reference', $reference)->update([
+            $proposalUpdate = Proposals::query()->where('reference', $request->reference)->update([
                 'vizualized' => 'Sim'
             ]);
         }
 
-        return view ('proposal.view', compact('proposal'));
+        return view ('tenant.proposal.view', compact('proposal'));
     }
 }

@@ -3,17 +3,16 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Observers\Tenant\Traits\TenantTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
-use App\Models\Roles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+    use HasApiTokens, HasFactory, TenantTrait, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -77,6 +76,10 @@ class User extends Authenticatable
         return $this->belongsTo(Roles::class);
     }
 
+    public function tenant()
+    {
+        return $this->belongsTo(Tenant::class);
+    }
     public function setPasswordAttribute($password)
     {
         if ( $password !== null & $password !== "" )

@@ -12,6 +12,7 @@ use App\Models\Releases;
 use App\Requests\ReleasesRequest;
 use App\Services\ReferenceService;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Bus;
 use PHPUnit\Exception;
 
@@ -22,6 +23,7 @@ class ReleasesRepository
 
         try {
             $ReleasesDB = Releases::query()->with('franchising');
+            $ReleasesDB->where('tenant_id', Auth::user()->tenant->id);
 
             if (isset($filterData['name']) && $filterData['name'] != null) {
                 $ReleasesDB->where('name', 'like', '%' .$filterData['name']. '%');
@@ -78,12 +80,13 @@ class ReleasesRepository
                 new ImportReleasesJob($file),
             ])->dispatch();
 
-            $selectImportedDinscinctReleasesDB = Releases::query()->select('releases.id', 'releases.name', 'releases.cnpj',
+            $selectImportedDinscinctReleasesDB = Releases::query()->select('releases.id', 'releases.tenant_id as tenant_id', 'releases.name', 'releases.cnpj',
                 'releases.franchising_id', 'releases.due_date', 'releases.amount', 'releases.imported', 'franchisings.id as franch_id',
                 'franchisings.attendant_id')
                 ->leftJoin('franchisings', 'franchisings.cnpj', 'releases.cnpj')
                 ->where('releases.franchising_id', null)
                 ->where('releases.imported', 'Nao')
+                ->where('releases.tenant_id', auth()->user()->tenant->id)
                 ->where('releases.status_id', 3)
                 ->orderBy('releases.id')
                 ->groupBy('releases.cnpj')
@@ -95,6 +98,7 @@ class ReleasesRepository
                 if(!$chargeDB || $chargeDB->agreement == 1){
                     $createChargeForReleases = Charges::query()->create([
                         'franchising_id' => $itemFranchisingn->franch_id,
+//                        'tenant_id' => Auth::user()->tenant->id,
                         'attendant_id' => $itemFranchisingn->attendant_id,
                         'reference' => $reference,
                         'status_id' => 9,
@@ -112,10 +116,11 @@ class ReleasesRepository
 
             $mytime = Carbon::now();
 
-            $selectImportedReleasesDB = Releases::query()->select('releases.id', 'releases.name', 'releases.cnpj', 'releases.franchising_id', 'releases.amount',
+            $selectImportedReleasesDB = Releases::query()->select('releases.id', 'releases.name',  'releases.tenant_id', 'releases.cnpj', 'releases.franchising_id', 'releases.amount',
                 'releases.amount_corrected', 'releases.due_date', 'franchisings.id as franch_id')
                 ->leftJoin('franchisings', 'franchisings.cnpj', 'releases.cnpj')
                 ->where('releases.franchising_id', null)
+                ->where('releases.tenant_id', auth()->user()->tenant->id)
                 ->where('releases.status_id', 3)
                 ->get();
 
@@ -136,11 +141,12 @@ class ReleasesRepository
                 $itemRelease->update();
             }
 
-            $selectReleasesToAddChargeID = Releases::query()->select('releases.id', 'releases.name', 'releases.cnpj', 'releases.franchising_id', 'releases.imported',
+            $selectReleasesToAddChargeID = Releases::query()->select('releases.id', 'releases.name', 'releases.tenant_id', 'releases.cnpj', 'releases.franchising_id', 'releases.imported',
                 'releases.due_date', 'franchisings.id as franch_id', 'charges.id as charges_id' )
                 ->leftJoin('franchisings', 'franchisings.id', 'releases.franchising_id')
                 ->leftJoin('charges', 'charges.franchising_id','franchisings.id')
                 ->where('releases.imported', 'Nao')
+                ->where('releases.tenant_id', auth()->user()->tenant->id)
                 ->where('releases.status_id', 3)
                 ->get();
 

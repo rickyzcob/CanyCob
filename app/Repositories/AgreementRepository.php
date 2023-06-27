@@ -5,9 +5,9 @@ namespace App\Repositories;
 use App\Models\Agreements;
 use App\Models\AgreementStatus;
 use App\Models\Charges;
-use App\Models\ChargeStatus;
 use App\Models\Partners;
 use App\Models\Releases;
+use App\Repositories\AgreementsRequest;
 use App\Requests\AgreementRequest;
 use App\Services\ClickSignService;
 use App\Services\ReferenceService;
@@ -37,7 +37,14 @@ class AgreementRepository
                 $query->orderBy($orderBy['column'], $orderBy['order']);
             });
 
-            $agreementsDB = $agreementsDB->paginate($pageSize);
+            if(auth()->user()->can('tenant_view_agreement_user') && auth()->user()->can('tenant_view_agreement_all')) {
+                $agreementsDB = $agreementsDB->paginate($pageSize);
+            }if(auth()->user()->can('tenant_view_agreement_user') && !auth()->user()->can('tenant_view_agreement_all')) {
+                $agreementsDB->where('user_id', auth()->user()->id);
+                $agreementsDB = $agreementsDB->paginate($pageSize);
+            } else if (auth()->user()->can('tenant_view_agreement_all') && !auth()->user()->can('tenant_view_agreement_user')) {
+                $agreementsDB = $agreementsDB->paginate($pageSize);
+            }
 
             return [
                 'status' => 'success',

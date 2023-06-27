@@ -7,10 +7,10 @@ use App\Models\ProposalAccept;
 
 class PorposalFormalizedController extends Controller
 {
-    public function show($reference = null)
+    public function show($subdomain = null, $reference = null)
     {
         $proposal = ProposalAccept::query()->where('reference', $reference)->first();
 
-        return view ('proposal.formalized', compact('proposal'));
+        return view ('tenant.proposal.formalized', compact('proposal'));
     }
 }

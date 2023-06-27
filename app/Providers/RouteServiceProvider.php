@@ -33,6 +33,16 @@ class RouteServiceProvider extends ServiceProvider
                 ->prefix('api')
                 ->group(base_path('routes/api.php'));
 
+            Route::domain('admin.' . env('APP_URL'))
+                ->middleware('web')
+                ->namespace($this->namespace)
+                ->group(base_path('routes/admin.php'));
+
+            Route::domain('{subdomain}')
+                ->middleware(['web', 'subdomain_client'])
+                ->namespace($this->namespace)
+                ->group(base_path('routes/tenant.php'));
+
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
         });
@@ -43,6 +53,17 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
+
+    private function baseDomain(string $subdomain = ''): string
+    {
+//        dd($subdomain);
+        if (strlen($subdomain) > 0) {
+            $subdomain = "{$subdomain}.";
+        }
+
+        return $subdomain . config('app.base_domain');
+    }
+
     protected function configureRateLimiting()
     {
         RateLimiter::for('api', function (Request $request) {

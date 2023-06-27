@@ -7,8 +7,8 @@ use App\Models\Charges;
 use App\Models\Configurations;
 use App\Models\ProposalAccept;
 use App\Models\Releases;
-use PHPUnit\Exception;
 use Carbon\Carbon;
+use PHPUnit\Exception;
 
 class ChargesFranchisingRepository
 {
@@ -18,13 +18,12 @@ class ChargesFranchisingRepository
         try {
             $franchisingDB = Charges::query()->with('releases','attendant', 'franchising');
 
-//                ->where('status_id', 1)
             $franchisingDB->whereHas('releases', function ($query) {
                     $query->whereIn('status_id', [2,3,6,8,9])->orderBy('created_at', 'DESC');
                 });
 
             if (isset($filterData['name']) && $filterData['name'] != null) {
-//                $franchisingDB->where('name', 'like', '%'.$filterData['name'].'%');
+
                 $franchisingDB->whereHas('franchising', function ($query) use ($filterData){
                     $query->where('name', 'like', '%'.$filterData['name'].'%');
                 });
@@ -35,10 +34,12 @@ class ChargesFranchisingRepository
 
             $franchisingDB->orderBy($orderBy['column'], $orderBy['order']);
 
-            if(auth()->user()->can('view_charges_user')) {
+            if(auth()->user()->can('tenant_view_charges_user') && auth()->user()->can('tenant_view_charges_all')){
+                $franchisingDB = $franchisingDB->paginate($pageSize);
+            }else if(auth()->user()->can('tenant_view_charges_user') && !auth()->user()->can('tenant_view_charges_all')) {
                 $franchisingDB->where('attendant_id', auth()->user()->id);
                 $franchisingDB = $franchisingDB->paginate($pageSize);
-            } else if (auth()->user()->can('view_charges_all')) {
+            } else if (auth()->user()->can('tenant_view_charges_all') && !auth()->user()->can('tenant_view_charges_user')) {
                 $franchisingDB = $franchisingDB->paginate($pageSize);
             }
 
@@ -221,11 +222,11 @@ class ChargesFranchisingRepository
         try {
             $franchisingDB = Charges::query()->with('releases','attendant', 'franchising', 'historics');
 
-//            $franchisingDB->where('status_id', 9);
-//
-//            $franchisingDB->whereHas('historics', function ($query) use ($now) {
-//                $query->where('date_schedule', $now OR 'date_schedule', null);
-//            });
+            $franchisingDB->where('status_id', 9);
+
+            $franchisingDB->whereHas('historics', function ($query) use ($now) {
+                $query->where('date_schedule', $now OR 'date_schedule', null);
+            });
 
             $franchisingDB->whereHas('releases', function ($query) {
                 $query->whereIn('status_id', [2,3,6,8,9])->orderBy('created_at', 'DESC');
@@ -243,7 +244,7 @@ class ChargesFranchisingRepository
             return [
                 'status' => 'success',
                 'data' => $franchisingDB,
-                'code' => 202
+                'code' => 200
             ];
         } catch (Exception $exception) {
             return [

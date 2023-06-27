@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Observers\Tenant\Traits\TenantTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Charges extends Model
 {
-    use HasFactory;
+    use HasFactory, TenantTrait;
 
     protected $fillable = ['reference', 'franchising_id', 'attendant_id', 'proposal_accept_id', 'agreement_id', 'total_amount', 'total_amount_corrected', 'notes', 'imported', 'status_id', 'agreement'];
 

@@ -26,10 +26,10 @@ class PermissionsSeeder extends Seeder
         $group = GroupPermissions::create(['name' => 'Configurações - Cadastro de Usuários']);
 
         $permissions = [
-            ['name' => 'add_user', 'label' => 'Adicionar'],
-            ['name' => 'edit_user', 'label' => 'Editar'],
-            ['name' => 'view_user', 'label' => 'Visualizar'],
-            ['name' => 'delete_user', 'label' => 'Deletar ']
+            ['name' => 'tenant_add_user', 'label' => 'Adicionar'],
+            ['name' => 'tenant_edit_user', 'label' => 'Editar'],
+            ['name' => 'tenant_view_user', 'label' => 'Visualizar'],
+            ['name' => 'tenant_delete_user', 'label' => 'Deletar ']
         ];
 
         foreach ($permissions as $permission) {
@@ -43,11 +43,11 @@ class PermissionsSeeder extends Seeder
         $group = GroupPermissions::create(['name' => 'Configurações - Cadastro de Permissões']);
 
         $permissions = [
-            ['name' => 'add_permission', 'label' => 'Adicionar'],
-            ['name' => 'edit_permission', 'label' => 'Editar'],
-            ['name' => 'view_permission', 'label' => 'Visualizar'],
-            ['name' => 'delete_permission', 'label' => 'Deletar'],
-            ['name' => 'roles_permission', 'label' => 'Permissões'],
+            ['name' => 'tenant_add_permission', 'label' => 'Adicionar'],
+            ['name' => 'tenant_edit_permission', 'label' => 'Editar'],
+            ['name' => 'tenant_view_permission', 'label' => 'Visualizar'],
+            ['name' => 'tenant_delete_permission', 'label' => 'Deletar'],
+            ['name' => 'tenant_roles_permission', 'label' => 'Permissões'],
         ];
 
         foreach ($permissions as $permission) {
@@ -61,10 +61,10 @@ class PermissionsSeeder extends Seeder
         $group = GroupPermissions::create(['name' => 'Configurações - Cor e Logo']);
 
         $permissions = [
-            ['name' => 'add_configuration', 'label' => 'Adicionar'],
-            ['name' => 'edit_configuration', 'label' => 'Editar'],
-            ['name' => 'view_configuration', 'label' => 'Visualizar'],
-            ['name' => 'delete_configuration', 'label' => 'Deletar'],
+            ['name' => 'tenant_add_configuration', 'label' => 'Adicionar'],
+            ['name' => 'tenant_edit_configuration', 'label' => 'Editar'],
+            ['name' => 'tenant_view_configuration', 'label' => 'Visualizar'],
+            ['name' => 'tenant_delete_configuration', 'label' => 'Deletar'],
         ];
 
         foreach ($permissions as $permission) {
@@ -78,14 +78,14 @@ class PermissionsSeeder extends Seeder
         $group = GroupPermissions::create(['name' => 'Cadastros - Franquias']);
 
         $permissions = [
-            ['name' => 'add_franchising', 'label' => 'Adicionar'],
-            ['name' => 'edit_franchising', 'label' => 'Editar'],
-            ['name' => 'view_franchising', 'label' => 'Visualizar'],
-            ['name' => 'delete_franchising', 'label' => 'Deletar '],
-            ['name' => 'partners_franchising', 'label' => 'Sócios '],
-            ['name' => 'collaborators_franchising', 'label' => 'Colaboradores '],
-            ['name' => 'import_franchising', 'label' => 'Importar '],
-            ['name' => 'export_franchising', 'label' => 'Exportar '],
+            ['name' => 'tenant_add_franchising', 'label' => 'Adicionar'],
+            ['name' => 'tenant_edit_franchising', 'label' => 'Editar'],
+            ['name' => 'tenant_view_franchising', 'label' => 'Visualizar'],
+            ['name' => 'tenant_delete_franchising', 'label' => 'Deletar '],
+            ['name' => 'tenant_partners_franchising', 'label' => 'Sócios '],
+            ['name' => 'tenant_collaborators_franchising', 'label' => 'Colaboradores '],
+            ['name' => 'tenant_import_franchising', 'label' => 'Importar '],
+            ['name' => 'tenant_export_franchising', 'label' => 'Exportar '],
         ];
 
         foreach ($permissions as $permission) {
@@ -99,61 +99,10 @@ class PermissionsSeeder extends Seeder
         $group = GroupPermissions::create(['name' => 'Cadastro - Sócios']);
 
         $permissions = [
-            ['name' => 'add_partner', 'label' => 'Adicionar'],
-            ['name' => 'edit_partner', 'label' => 'Editar'],
-            ['name' => 'view_partner', 'label' => 'Visualizar'],
-            ['name' => 'delete_partner', 'label' => 'Deletar'],
-        ];
-
-        foreach ($permissions as $permission) {
-            Permission::create([
-                'group_permissions_id' => $group->id,
-                'name' => $permission['name'],
-                'label' => $permission['label']
-            ]);
-        }
-
-        $group = GroupPermissions::create(['name' => 'Cadastro - Tipo de Vendas']);
-
-        $permissions = [
-            ['name' => 'add_type_sales', 'label' => 'Adicionar'],
-            ['name' => 'edit_type_sales', 'label' => 'Editar'],
-            ['name' => 'view_type_sales', 'label' => 'Visualizar'],
-            ['name' => 'delete_type_sales', 'label' => 'Deletar'],
-        ];
-
-        foreach ($permissions as $permission) {
-            Permission::create([
-                'group_permissions_id' => $group->id,
-                'name' => $permission['name'],
-                'label' => $permission['label']
-            ]);
-        }
-
-        $group = GroupPermissions::create(['name' => 'Cadastro - Tipos de Recisão']);
-
-        $permissions = [
-            ['name' => 'add_type_termination', 'label' => 'Adicionar'],
-            ['name' => 'edit_type_termination', 'label' => 'Editar'],
-            ['name' => 'view_type_termination', 'label' => 'Visualizar'],
-            ['name' => 'delete_type_termination', 'label' => 'Deletar'],
-        ];
-
-        foreach ($permissions as $permission) {
-            Permission::create([
-                'group_permissions_id' => $group->id,
-                'name' => $permission['name'],
-                'label' => $permission['label']
-            ]);
-        }
-
-        $group = GroupPermissions::create(['name' => 'Cadastro - Status da Cobrança']);
-
-        $permissions = [
-            ['name' => 'add_type_status_charges', 'label' => 'Adicionar'],
-            ['name' => 'edit_type_status_charges', 'label' => 'Editar'],
-            ['name' => 'view_type_status_charges', 'label' => 'Visualizar'],
-            ['name' => 'delete_type_status_charges', 'label' => 'Deletar'],
+            ['name' => 'tenant_add_partner', 'label' => 'Adicionar'],
+            ['name' => 'tenant_edit_partner', 'label' => 'Editar'],
+            ['name' => 'tenant_view_partner', 'label' => 'Visualizar'],
+            ['name' => 'tenant_delete_partner', 'label' => 'Deletar'],
         ];
 
         foreach ($permissions as $permission) {
@@ -167,10 +116,10 @@ class PermissionsSeeder extends Seeder
         $group = GroupPermissions::create(['name' => 'Cadastro - Juros dos Lançamentos']);
 
         $permissions = [
-            ['name' => 'add_fees', 'label' => 'Adicionar'],
-            ['name' => 'edit_fees', 'label' => 'Editar'],
-            ['name' => 'view_fees', 'label' => 'Visualizar'],
-            ['name' => 'delete_fees', 'label' => 'Deletar'],
+            ['name' => 'tenant_add_fees', 'label' => 'Adicionar'],
+            ['name' => 'tenant_edit_fees', 'label' => 'Editar'],
+            ['name' => 'tenant_view_fees', 'label' => 'Visualizar'],
+            ['name' => 'tenant_delete_fees', 'label' => 'Deletar'],
         ];
 
         foreach ($permissions as $permission) {
@@ -184,13 +133,13 @@ class PermissionsSeeder extends Seeder
         $group = GroupPermissions::create(['name' => 'Permissões - Lançamentos']);
 
         $permissions = [
-            ['name' => 'add_releases', 'label' => 'Adicionar'],
-            ['name' => 'edit_releases', 'label' => 'Editar'],
-            ['name' => 'view_releases', 'label' => 'Visualizar'],
-            ['name' => 'delete_releases', 'label' => 'Deletar '],
-            ['name' => 'import_releases', 'label' => 'Importar '],
-            ['name' => 'export_releases', 'label' => 'Exportar '],
-            ['name' => 'export_releases_historics', 'label' => 'Históricos '],
+            ['name' => 'tenant_add_releases', 'label' => 'Adicionar'],
+            ['name' => 'tenant_edit_releases', 'label' => 'Editar'],
+            ['name' => 'tenant_view_releases', 'label' => 'Visualizar'],
+            ['name' => 'tenant_delete_releases', 'label' => 'Deletar '],
+            ['name' => 'tenant_import_releases', 'label' => 'Importar '],
+            ['name' => 'tenant_export_releases', 'label' => 'Exportar '],
+            ['name' => 'tenant_export_releases_historics', 'label' => 'Históricos '],
         ];
 
         foreach ($permissions as $permission) {
@@ -204,14 +153,20 @@ class PermissionsSeeder extends Seeder
         $group = GroupPermissions::create(['name' => 'Permissões - Acordos']);
 
         $permissions = [
-            ['name' => 'add_agreement', 'label' => 'Adicionar'],
-            ['name' => 'edit_agreement', 'label' => 'Editar'],
-            ['name' => 'view_agreement', 'label' => 'Visualizar'],
-            ['name' => 'delete_agreement', 'label' => 'Deletar '],
-            ['name' => 'view_agreement_all', 'label' => 'Visualizar Todos'],
-            ['name' => 'view_agreement_user', 'label' => 'Visualizar Somente Usuário'],
-            ['name' => 'export_word_agreement', 'label' => ' Exportar Word '],
-            ['name' => 'export_pdf_agreement', 'label' => ' Exportar PDF ']
+            ['name' => 'tenant_add_agreement', 'label' => 'Adicionar'],
+            ['name' => 'tenant_edit_agreement', 'label' => 'Editar'],
+            ['name' => 'tenant_view_agreement', 'label' => 'Visualizar'],
+            ['name' => 'tenant_delete_agreement', 'label' => 'Deletar '],
+            ['name' => 'tenant_view_agreement_all', 'label' => 'Visualizar Todos'],
+            ['name' => 'tenant_view_agreement_user', 'label' => 'Visualizar Somente Usuário'],
+            ['name' => 'tenant_view_contract_agreement', 'label' => 'Visualizar Contrato'],
+            ['name' => 'tenant_view_releases_agreement', 'label' => 'Ver lançamentos'],
+            ['name' => 'tenant_view_details_agreement', 'label' => 'Ver detalhes'],
+            ['name' => 'tenant_create_term_agreement', 'label' => 'Criar Confissão Divida'],
+            ['name' => 'tenant_send_term_agreement', 'label' => 'Enviar Confissão Divida'],
+            ['name' => 'tenant_download_term_agreement', 'label' => 'Baixar Confissão Divida'],
+            ['name' => 'tenant_export_word_agreement', 'label' => ' Exportar Word '],
+            ['name' => 'tenant_export_pdf_agreement', 'label' => ' Exportar PDF ']
         ];
 
         foreach ($permissions as $permission) {
@@ -226,32 +181,49 @@ class PermissionsSeeder extends Seeder
         $group = GroupPermissions::create(['name' => 'Permissões - Cobranças']);
 
         $permissions = [
-            ['name' => 'view_charges', 'label' => 'Visualizar'],
-            ['name' => 'view_charges_user', 'label' => 'Visualizar Somente Usuário'],
-            ['name' => 'view_charges_all', 'label' => 'Visualizar Todos'],
-            ['name' => 'change_status_charges', 'label' => 'Alterar Status Cobrança'],
-            ['name' => 'view_franchising_charges', 'label' => 'Visualizar dados Franqueado'],
-            ['name' => 'edit_franchising_charges', 'label' => 'Editar dados Franqueado'],
-            ['name' => 'view_precification_charges', 'label' => 'Vizualizar Precificação de Valores'],
-            ['name' => 'change_precification_charges', 'label' => 'Editar Precificação de Valores'],
-            ['name' => 'view_releases_charges', 'label' => 'Vizualizar Lançamentos'],
-            ['name' => 'add_historic_charges', 'label' => 'Cadastrar Cobranças'],
-            ['name' => 'view_historic_charges', 'label' => 'Vizualizar Historicos'],
-            ['name' => 'view_proposal_charges', 'label' => 'Vizualizar Propostas'],
-            ['name' => 'details_proposal_charges', 'label' => 'Detalhes Proposta Especifica'],
-            ['name' => 'add_proposal_charges', 'label' => 'Adicionar Propostas'],
-            ['name' => 'block_proposal_charges', 'label' => 'Ativar/Bloquear Propostas'],
-            ['name' => 'delete_proposal_charges', 'label' => 'Apagar Propostas'],
-            ['name' => 'whatsapp_proposal_charges', 'label' => 'Enviar WhatsApp de Propostas'],
-            ['name' => 'send_email_proposal_charges', 'label' => 'Enviar email de Propostas'],
-            ['name' => 'view_proposal_accept_charges', 'label' => 'Vizualizar Termo de Aceite'],
-            ['name' => 'details_proposal_accept_charges', 'label' => 'Detalhes Termo de Aceite'],
-            ['name' => 'add_proposal_accept_charges', 'label' => 'Adicionar Termo de Aceite'],
-            ['name' => 'block_proposal_accept_charges', 'label' => 'Ativar/Bloquear Termo de Aceite'],
-            ['name' => 'delete_proposal_accept_charges', 'label' => 'Deletar Termo de Aceite'],
-            ['name' => 'send_email_proposal_accept_charges', 'label' => 'Envia email de Termo de Aceite'],
-            ['name' => 'simulation_charges', 'label' => 'Simulação de Acordos'],
+            ['name' => 'tenant_view_charges', 'label' => 'Visualizar'],
+            ['name' => 'tenant_view_charges_user', 'label' => 'Visualizar Somente Usuário'],
+            ['name' => 'tenant_view_charges_all', 'label' => 'Visualizar Todos'],
+            ['name' => 'tenant_change_status_charges', 'label' => 'Alterar Status Cobrança'],
+            ['name' => 'tenant_view_franchising_charges', 'label' => 'Visualizar dados Franqueado'],
+            ['name' => 'tenant_edit_franchising_charges', 'label' => 'Editar dados Franqueado'],
+            ['name' => 'tenant_view_precification_charges', 'label' => 'Vizualizar Precificação de Valores'],
+            ['name' => 'tenant_change_precification_charges', 'label' => 'Editar Precificação de Valores'],
+            ['name' => 'tenant_view_releases_charges', 'label' => 'Vizualizar Lançamentos'],
+            ['name' => 'tenant_add_historic_charges', 'label' => 'Cadastrar Cobranças'],
+            ['name' => 'tenant_view_historic_charges', 'label' => 'Vizualizar Historicos'],
+            ['name' => 'tenant_view_proposal_charges', 'label' => 'Vizualizar Propostas'],
+            ['name' => 'tenant_details_proposal_charges', 'label' => 'Detalhes Proposta Especifica'],
+            ['name' => 'tenant_add_proposal_charges', 'label' => 'Adicionar Propostas'],
+            ['name' => 'tenant_block_proposal_charges', 'label' => 'Ativar/Bloquear Propostas'],
+            ['name' => 'tenant_delete_proposal_charges', 'label' => 'Apagar Propostas'],
+            ['name' => 'tenant_whatsapp_proposal_charges', 'label' => 'Enviar WhatsApp de Propostas'],
+            ['name' => 'tenant_send_email_proposal_charges', 'label' => 'Enviar email de Propostas'],
+            ['name' => 'tenant_view_proposal_accept_charges', 'label' => 'Vizualizar Termo de Aceite'],
+            ['name' => 'tenant_details_proposal_accept_charges', 'label' => 'Detalhes Termo de Aceite'],
+            ['name' => 'tenant_add_proposal_accept_charges', 'label' => 'Adicionar Termo de Aceite'],
+            ['name' => 'tenant_block_proposal_accept_charges', 'label' => 'Ativar/Bloquear Termo de Aceite'],
+            ['name' => 'tenant_delete_proposal_accept_charges', 'label' => 'Deletar Termo de Aceite'],
+            ['name' => 'tenant_send_email_proposal_accept_charges', 'label' => 'Envia email de Termo de Aceite'],
+            ['name' => 'tenant_simulation_charges', 'label' => 'Simulação de Acordos'],
 
+        ];
+
+        foreach ($permissions as $permission) {
+            Permission::create([
+                'group_permissions_id' => $group->id,
+                'name' => $permission['name'],
+                'label' => $permission['label']
+            ]);
+        }
+
+        $group = GroupPermissions::create(['name' => 'Permissões - Humor']);
+
+        $permissions = [
+            ['name' => 'tenant_add_humor', 'label' => 'Adicionar'],
+            ['name' => 'tenant_edit_humor', 'label' => 'Editar'],
+            ['name' => 'tenant_view_humor', 'label' => 'Visualizar'],
+            ['name' => 'tenant_delete_humor', 'label' => 'Deletar ']
         ];
 
         foreach ($permissions as $permission) {
@@ -265,8 +237,8 @@ class PermissionsSeeder extends Seeder
         $group = GroupPermissions::create(['name' => 'Relatórios - Histórico Cobrança']);
 
         $permissions = [
-            ['name' => 'view_report_charges', 'label' => 'Visualizar'],
-            ['name' => 'export_report_charges', 'label' => 'Exportar'],
+            ['name' => 'tenant_view_report_charges', 'label' => 'Visualizar'],
+            ['name' => 'tenant_export_report_charges', 'label' => 'Exportar'],
         ];
 
         foreach ($permissions as $permission) {
@@ -280,8 +252,8 @@ class PermissionsSeeder extends Seeder
         $group = GroupPermissions::create(['name' => 'Relatórios - Lançamentos']);
 
         $permissions = [
-            ['name' => 'view_report_releases', 'label' => 'Visualizar'],
-            ['name' => 'export_report_releases', 'label' => 'Exportar'],
+            ['name' => 'tenant_view_report_releases', 'label' => 'Visualizar'],
+            ['name' => 'tenant_export_report_releases', 'label' => 'Exportar'],
         ];
 
         foreach ($permissions as $permission) {
@@ -295,8 +267,23 @@ class PermissionsSeeder extends Seeder
         $group = GroupPermissions::create(['name' => 'Relatórios - Acordos']);
 
         $permissions = [
-            ['name' => 'view_report_agreements', 'label' => 'Visualizar'],
-            ['name' => 'export_report_agreements', 'label' => 'Exportar'],
+            ['name' => 'tenant_view_report_agreements', 'label' => 'Visualizar'],
+            ['name' => 'tenant_export_report_agreements', 'label' => 'Exportar'],
+        ];
+
+        foreach ($permissions as $permission) {
+            Permission::create([
+                'group_permissions_id' => $group->id,
+                'name' => $permission['name'],
+                'label' => $permission['label']
+            ]);
+        }
+
+        $group = GroupPermissions::create(['name' => 'Relatórios - Humor']);
+
+        $permissions = [
+            ['name' => 'tenant_view_report_humor', 'label' => 'Visualizar'],
+            ['name' => 'tenant_export_report_humor', 'label' => 'Exportar'],
         ];
 
         foreach ($permissions as $permission) {
@@ -309,13 +296,13 @@ class PermissionsSeeder extends Seeder
 
 
 //        // create permissions
-//        Permission::create(['name' => 'edit articles']);
-//        Permission::create(['name' => 'delete articles']);
-//        Permission::create(['name' => 'publish articles']);
-//        Permission::create(['name' => 'unpublish articles']);
+//        Permission::create(['name' => 'tenant_edit articles']);
+//        Permission::create(['name' => 'tenant_delete articles']);
+//        Permission::create(['name' => 'tenant_publish articles']);
+//        Permission::create(['name' => 'tenant_unpublish articles']);
 //
 //        // create roles and assign existing permissions
-//        $role1 = Role::create(['name' => 'writer', 'tenant_id'  => 1]);
+//        $role1 = Role::create(['name' => 'tenant_writer', 'tenant_id'  => 1]);
 //        $role1->givePermissionTo('edit articles');
 //        $role1->givePermissionTo('delete articles');
 

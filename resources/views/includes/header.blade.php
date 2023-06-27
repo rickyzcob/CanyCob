@@ -1,5 +1,5 @@
 <header class="sticky top-0 z-20">
-    <nav class="navbar navbar-expand-lg shadow-md relative flex bg-sky-700 items-center w-full h-14 justify-between ">
+    <nav class="primary-color navbar navbar-expand-lg shadow-md relative flex items-center w-full h-14 justify-between ">
         <div class="container flex flex-wrap items-center justify-between mx-auto">
 
             <button @click="isMobileOpen = !isMobileOpen">
@@ -11,18 +11,30 @@
             </button>
 
             <a href="#" class="flex items-center">
-                <img src="{{ asset('img/logo/logo_cany_2.png') }} " class="h-6 mr-3 sm:h-10" alt="Flowbite Logo" />
-{{--                <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white text-white">Cobrança Fácil</span>/s--}}
+
+                @if(session('tenant')['logo'] == null)
+                    <span class="self-center text-xl font-semibold whitespace-nowrap primary-text-color">{{ session('tenant')['name'] }}</span>
+                @else
+                    <img src="{{ asset('storage/'.session('tenant')['logo']) }}" class="h-6 mr-3 sm:h-10"  alt="{{ auth()->user()->tenant->name }}" >
+                @endif
             </a>
-    @include('includes.menu')
-    @include('includes.mobile_menu')
+
+            @if(auth()->user()->tenant->scope == 'Cliente')
+                @include('tenant.menu.menu')
+                @include('tenant.menu.mobile_menu')
+            @elseif(auth()->user()->tenant->scope == 'Admin')
+                @include('admin.menu.menu')
+                @include('admin.menu.mobile_menu')
+            @endif
+
             <div class="flex justify-center items-center ">
-                @livewire('notifications.button', ['visible' => true])
+
+                @livewire('vendor.notifications.button', ['visible' => true])
 
                 <div x-data="{ open: false }"  class="relative">
-                    <div  @click="open = true" class="flex items-center justify-center text-white hover:bg-white hover:text-sky-700 h-14 w-14 cursor-pointer
-            {{ request()->is('configuracoes*') ? 'text-sky-800 bg-white' : 'text-white' }}"
-                          :class="{ 'text-sky-800 bg-white': open, 'text-white' : !open  }">
+                    <div  @click="open = true" class="flex items-center justify-center primary-text-color h-14 w-14 cursor-pointer
+                            {{ request()->is('meu-perfil') ? 'primary-text-active primary-active' : 'primary-text-color' }}"
+                          :class="{ 'primary-text-color-active primary-color-active': open }">
                         <span class="material-icons text-3xl text-center">account_box</span>
                     </div>
                     <div x-show="open"
@@ -44,32 +56,34 @@
                                     {{ auth()->user()->name }}
                                 </p>
                                 <p class="text-base text-center">
+                                    @if(auth()->user()->role)
                                     {{ auth()->user()->role->name }}
+                                    @endif
                                 </p>
                             </div>
 
 
                         </div>
 
-                        <a href="{{route('profile.index', auth()->user()->id)}}"
+                        <a href="{{route('profile.index', session('tenant')['subdomain'], auth()->user()->id)}}"
                            class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-600  border-b-2 border-gray-20 text-center">
                             Configurações
                         </a>
-                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                        <a href="{{ route('logout', session('tenant')['subdomain']) }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
                            class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-600  border-b-2 border-gray-20 text-center text-lg">
                             Sair
                         </a>
 
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        <form id="logout-form" action="{{ route('logout', session('tenant')['subdomain']) }}" method="POST" style="display: none;">
                             @csrf
                         </form>
                     </div>
                 </div>
-                @canany(['view_configuration', 'view_permission', 'view_user'])
+{{--                @canany(['view_configuration', 'view_permission', 'view_user'])--}}
                     <div x-data="{ open: false }"  class="relative">
-                        <div  @click="open = true" class="flex items-center justify-center   hover:bg-white hover:text-sky-700 h-14 w-14 cursor-pointer
-                            {{ request()->is('configuracoes*') ? 'text-sky-800 bg-white' : 'text-white' }}"
-                              :class="{ 'text-sky-800 bg-white': open, 'text-white' : !open  }">
+                        <div  @click="open = true" class="flex items-center justify-center primary-color primary-text-color h-14 w-14 cursor-pointer
+                            {{ request()->is('configuracoes*') ? 'primary-text-active primary-active' : 'primary-text-color' }}"
+                              :class="{ 'primary-text-color-active primary-color-active': open }">
                             <span class="material-icons text-3xl ">settings_applications</span>
                         </div>
                         <div x-show="open"
@@ -78,35 +92,35 @@
                              x-transition:leave.duration.800ms
                              x-cloak
                              class="absolute items-center z-40 w-72 py-2 rounded-br-lg rounded-bl-lg bg-white shadow-xl right-0">
-                            @can('view_configuration')
-                                <a href=""
+{{--                            @can('view_configuration')--}}
+                                <a href="{{route('configuration.index', session('tenant')['subdomain'])}}"
                                    class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-600  border-b-2 border-gray-20">
                                     <span class="material-icons text-base pr-2">display_settings</span>
-                                    Cor e Logo
+                                    Configurações
                                 </a>
-                            @endcan
-                            @can('view_permission')
-                                <a href="{{route('permissions.index')}}"
+{{--                            @endcan--}}
+{{--                            @can('view_permission')--}}
+                                <a href="{{route('permissions.index', session('tenant')['subdomain'])}}"
                                    class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-600  border-b-2 border-gray-20">
                                     <span class="material-icons text-base pr-2">engineering</span>
                                     Permissões
                                 </a>
-                            @endcan
-                            @can('view_user')
-                                <a href="{{route('user.index')}}"
+{{--                            @endcan--}}
+{{--                            @can('view_user')--}}
+                                <a href="{{route('user.index', session('tenant')['subdomain'])}}"
                                    class="block flex items-center px-4 py-2 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-600  border-b-2 border-gray-200">
                                     <span class="material-icons text-base pr-2">people</span>
                                     Usuários
                                 </a>
-                            @endcan
+{{--                            @endcan--}}
                         </div>
                     </div>
-                @endcanany
+{{--                @endcanany--}}
                 {{--@endif--}}
             </div>
         </div>
     </nav>
-
+    </div>
     <div class="h-2 {{ session('tenant')['color'] ?? 'bg-gray-500' }}"></div>
 </header>
 

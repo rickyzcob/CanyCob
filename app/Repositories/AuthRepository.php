@@ -3,12 +3,12 @@
 namespace App\Repositories;
 
 use App\Models\User;
-use App\Requests\AuthRequest;
 use App\Notifications\ResetPasswordNotification;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
+use App\Requests\AuthRequest;
 use Carbon\Carbon;
 use DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use PHPUnit\Exception;
 
 

@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Models\Releases;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -20,6 +21,7 @@ class ImportReleases implements ToModel, WithHeadingRow, WithChunkReading
     {
         return new Releases([
             'name' => $row['name'],
+            'tenant_id' => Auth::user()->tenant->id,
             'cnpj' => $row['cnpj'],
             'status_id' => 3,
             'due_date' => $row['due_date'],

@@ -9,7 +9,6 @@ class CentralModal extends Component
 {
     use WithModal;
 
-    public $model_id;
     public $title = '';
     public $message = '';
     public $function = '';
@@ -19,14 +18,14 @@ class CentralModal extends Component
 
     protected $listeners = ['showCentralModal', 'closeCentralModal'];
 
-    public function showCentralModal($component = null,  $title = null, $message = null, $function = null, $modelid = null)
+    public function showCentralModal($component = null,  $title = null, $message = null, $params = null, $function = null)
     {
         $this->showCentralModal = true;
-        $this->model_id = $modelid;
+        $this->params = $params;
         $this->title = $title;
         $this->message = $message;
         $this->component = $component;
-        $this->function = $function;
+        $this->function = $function;;
     }
 
     public function closeCentralModal()

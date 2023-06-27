@@ -4,6 +4,39 @@
 /*    max-width: 650px;*/
 /*    max-height: 250px;*/
 /*}*/
+.primary-color { background-color: var(--user-primary-color); }
+.primary-text-color { color: var(--text-primary-color); }
+
+.primary-color-active { background-color: var(--text-primary-color); }
+.primary-text-color-active { color: var(--user-primary-color); }
+
+.primary-active { background-color: var(--text-primary-color); }
+.primary-text-active { color: var(--user-primary-color); }
+
+.sideBar
+{
+    width: 300px;
+    float: left;
+    height: 500px;
+    background: blue;
+}
+
+.border-red {
+    border-color: red;
+    border-width: 5px;
+}
+
+input[type=text]:focus {
+    border: 2px solid var(--user-primary-color);
+    box-shadow: none
+    /*outline: 1px solid var(--user-primary-color);*/
+}
+
+
+a:hover {
+    background-color: var(--text-primary-color);
+    color: var(--user-primary-color);
+}
 
 .card {
     /* Add shadows to create the "card" effect */
@@ -29,8 +62,8 @@ p {
     padding: 10px 10px 10px 10px;
     text-align: left;
     font-size: smaller;
-    background-color: #0369A1;
-    color: white;
+    background-color: var(--user-primary-color);
+    color: var(--text-primary-color);
     overflow-x:auto;
 }
 

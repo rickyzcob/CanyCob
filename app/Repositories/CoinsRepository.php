@@ -3,9 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Coins;
-use App\Models\Fees;
 use App\Models\User;
-use App\Requests\FeesRequest;
 use Illuminate\Support\Facades\Auth;
 use PHPUnit\Exception;
 
@@ -41,6 +39,26 @@ class CoinsRepository
                 'message' => 'Erro ao Cadastrar'
             ];
 
+        }
+    }
+
+    public function show($id)
+    {
+        try {
+            $coinsDB = Coins::query()->with('user')->find($id);
+
+            return [
+                'status' => 'success',
+                'data' => $coinsDB,
+                'code' => 200,
+
+            ];
+        }catch (Exception $exception){
+            return [
+                'status' => 'error',
+                'code' => 400,
+                'message' => 'Erro na requisição'
+            ];
         }
     }
     public function getUsersByCoin()
@@ -84,7 +102,6 @@ class CoinsRepository
                 'message' => 'Erro na requisição'
             ];
         }
-
     }
 
     public function addCoinsToUser($coins)
@@ -93,5 +110,31 @@ class CoinsRepository
 
         $userDB->increment('coins', $coins);
 
+    }
+
+    public function getHumorByUserDaily()
+    {
+        $today = date('d');
+
+        try {
+            $coinsDB = Coins::query()->with('user')->where('type', 'Humor')->whereDay('created_at', $today)->get();
+
+//            $coinsDB->whereHas('user', function ($query) {
+//                $query->where('tenant_id', Auth::user()->tenant->id)->orderBy('created_at', 'DESC');
+//            });
+
+            return [
+                'status' => 'success',
+                'data' => $coinsDB,
+                'code' => 200
+            ];
+
+        } catch (Exception $exception){
+            return [
+                'status' => 'error',
+                'code' => 400,
+                'message' => 'Erro na requisição'
+            ];
+        }
     }
 }

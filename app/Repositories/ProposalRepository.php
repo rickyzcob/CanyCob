@@ -3,20 +3,16 @@
 namespace App\Repositories;
 
 use App\Models\Charges;
-use App\Models\Franchisings;
-use App\Models\Partners;
 use App\Models\PartnersFranchisings;
 use App\Models\ProposalAccept;
 use App\Models\Proposals;
-use App\Models\Releases;
 use App\Models\TemplateProposal;
-use App\Notifications\NotifyChargeFranchising;
 use App\Notifications\NotifyProposalAccept;
 use App\Requests\ProposalRequest;
 use App\Services\ReferenceService;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Storage;
 use PHPUnit\Exception;
+use function App\Repositories\strtr;
 
 class ProposalRepository
 {

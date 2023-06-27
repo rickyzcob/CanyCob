@@ -40,9 +40,9 @@ trait
         $this->emitTo('components.confirm-modal', 'closeConfirmModal');
     }
 
-    public function openCentralModal($modelid = null, $component = null, $title = null, $message = null)
+    public function openCentralModal($component = null, $title = null, $message = null, $modelid = null, $function = null)
     {
-        $this->emitTo('components.central-modal', 'showCentralModal', $modelid, $component, $title, $message);
+        $this->emitTo('components.central-modal', 'showCentralModal', $component, $title, $message, $modelid, $function);
     }
 
     public function closeCentralModal()

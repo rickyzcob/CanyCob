@@ -2,8 +2,9 @@
 
 namespace App\Repositories;
 
-use App\Requests\RoleRequest;
 use App\Models\Roles;
+use App\Requests\RoleRequest;
+use Illuminate\Support\Facades\Auth;
 use PHPUnit\Exception;
 use Spatie\Permission\Models\Role;
 
@@ -14,6 +15,7 @@ class RolesRepository
 
         try {
             $usersDB = Role::query();
+            $usersDB->where('tenant_id', auth()->user()->tenant->id);
 
             if (isset($filterData['name']) && $filterData['name'] != null) {
                 $usersDB->where('name', 'like', '%'.$filterData['name'].'%');
@@ -45,7 +47,7 @@ class RolesRepository
         $roleRequest = new RoleRequest();
         $requestValidated = $roleRequest->validate($request);
 
-        $requestValidated['guard_name'] = 'web';
+        $requestValidated['guard_name'] = session('tenant')['subdomain'];
 
         try {
 
@@ -54,8 +56,8 @@ class RolesRepository
             return [
                 'status' => 'success',
                 'data' => $rolesDB,
-                'code' => 202,
-                'message' => 'Categoria cadastrado com sucesso !'
+                'code' => 200,
+                'message' => 'Função cadastrado com sucesso !'
             ];
 
 
@@ -64,7 +66,7 @@ class RolesRepository
             return [
                 'status' => 'error',
                 'data' => $exception,
-                'code' => 200,
+                'code' => 400,
                 'message' => 'Erro ao Cadastrar'
             ];
 
@@ -145,7 +147,7 @@ class RolesRepository
 
     public function selectRoles()
     {
-        $roles = Role::query()->get();
+        $roles = Role::query()->where('tenant_id', Auth::user()->tenant->id)->get();
         return $roles;
     }
 

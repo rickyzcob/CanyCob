@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\Models\ChargeStatus;
-use App\Models\Configurations;
 use App\Requests\ChargeStatusRequest;
 use PHPUnit\Exception;
 

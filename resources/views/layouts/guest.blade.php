@@ -12,6 +12,14 @@
 
     <link href="{{url('css/style.css')}}" rel="stylesheet" type="text/css">
 
+
+    <style>
+        :root{
+            --user-primary-color: {{ session('tenant')['color'] }};
+            --user-text-color: {{ session('tenant')['text_color'] }};
+        }
+    </style>
+
 {{--    <!-- Scripts -->--}}
 {{--        <link rel="stylesheet" href="{{ mix('css/app.css') }}">--}}
 {{--        <script src="{{ mix('js/app.js') }}" defer></script>--}}
@@ -21,8 +29,6 @@
 <body>
 
 @yield('content')
-
-
 
 @livewireScripts
 

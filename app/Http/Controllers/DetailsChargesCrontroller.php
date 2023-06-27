@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 
 class DetailsChargesCrontroller extends Controller
 {
-    public function show($reference = null)
+    public function show(Request $request)
     {
-        return view ('charges.view', compact('reference'));
+        $reference = $request->reference;
+
+        return view ('tenant.charges.view', compact('reference'));
     }
 }
