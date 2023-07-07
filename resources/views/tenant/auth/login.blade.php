@@ -6,7 +6,7 @@
     <div class="flex items-center justify-center gap-5 bg-white py-5 md:w-1/2 bg-cover" >
         <img src="https://png.pngtree.com/png-vector/20220730/ourmid/pngtree-m-company-logo-png-image_6092974.png" alt="" />
     </div>
-    <div class="flex flex-col items-center justify-center primary-color py-5 md:w-1/2" style="background-image: url('img/bg_login.png')" >
+    <div class="flex flex-col items-center justify-center primary-color py-5 md:w-1/2">
         <div class="flex items-center p-2">
             @if(session('tenant')['logo'] == null)
                 <span class="self-center text-xl font-semibold whitespace-nowrap uppercase primary-text-color">{{ session('tenant')['name'] }}</span>
