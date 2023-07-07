@@ -21,7 +21,7 @@ class Table extends Component
 
     public $order = [
         'column' => 'created_at',
-        'order' => 'ASC'
+        'order' => 'DESC'
     ];
 
     protected $listeners = [

@@ -11,6 +11,7 @@ class SendWhatsappService
 {
     public function sendMessage($data = null, $proposal = null)
     {
+
         $numberWhatsapp = str_replace( ['(', ')', '-'], '', $data['phone']);
 
         try {
@@ -27,7 +28,7 @@ class SendWhatsappService
 
             $body = [
                   "number" => '55'.$numberWhatsapp,
-                  "text" => "Olá " .$data['name']." ! \n\nPreparamos uma oferta incrível para você ! \n\nclique no link abaixo e confira a sua oportuidade \n\n" .route('proposal.show', $proposal['id']),
+                  "text" => "Olá " .$data['name']." ! \n\nPreparamos uma oferta incrível para você ! \n\nclique no link abaixo e confira a sua oportuidade \n\n" .route('proposal.show', ['subdomain' => session('tenant')['subdomain'], 'reference' => $proposal['reference']]),
                   "title" =>"Botões",
                   "footer" =>"Aqui vai o texto do rodapé da mensagem",
                   "buttons" => [

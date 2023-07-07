@@ -2,8 +2,9 @@
     <x-card cardClasses="border-l-4 border-red-500">
         <div class="flex items-start justify-between border-b-2 mb-2">
             <h1 class="text-base text-gray-600 font-semibold py-2">Unidade : {{$charge['franchising']['name']}}</h1>
-            @if($charge['agreement'] == 0)
+
             <div class="flex gap-2">
+                @if($charge['agreement'] == 0)
                 @can('add_historic_charges')
                 <x-button wire:click="openModal('tenant.charges.historic.form', {'id': {{$charge['id']}} })" positive sm icon="annotation" label="Cobrar"/>
                 @endcan
@@ -11,10 +12,16 @@
                 <x-button class="fa fa-whatsapp" wire:click="openModal('tenant.charges.whatsapp.form', {'id': {{$charge['id']}} })" teal sm label="Whatsapp"/>
                 @endcan
                 @can('simulation_charges')
-                <x-button wire:click="openModal('tenant.charges.simulation.form', {'id': {{$charge['id']}} })" blue sm icon="refresh" label="Simular"/>
+                    @if($charge->total_amount_corrected > auth()->user()->value_agreement)
+                        <x-button wire:click="openModal('tenant.charges.simulation.form', {'id': {{$charge['id']}} })" blue sm icon="refresh" label="Simular"/>
+                    @endif
                 @endcan
+                @endif
+                    @if($charge->total_amount_corrected < auth()->user()->value_agreement && $charge->status_id = 17 && $charge->agreement == 1 && $charge->concluded == 'Não')
+                <x-button icon="check-circle"  wire:click="openModal('tenant.charges.conference.form', {'id': {{$charge['id']}} })" warning sm label="Conferir"/>
+                    @endif
+
             </div>
-            @endif
         </div>
         <table class="tables">
             <thead>

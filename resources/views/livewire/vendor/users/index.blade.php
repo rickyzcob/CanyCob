@@ -1,7 +1,8 @@
 <div class="page-title-box">
     <div class="container xl justify-center items-center min-h-[640px]">
-        <nav class="py-5">
-            <ol class="list-reset flex">
+        <nav class="p-4">
+            <ol class="list-reset flex gap-2">
+                <span class="material-icons text-base ">account_box</span>
                 <li><a href="#" class="text-whites hover:text-blue-700">Gestão</a></li>
                 <li><span class="text-white mx-2"> / </span></li>
                 <li class="text-gray-100">Usuários</li>

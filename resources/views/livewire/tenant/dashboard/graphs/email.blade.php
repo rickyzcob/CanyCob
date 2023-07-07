@@ -3,7 +3,6 @@
         <div class="ml-4" id="chargesEmail"> </div>
     </div>
 </div>
-{{--@dd($response)--}}
 @push('body-scripts')
     @once
         <script>
@@ -27,7 +26,7 @@
                 ],
                 chart: {
                     toolbar: false,
-                    height: 169,
+                    height: 183,
                     type: 'bar',
                     stacked: false,
                     dropShadow: {

@@ -21,6 +21,7 @@ class Form extends Component
         'phone' => '',
         'partner_id' => '',
         'date_schedule' => '',
+        'date_conference' => '',
         'type' => 'Unidade',
         'origin' => 'Ativo'
     ];
@@ -57,7 +58,7 @@ class Form extends Component
         $current = carbon::now();
 
         if($this->state['success'] == 'Não'){
-            $this->state['date_schedule'] = $current->addDays(2);
+            $this->state['date_schedule'] = $current->addWeekday(2);
         } else {
             $this->state['date_schedule'] = '';
         }
@@ -83,7 +84,7 @@ class Form extends Component
     public function getFranchising()
     {
         $franchisingRepository = new FranchisingRepository();
-        $franchisingReturnDB = $franchisingRepository->view($this->charge['franchising_id'])['data'];
+        $franchisingReturnDB = $franchisingRepository->show($this->charge['franchising_id'])['data'];
 
         return $franchisingReturnDB;
     }

@@ -3,8 +3,9 @@
         <thead>
         <tr>
             <th>Nome</th>
+            <th>Referencia</th>
             <th>CNPJ</th>
-            <th>Valor Devido</th>
+            <th>Valor</th>
             <th>Status</th>
             <div class="justify-items-center">
                 <th>Açoes</th>
@@ -16,14 +17,15 @@
         @foreach($response->agreements as $itemAgreement)
             <tr>
                 <td>{{ $itemAgreement['franchising']['name'] }}</td>
+                <td>{{ $itemAgreement['reference'] }}</td>
                 <td>{{ $itemAgreement['franchising']['cnpj'] }}</td>
-                <td> {{ formatMoney($itemAgreement['total_amount']) }}</td>
+                <td> {{ formatMoney($itemAgreement['agreements_amount']) }}</td>
                 <td> <x-badge outline color="{{$itemAgreement['status']['color']}}" label="{{$itemAgreement['status']['name']}}" /></td>
 
                 <td width="250px">
                     <div class="flex flex-wrap justify-items-center gap-x-2">
                         @can('view_contract_agreement')
-                            <x-button a href="{{route('agreement.show', $itemAgreement['reference'])}}" sm gray icon="eye" primary />
+                            <x-button a href="{{route('agreement.show',['subdomain' => session('tenant')['subdomain'], 'reference' => $itemAgreement['reference'] ])}}" sm gray icon="eye" primary />
                         @endcan
                         @can('view_releases_agreement')
                             <x-button sm teal icon="cash" primary wire:click="openModal('tenant.agreement.releases.table', {'id': {{ $itemAgreement['id'] }} } )"/>
@@ -31,18 +33,29 @@
                         @can('view_details_agreement')
                             <x-button sm warning icon="information-circle" wire:click="openModal('tenant.agreement.info.card', {'id': {{ $itemAgreement['id'] }} } )"/>
                         @endcan
-                        @if($itemAgreement['generate_document'] != 1)
+
+                        @if( $itemAgreement['generate_document'] != 1)
                             @can('view_details_agreement')
                             <x-button sm info icon="document-add" wire:click="generateDocument({{ $itemAgreement['id'] }})" spinner="generateDocument"/>
                             @endcan
-                        @else
+
+                            @elseif($itemAgreement['sent'] != 1)
+                                @can('send_term_agreement')
+                                <x-button sm purple icon="arrow-circle-up" wire:click="sendEmail({{ $itemAgreement['id'] }})" spinner="sendEmail"/>
+                                @endcan
+
+                            @elseif ($itemAgreement['sent'] == 1 && $itemAgreement['status_id'] != 5)
+
                             @can('send_term_agreement')
-                            <x-button sm purple icon="arrow-circle-up" wire:click="sendEmail({{ $itemAgreement['id'] }})" spinner="sendEmail"/>
+                                <x-button sm green icon="check" wire:click="changeStatus({{ $itemAgreement['id'] }}, 5)" spinner="changeStatus"/>
                             @endcan
                         @endif
+
+                        @if(auth()->user()->tenant->type_agreement == 'Normal')
                             @can('download_term_agreement')
-                            <x-button sm red icon="document-download" wire:click="openModal('tenant.agreement.info.card', {'id': {{ $itemAgreement['id'] }} } )"/>
+                                <x-button sm red icon="document-download" wire:click="downloadDocument({{ $itemAgreement['id'] }})"/>
                             @endcan
+                        @endif
                     </div>
                 </td>
             </tr>

@@ -9,21 +9,31 @@ use PHPUnit\Exception;
 
 class CoinsRepository
 {
-    public function create($request)
+    public function create($request, $type, $user_id)
     {
-        $request['type'] = 'Humor';
 
-        if(isset($request['description'] ) && $request['description'] != null){
-            $request['coins'] = 50;
-        } else {
-            $request['coins'] = 25;
+
+        if($type == 'Humor') {
+            $request['type'] = $type;
+            if(isset($request['description'] ) && $request['description'] != null){
+                $request['coins'] = 50;
+            } else {
+                $request['coins'] = 25;
+            }
+        } else if ($type == 'Cobrança') {
+            $request['type'] = $type;
+            $request['coins'] = 100;
+            $request['description'] ;
+        } else if ($type == 'Acordo') {
+            $request['type'] = $type;
+            $request['coins'] = 200;
+            $request['description'] ;
         }
 
         try {
 
-
             $coinsDB = auth()->user()->coins()->create($request);
-            $this->addCoinsToUser($coinsDB->coins);
+            $this->addCoinsToUser($user_id, $coinsDB->coins);
 
             return [
                 'status' => 'success',
@@ -104,9 +114,9 @@ class CoinsRepository
         }
     }
 
-    public function addCoinsToUser($coins)
+    public function addCoinsToUser($user_id, $coins)
     {
-        $userDB = User::query()->findOrFail(auth()->user()->id);
+        $userDB = User::query()->findOrFail($user_id);
 
         $userDB->increment('coins', $coins);
 

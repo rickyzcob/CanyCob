@@ -23,6 +23,28 @@ class PermissionsSeeder extends Seeder
 
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
+        $group = GroupPermissions::create(['name' => 'Dashboard']);
+
+        $permissions = [
+            ['name' => 'tenant_dashboard_view_panel', 'label' => 'Visualizar Painel Informativo'],
+            ['name' => 'tenant_dashboard_view_panel_all', 'label' => 'Painel Informativo dados geral'],
+            ['name' => 'tenant_dashboard_view_panel_user', 'label' => 'Painel Informativo dados usuários'],
+            ['name' => 'tenant_dashboard_view_agreement', 'label' => 'Visualizar acordos'],
+            ['name' => 'tenant_dashboard_view_graph', 'label' => 'Visualizar Graficos'],
+            ['name' => 'tenant_dashboard_view_ranking', 'label' => 'Visualizar Ranking'],
+            ['name' => 'tenant_dashboard_view_panel_charges', 'label' => 'Painel Cobranças'],
+            ['name' => 'tenant_dashboard_view_charge', 'label' => 'Visualizar Cobranças '],
+            ['name' => 'tenant_dashboard_view_conference', 'label' => 'Visualizar conferencias '],
+        ];
+
+        foreach ($permissions as $permission) {
+            Permission::create([
+                'group_permissions_id' => $group->id,
+                'name' => $permission['name'],
+                'label' => $permission['label']
+            ]);
+        }
+
         $group = GroupPermissions::create(['name' => 'Configurações - Cadastro de Usuários']);
 
         $permissions = [

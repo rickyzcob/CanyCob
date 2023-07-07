@@ -2,5 +2,5 @@
 @section('title', 'Minhas Notificações')
 
 @section('content')
-    @livewire('tenant.notifications.index')
+    @livewire('vendor.notifications.index')
 @stop

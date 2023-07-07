@@ -29,7 +29,7 @@ class Form extends Component
             $chargeFranchisingReturnDB = $chargeFranchisingRepository->show($id)['data'];
             $this->charge = $chargeFranchisingReturnDB;
 
-            $this->state['amount_corrected'] = $this->charge['total_amount_corrected'];
+            $this->state['amount_corrected'] = formatMoney($this->charge['total_amount_corrected']);
 
 //            $franchisingRepository = new FranchisingRepository();
 //            $franchisingReturnDB = $franchisingRepository->view($chargeFranchisingReturnDB->franchising_id)['data'];

@@ -7,7 +7,7 @@
             </div>
             <div class="grid grid-cols-12 gap-4 p-5">
                 <div class="col-span-12">
-                    <div wire:ignore  class="colorPicker"></div>
+                    <div wire:ignore  class="colorPicker" ></div>
                     <div class="hidden" id="values"></div>
                     <div class="pt-2">
                         <x-input id="hexInput" wire:model.defer="color" label="Cor de Fundo" placeholder="Selecione a Cor" />
@@ -25,13 +25,14 @@
     @once
         <script>
             var colorPicker = new iro.ColorPicker(".colorPicker", {
-                // color picker options
-                // Option guide: https://iro.js.org/guide.html#color-picker-options
-                width: 340,
-                height: 260,
+
+                width: 550,
+                boxHeight: 250,
                 color: "rgb(255, 0, 0)",
                 borderWidth: 1,
                 borderColor: "#fff",
+                display: "block",
+                layoutDirection: "vertical",
                 layout: [
                     {
                         component: iro.ui.Box,
@@ -87,10 +88,9 @@
             @this.set('color', hexInput.value, true);
             }
 
+            // var newWidth = 400;
+            // colorPicker.resize(newWidth);
 
-            function getColor() {
-
-            }
             colorPicker.on('color:change', setColor);
 
         </script>

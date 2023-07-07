@@ -64,7 +64,7 @@ class UserRepository
             return [
                 'status' => 'success',
                 'data' => $userDB,
-                'code' => 202,
+                'code' => 200,
                 'message' => 'Usuário cadastrado com sucesso !'
             ];
 
@@ -74,7 +74,7 @@ class UserRepository
             return [
                 'status' => 'error',
                 'data' => $exception,
-                'code' => 200,
+                'code' => 400,
                 'message' => 'Erro ao Cadastrar'
             ];
 

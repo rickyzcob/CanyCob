@@ -16,6 +16,7 @@ class UserRequest
             'name' => 'required',
             'status' => 'required',
             'type' => 'required',
+            'value_agreement' => 'required',
             'role_id' =>' required',
             'email' => [
                 'required',

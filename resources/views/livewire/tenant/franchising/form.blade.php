@@ -21,12 +21,14 @@
                 </div>
 
                 <div class="md:col-span-4 col-span-12">
-                    <x-native-select label="Atendente" wire:model="state.attendant_id">
-                        @foreach($response->attendants as $itemAttendant)
-                        <option value="{{ $itemAttendant['id'] }}" >{{ $itemAttendant['name'] }}</option>
-
-                        @endforeach
-                    </x-native-select>
+                    <div class="styled-1">
+                        <x-native-select   class="sty" label="Atendente" wire:model.defer="state.attendant_id">
+                            <option value="" ></option>
+                            @foreach($response->attendants as $itemAttendant)
+                            <option value="{{ $itemAttendant['id'] }}" >{{ $itemAttendant['name'] }}</option>
+                            @endforeach
+                        </x-native-select>
+                    </div>
                 </div>
 
                 <div class="md:col-span-4 col-span-12">

@@ -1,5 +1,5 @@
 <div>
-    @if($charge->total_amount_corrected > $configuration->value_agreement)
+    @if($charge->total_amount_corrected > auth()->user()->value_agreement)
     <x-card cardClasses="h-42 border-l-4 border-orange-600">
         <div class="flex items-start justify-between border-b-2 mb-2">
             <h1 class="text-base text-gray-600 font-semibold py-2">Termo de Aceite</h1>

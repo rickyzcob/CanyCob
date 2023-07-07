@@ -49,7 +49,7 @@ class NotifyProposalAccept extends Notification
         return (new MailMessage)
                     ->subject('Notificação de Aceite')
                     ->line('Olá ' .$this->proposal['attendant']['name'].  '! Tem Proposta Aceita por um Franqueado !' )
-                    ->action('Vizualizar', route('formalized.show', $this->proposal['proposalAccept']['id']))
+                    ->action('Vizualizar', route('formalized.show', ['subdomain' => session('tenant')['subdomain'], 'reference' => $this->proposal['reference']]))
                     ->line('Agora Você pode gerar o acordo e condições de pagamento para essa unidade');
     }
 

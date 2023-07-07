@@ -10,7 +10,7 @@ class Agreements extends Model
 {
     use HasFactory, TenantTrait;
 
-    protected $fillable = ['reference', 'user_id', 'franchising_id', 'partner_id', 'status_id', 'generate_document', 'agreements_amount', 'inflow', 'balance', 'installment_value', 'due_date', 'installments', 'fine', 'json_document', 'signatory_document', 'sent', 'traffic_ticket'];
+    protected $fillable = ['reference', 'type', 'user_id', 'charge_id', 'franchising_id', 'partner_id', 'status_id', 'generate_document', 'agreements_amount', 'inflow', 'balance', 'installment_value', 'due_date', 'installments', 'fine', 'json_document', 'signatory_document', 'sent', 'traffic_ticket', 'file'];
 
     public function user()
     {
@@ -25,6 +25,11 @@ class Agreements extends Model
     public function partner()
     {
         return $this->belongsTo(Partners::class);
+    }
+
+    public function charge()
+    {
+        return $this->belongsTo(Charge::class);
     }
 
     public function status()

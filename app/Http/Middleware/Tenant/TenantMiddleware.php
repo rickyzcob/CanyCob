@@ -24,7 +24,7 @@ class TenantMiddleware
             return abort(404);
         }
 
-        $this->setSession($tenant->only('name', 'subdomain', 'color', 'text_color', 'scope'));
+        $this->setSession($tenant->only('name', 'subdomain', 'color', 'text_color', 'scope', 'logo'));
 
         return $next($request);
     }

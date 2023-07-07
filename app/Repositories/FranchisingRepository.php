@@ -118,7 +118,7 @@ class FranchisingRepository
     {
         try {
 
-            $franchisingDB = Franchisings::query()->with('partners.partner')->find($id);
+            $franchisingDB = Franchisings::query()->with('partners.partner', 'attendant')->find($id);
 
             return [
                 'status' => 'success',

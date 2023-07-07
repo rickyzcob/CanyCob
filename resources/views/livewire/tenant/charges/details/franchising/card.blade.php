@@ -1,5 +1,5 @@
 <div>
-    <x-card cardClasses="h-52 border-l-4 border-orange-400">
+    <x-card cardClasses="md:h-52 border-l-4 border-orange-400">
         <div class="flex items-start justify-between border-b-2 mb-2">
             <h1 class="text-base text-gray-600 font-semibold py-2 ">Dados Cadastrais</h1>
             @if($charge['agreement'] == 0)

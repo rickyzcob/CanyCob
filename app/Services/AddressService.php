@@ -11,15 +11,12 @@ class AddressService
 
     public function consultCEP($postalCode)
     {
-//        dd($postalCode);
+        $countZip = strlen($postalCode);
 
-        $client = new Client();
-        $response = $client->request('GET', 'https://viacep.com.br/ws/'.$postalCode.'/json/');
-
-        dd($response->getStatusCode());
-//        $request = file_get_contents('https://viacep.com.br/ws/'.$postalCode.'/json/');
-
-//        return json_decode($request);
+        if($countZip == 8) {
+            $request = file_get_contents('https://viacep.com.br/ws/'.$postalCode.'/json/');
+            return json_decode($request);
+        }
     }
 
     public function apiBrasilCep(String $zipcode = null)

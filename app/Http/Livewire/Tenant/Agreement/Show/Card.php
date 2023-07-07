@@ -24,7 +24,7 @@ class Card extends Component
     public function getChargesFranchising()
     {
         $franchisingRepository = new ChargesReleasesRepository();
-        $franchisingReturnDB = $franchisingRepository->getReleasesForCharge($this->agreement['charge_id'])['data'];
+        $franchisingReturnDB = $franchisingRepository->getReleasesForCharge($this->agreement['charge_id'], 10)['data'];
 
         return $franchisingReturnDB;
     }

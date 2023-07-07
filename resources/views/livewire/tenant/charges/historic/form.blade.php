@@ -113,13 +113,26 @@
                         <div class="text-red-800 text-sm p-1">{{ $message }}</div>
                         @enderror
                     </div>
+                        @elseif($state['success'] == 'Sim' && auth()->user()->value_agreement > $charge['total_amount_corrected'])
+                        <div class="md:col-span-5 col-span-12">
+                            <x-datetime-picker
+                                label="Data Conferencia"
+                                parse-format="YYYY-MM-DD HH:mm"
+                                wire:model.defer="state.date_conference"
+                            />
+                            @error('success')
+                            <div class="text-red-800 text-sm p-1">{{ $message }}</div>
+                            @enderror
+                        </div>
                     @endif
 
                     <div class="md:col-span-12 col-span-12">
+                        <div class="styled-2">
                         <x-textarea wire:model="state.description" label="Descrição" />
                         @error('description')
                         <div class="text-red-800 text-sm p-1">{{ $message }}</div>
                         @enderror
+                        </div>
                     </div>
 
                     <div class="col-span-12">

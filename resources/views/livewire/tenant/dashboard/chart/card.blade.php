@@ -1,24 +1,24 @@
 <div>
     <div x-data="{ tab: window.location.hash ? window.location.hash.substring(1) : 'chargesPhone' }" id="tab_wrapper"
-         class="grid grid-cols-3 gap-5">
-        <button :class="{ 'bg-sky-700 text-white': tab === 'chargesPhone' }" @click.prevent="tab = 'chargesPhone'; window.location.hash = 'chargesPhone'"
-                class="text-white p-4 rounded text-sky-800 shadow-md flex items-center justify-center"
+         class="grid grid-cols-3 text-gray-500 gap-5">
+        <button :class="{ 'primary-color primary-text-color': tab === 'chargesPhone' }" @click.prevent="tab = 'chargesPhone'; window.location.hash = 'chargesPhone'"
+                class="p-2 rounded  shadow-md flex items-center justify-center"
         >
             <div class="mr-2">
                 <span class="material-icons text-lg ">add_ic_call</span>
             </div>
             Telefones
         </button>
-        <button :class="{ 'bg-sky-700 text-white': tab === 'chargesEmail' }" @click.prevent="tab = 'chargesEmail'; window.location.hash = 'chargesEmail'"
-                class="p-4 rounded text-sky-800 shadow-md flex items-center justify-center"
+        <button :class="{ 'primary-color primary-text-color': tab === 'chargesEmail' }" @click.prevent="tab = 'chargesEmail'; window.location.hash = 'chargesEmail'"
+                class="p-2 rounded  shadow-md flex items-center justify-center"
         >
             <div class=" mr-2">
                 <span class="material-icons text-lg ">forward_to_inbox</span>
             </div>
             Emails
         </button>
-        <button :class="{ 'bg-sky-700 text-white': tab === 'chargesWhatsapp' }" @click.prevent="tab = 'chargesWhatsapp'; window.location.hash = 'chargesWhatsapp'"
-                class="p-4 rounded text-sky-800 shadow-md flex items-center justify-center"
+        <button :class="{ 'primary-color primary-text-color': tab === 'chargesWhatsapp' }" @click.prevent="tab = 'chargesWhatsapp'; window.location.hash = 'chargesWhatsapp'"
+                class="p-2 rounded shadow-md  flex items-center justify-center"
         >
             <div class="h-6 w-6 mr-2">
                 <i class="fa fa-whatsapp text-base"></i>

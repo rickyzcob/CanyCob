@@ -27,7 +27,7 @@
                 ],
                 chart: {
                     toolbar: false,
-                    height: 169,
+                    height: 183,
                     type: 'bar',
                     stacked: false,
                     dropShadow: {

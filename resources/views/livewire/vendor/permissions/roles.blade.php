@@ -11,7 +11,8 @@
                             <div class="flex flex-col bg-slate-200 p-2 rounded">
                             @foreach($itemGroup['permissions'] as $key => $itemPermission)
                                 <div class="gap-3 py-2">
-                                    <x-toggle label="{{$itemPermission['label']}}" value="{{$itemPermission->id}}" wire:model.defer="permissions" />
+                                    <input type="checkbox" label="{{$itemPermission['label']}}" value="{{$itemPermission->id}}" wire:model.defer="permissions" />
+                                    <label for="vehicle1"> {{$itemPermission['label']}}</label>
 {{--                                    <x-checkbox id="right-label" label="{{$itemPermission['label']}}" value="{{$itemPermission->id}}" wire:model="permissions" />--}}
                                 </div>
                             @endforeach

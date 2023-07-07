@@ -15,6 +15,7 @@ class Form extends Component
 
     public $state = [
         'due_date' => '',
+        'type' => '',
         'amount_corrected' => '',
         'amount_balance' => '',
         'balance_value' => '',
@@ -71,6 +72,7 @@ class Form extends Component
         $chargeFranchisingReturnDB = $chargeFranchisingRepository->show($this->charge_id)['data'];
 
         $this->state['partner_id'] = $chargeFranchisingReturnDB['proposalAccept']['partner_id'];
+        $this->state['type'] = $chargeFranchisingReturnDB['proposalAccept']['type'];
         $this->state['amount_corrected'] = $chargeFranchisingReturnDB['total_amount_corrected'];
         $this->state['inflow'] = formatMoneyInput($chargeFranchisingReturnDB['proposalAccept']['inflow']);
         $this->state['installments'] = $chargeFranchisingReturnDB['proposalAccept']['installments'];

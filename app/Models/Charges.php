@@ -10,7 +10,7 @@ class Charges extends Model
 {
     use HasFactory, TenantTrait;
 
-    protected $fillable = ['reference', 'franchising_id', 'attendant_id', 'proposal_accept_id', 'agreement_id', 'total_amount', 'total_amount_corrected', 'notes', 'imported', 'status_id', 'agreement'];
+    protected $fillable = ['reference', 'franchising_id', 'attendant_id', 'proposal_accept_id', 'agreement_id', 'total_amount', 'patyment_code', 'total_amount_corrected', 'notes', 'imported', 'status_id', 'concluded', 'agreement'];
 
     public function attendant()
     {

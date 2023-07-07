@@ -31,7 +31,7 @@ class ProposalRepository
     public function create($request, $charge_id)
     {
         $proposalRequest = new ProposalRequest();
-        $requestValidated = $proposalRequest->validate($request);
+        $requestValidated = $proposalRequest->validateProposal($request);
 
         $chargeDB = Charges::query()->find($charge_id)->toArray();
         $templateProposal = TemplateProposal::query()->find($requestValidated['template_proposal_id'])->toArray();
@@ -48,7 +48,7 @@ class ProposalRepository
             '{value_installment}' => formatMoney($installmentValue),
         ];
 
-        $modify = strtr($content, $contentReplace);
+        $modify = \strtr($content, $contentReplace);
 
         $referenceService = new ReferenceService();
         $reference = $referenceService->getReference();
@@ -200,10 +200,11 @@ class ProposalRepository
             }
         } catch (\Exception $exception) {
 
+            dd($exception);
             return [
                 'status' => 'error',
                 'code' => 400,
-                'message' => 'Erro ao deletar'
+                'message' => 'Erro na requisição'
             ];
         }
     }

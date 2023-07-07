@@ -35,7 +35,7 @@
     </select>
 
     @if ($hint)
-        <label @if ($id) for="{{ $id }}" @endif class="mt-2 text-sm text-secondary-500 dark:text-secondary-400">
+        <label @if ($id) for="{{ $id }}" @endif class="mt-2 text-sm text-red-500 dark:text-red-400">
             {{ $hint }}
         </label>
     @endif

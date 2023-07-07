@@ -26,6 +26,7 @@ class User extends Authenticatable
         'status',
         'type',
         'coins',
+        'value_agreement',
         'image',
         'phone',
         'document',

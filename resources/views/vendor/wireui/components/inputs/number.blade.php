@@ -27,7 +27,7 @@
                     x-on:keydown.enter="minus"
                     class="h-full rounded-l-md"
                     icon="minus"
-                    primary
+                    secondary
                     flat
                     squared
                     x-bind:disabled="disableMinus"
@@ -43,7 +43,7 @@
                     x-on:keydown.enter="plus"
                     class="h-full rounded-r-md"
                     icon="plus"
-                    primary
+                    secondary
                     flat
                     squared
                     x-bind:disabled="disablePlus"

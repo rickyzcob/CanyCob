@@ -2,7 +2,9 @@
 
 namespace App\Repositories;
 
+use App\Models\Agreements;
 use App\Models\ChargeHistoric;
+use App\Models\Charges;
 use App\Models\ProposalAccept;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -70,16 +72,22 @@ class DashboardRepository
             ->get();
 
         $chargesDB = json_decode($chargesDB,true);
-//        dd($chargesDB);
 
         $return = [];
 
-        foreach ($chargesDB as $key => $itemCharge){
-            $return['totalPhone'][$key] = 0;
-            $return['day'][$key] = formatDate($itemCharge['datetime']) ;
+        if($chargesDB != null ){
+            foreach ($chargesDB as $key => $itemCharge){
 
-            $return['totalPhone'][$key] += $itemCharge['count'];
+                $return['totalPhone'][$key] = 0;
+                $return['day'][$key] = formatDate($itemCharge['datetime']) ;
 
+                $return['totalPhone'][$key] += $itemCharge['count'];
+
+
+            }
+        } else {
+            $return['totalPhone'] = 0;
+            $return['day'] = 0;
         }
 
         return $return;
@@ -117,16 +125,21 @@ class DashboardRepository
             ->get();
 
         $chargesDB = json_decode($chargesDB,true);
-//        dd($chargesDB);
 
         $return = [];
 
-        foreach ($chargesDB as $key => $itemCharge){
-            $return['totalEmail'][$key] = 0;
-            $return['day'][$key] = formatDate($itemCharge['datetime']) ;
+        if($chargesDB != null ){
+            foreach ($chargesDB as $key => $itemCharge){
 
-                $return['totalEmail'][$key] += $itemCharge['count'];
+                    $return['totalEmail'][$key] = 0;
+                    $return['day'][$key] = formatDate($itemCharge['datetime']) ;
 
+                    $return['totalEmail'][$key] += $itemCharge['count'];
+
+            }
+        } else {
+            $return['totalEmail'] = 0;
+            $return['day'] = 0;
         }
 
         return $return;
@@ -163,23 +176,86 @@ class DashboardRepository
             ->get();
 
         $chargesDB = json_decode($chargesDB,true);
-//        dd($chargesDB);
 
         $return = [];
 
-        foreach ($chargesDB as $key => $itemCharge){
-            $return['totalWhatsapp'][$key] = 0;
-            $return['day'][$key] = null;
-            $return['day'][$key] = formatDate($itemCharge['datetime']) ;
+        if($chargesDB != null ){
+            foreach ($chargesDB as $key => $itemCharge){
+                $return['totalWhatsapp'][$key] = 0;
+                $return['day'][$key] = formatDate($itemCharge['datetime']) ;
 
-            $return['totalWhatsapp'][$key] += $itemCharge['count'];
-
+                $return['totalWhatsapp'][$key] += $itemCharge['count'];
+            }
+        } else {
+            $return['totalWhatsapp'] = 0;
+            $return['day'] = 0;
         }
-
-//        dd($return);
 
         return $return;
 
+    }
+
+    public function getTotalValueCharges()
+    {
+        $chargeDB = Charges::query()->where('status_id', 9);
+
+        if(auth()->user()->can('tenant_dashboard_view_panel_all') && auth()->user()->can('tenant_dashboard_view_panel_user')){
+            $chargeDB = $chargeDB->sum('total_amount');
+        }else if(auth()->user()->can('tenant_view_charges_user') && !auth()->user()->can('tenant_view_charges_all')) {
+            $chargeDB->where('attendant_id', auth()->user()->id)->sum('total_amount');;
+        } else if (auth()->user()->can('tenant_view_charges_all') && !auth()->user()->can('tenant_view_charges_user')) {
+            $chargeDB = $chargeDB->sum('total_amount');
+        }
+
+        return formatMoney($chargeDB);
+    }
+
+    public function getTotalValueConference()
+    {
+        $chargeDB = Charges::query()->where('status_id', 17);
+
+        if(auth()->user()->can('tenant_dashboard_view_panel_all') && auth()->user()->can('tenant_dashboard_view_panel_user')){
+            $chargeDB = $chargeDB->sum('total_amount');
+        }else if(auth()->user()->can('tenant_view_charges_user') && !auth()->user()->can('tenant_view_charges_all')) {
+            $chargeDB->where('attendant_id', auth()->user()->id)->sum('total_amount');;
+        } else if (auth()->user()->can('tenant_view_charges_all') && !auth()->user()->can('tenant_view_charges_user')) {
+            $chargeDB = $chargeDB->sum('total_amount');
+        }
+
+        return formatMoney($chargeDB);
+    }
+
+    public function getTotalValueAgreement()
+    {
+        $agreementDB = Agreements::query();
+
+        if(auth()->user()->can('tenant_dashboard_view_panel_all') && auth()->user()->can('tenant_dashboard_view_panel_user')){
+            $agreementDB = $agreementDB->sum('agreements_amount');
+        }else if(auth()->user()->can('tenant_view_charges_user') && !auth()->user()->can('tenant_view_charges_all')) {
+            $agreementDB->where('attendant_id', auth()->user()->id)->sum('agreements_amount');;
+        } else if (auth()->user()->can('tenant_view_charges_all') && !auth()->user()->can('tenant_view_charges_user')) {
+            $agreementDB = $agreementDB->sum('agreements_amount');
+        }
+
+        return formatMoney($agreementDB);
+    }
+
+    public function getTotalHistoricsCharge()
+    {
+        $historicsChargeDB = ChargeHistoric::query()->with('charge');
+
+        if(auth()->user()->can('tenant_dashboard_view_panel_all') && auth()->user()->can('tenant_dashboard_view_panel_user')){
+            $historicsChargeDB = $historicsChargeDB->count();
+        }else if(auth()->user()->can('tenant_view_charges_user') && !auth()->user()->can('tenant_view_charges_all')) {
+            $historicsChargeDB->whereHas('charge', function ($query) {
+                $query->where('attendant_id', auth()->user()->id)->count();
+            });
+        } else if (auth()->user()->can('tenant_view_charges_all') && !auth()->user()->can('tenant_view_charges_user')) {
+            $historicsChargeDB = $historicsChargeDB->count();
+        }
+
+
+        return $historicsChargeDB;
     }
 
 }

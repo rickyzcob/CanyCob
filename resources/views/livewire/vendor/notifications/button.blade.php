@@ -1,8 +1,8 @@
 <div>
     @if($visible)
-    <div x-data="{ open: false }" class="relative">
-        <div  @click="open = true" class="flex items-center justify-center  primary-text-color  text-white hover:bg-white hover:text-sky-700 h-14 w-14 cursor-pointer">
-            <div
+        <div x-data="{ open: false }"  class="relative">
+            <div  @click="open = true" class="flex items-center justify-center primary-color primary-text-color h-14 w-14 cursor-pointer"
+                  :class="{ 'primary-text-color-active primary-color-active': open }"><div
                 class="absolute bottom-auto left-auto right-3 top-5 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 whitespace-nowrap rounded-full bg-red-500 px-2 py-1 text-center align-baseline text-xs font-bold leading-none text-white">
                 {{ $this->count }}
             </div>
@@ -32,7 +32,7 @@
                     </div>
                 @endforelse
             </div>
-            <a href="{{ route('notifications.index', session('tenant')['subdomain']) }}" class="block bg-sky-800 text-white text-center py-2">Ver Todas</a>
+            <a href="{{ route('notifications.index', session('tenant')['subdomain']) }}" class="block primary-color primary-text-color text-center py-2">Ver Todas</a>
         </div>
         </div>
         @endif

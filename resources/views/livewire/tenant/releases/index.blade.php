@@ -1,5 +1,5 @@
 <div class="page-title-box">
-    <div class="container xl justify-center items-center min-h-[640px]">
+    <div class="relative container xl justify-center items-center min-h-[640px]">
         <nav class="p-4">
             <ol class="list-reset flex gap-2">
                 <span class="material-icons text-base ">post_add</span>

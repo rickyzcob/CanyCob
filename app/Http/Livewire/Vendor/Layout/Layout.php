@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Livewire\Vendor\Configuration;
+namespace App\Http\Livewire\Vendor\Layout;
 
 use App\Http\Traits\WithModal;
-use App\Repositories\Admin\ClientsRepository;
 use App\Repositories\ConfigurationRepository;
 use App\Services\ChangeColorsService;
 use Livewire\Component;
@@ -65,6 +64,6 @@ class Layout extends Component
 
     public function render()
     {
-        return view('livewire.vendor.configuration.layout');
+        return view('livewire.vendor.layout.layout');
     }
 }

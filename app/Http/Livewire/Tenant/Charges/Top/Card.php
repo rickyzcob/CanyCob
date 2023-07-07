@@ -27,9 +27,6 @@ class Card extends Component
             $franchisingRepository = new ChargesFranchisingRepository();
             $this->charge = $franchisingRepository->showByReference($this->reference)['data'];
         }
-
-        $configurationRepository = new ConfigurationRepository();
-        $this->configuration = $configurationRepository->getConfiguration();
     }
 
     public function getChargeByFranchising()
@@ -40,17 +37,10 @@ class Card extends Component
         return $franchisingReturnDB;
     }
 
-    public function getStatusByChargeAgreement()
+    public function getStatusChargeByValueAgreement()
     {
         $chargeStatusRepository = new ChargeStatusRepository();
-        $chargeStatusReturnDB = $chargeStatusRepository->getSelectStatusChargeByAgreement($this->charge->status_id);
-
-        return $chargeStatusReturnDB;
-    }
-    public function getStatusByChargeComum()
-    {
-        $chargeStatusRepository = new ChargeStatusRepository();
-        $chargeStatusReturnDB = $chargeStatusRepository->getSelectStatusChargeComum($this->charge->status_id);
+        $chargeStatusReturnDB = $chargeStatusRepository->getSelectStatusChargeByValueAgreement($this->charge->id );
 
         return $chargeStatusReturnDB;
     }
@@ -86,8 +76,7 @@ class Card extends Component
     public function render()
     {
         $response = new \stdClass();
-        $response->status = $this->getStatusByChargeAgreement();
-        $response->statusComum = $this->getStatusByChargeComum();
+        $response->status = $this->getStatusChargeByValueAgreement();
         $response->charge = $this->getChargeByFranchising();
 
         return view('livewire.tenant.charges.top.card', ['response' => $response]);

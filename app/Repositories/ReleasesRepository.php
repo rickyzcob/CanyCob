@@ -72,7 +72,7 @@ class ReleasesRepository
     {
         try {
             $referenceService = new ReferenceService();
-            $reference = $referenceService->getReference();
+
 
             sleep(2);
 
@@ -94,7 +94,10 @@ class ReleasesRepository
 
 
             foreach ($selectImportedDinscinctReleasesDB as $itemFranchisingn) {
+
+                $reference = $referenceService->getReference();
                 $chargeDB = Charges::query()->where('franchising_id', $itemFranchisingn->franch_id)->first();
+
                 if(!$chargeDB || $chargeDB->agreement == 1){
                     $createChargeForReleases = Charges::query()->create([
                         'franchising_id' => $itemFranchisingn->franch_id,

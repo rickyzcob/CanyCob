@@ -29,37 +29,57 @@ class ProposalAcceptRepository
 
         foreach ($releases as $key => $itemRelease) {
             $rel[] = '<tr>
-                        <td>'.$itemRelease->name.'<td>
-                         <td>'.formatDate($itemRelease->due_date).'<td>
-                          <td>'.formatMoney($itemRelease->amount_corrected).'<td>
+                        <td class="whitespace-nowrap px-6 py-4 font-medium">'.$itemRelease->name.'</td>
+                         <td class="whitespace-nowrap px-6 py-4">'.formatDate($itemRelease->due_date).'</td>
+                          <td class="whitespace-nowrap px-6 py-4">'.formatMoney($itemRelease->amount).'</td>
+                          <td class="whitespace-nowrap px-6 py-4">'.formatMoney($itemRelease->amount_corrected).'</td>
                     </tr>';
         }
-        if($requestValidated['inflow'] != null) {
+        if($requestValidated['type'] == 'Parcelado com Entrada') {
             $installmentValue = ($chargeDB['total_amount_corrected'] - $requestValidated['inflow'])  / $requestValidated['installments'];
             $balanceValue = ($chargeDB['total_amount_corrected'] - $requestValidated['inflow']);
             $requestValidated['balance_value'] = $balanceValue;
-        } else {
+
+            $parse = 'Eu, '.$partner['partner']['name']. ' sob documento '. formatCPFCNPJ($partner['partner']['cpf']).', autorizo a negociação dos lançamentos em aberto no valor de ' .formatMoney($chargeDB['total_amount_corrected']).
+             ' na condição de '.$requestValidated['type'] . ' sendo '.formatMoney($requestValidated['inflow']). ' de entrada e o saldo restante de '.formatMoney($balanceValue).' em ' .$requestValidated['installments']. 'x de ' .formatMoney($installmentValue). ' .' ;
+
+        } elseif ($requestValidated['type'] == 'Parcelado sem Entrada') {
             $installmentValue = $chargeDB['total_amount_corrected'] / $requestValidated['installments'];
+            $requestValidated['balance_value'] = $chargeDB['total_amount_corrected'];
+
+            $parse = 'Eu, '.$partner['partner']['name']. ' sob documento '. formatCPFCNPJ($partner['partner']['cpf']).', autorizo a negociação dos lançamentos em aberto no valor de ' .formatMoney($chargeDB['total_amount_corrected']).
+                ' na condição de '.$requestValidated['type'] . ' sendo em ' .$requestValidated['installments']. 'x de ' .formatMoney($installmentValue). ' .' ;
+
+        } else {
+            $installmentValue = $chargeDB['total_amount_corrected'];
+
+            $parse = 'Eu, '.$partner['partner']['name']. ' sob documento '. formatCPFCNPJ($partner['partner']['cpf']).', autorizo a negociação dos lançamentos em aberto no valor de ' .formatMoney($chargeDB['total_amount_corrected']).
+                ' na condição de '.$requestValidated['type'] . ' no valor de ' .formatMoney($chargeDB['total_amount_corrected']). ' .' ;
+
         }
 
         $content = $templateProposal['content'];
 
         $contentReplace = [
+            '{type}'=> $requestValidated['type'],
             '{unit}' => $partner['franchising']['name'],
             '{name}' => $partner['partner']['name'],
+            '{cpf}' => $partner['partner']['cpf'],
             '{email}' => $partner['partner']['email'],
             '{phone}' => $partner['partner']['phone'],
             '{address}' => $partner['franchising']['address']. '-' .$partner['franchising']['number'],
             '{date}' => Carbon::now()->format('d/m/y H:i'),
+            '{parse}' => $parse,
             '{total_amount}' => formatMoney($chargeDB['total_amount_corrected']),
-            '{inflow}' => formatMoney($requestValidated['inflow']),
-            '{installments}' => $requestValidated['installments'],
-            '{value_installment}' => formatMoney($installmentValue),
+//            '{inflow}' => formatMoney($requestValidated['inflow']) ,
+//            '{installments}' => $requestValidated['installments'],
+//            '{balance}' => formatMoney($balanceValue),
+//            '{value_installment}' => formatMoney($installmentValue),
             '{releases}' => implode($rel),
             '{days}' => $requestValidated['days']
         ];
 
-        $modify = strtr($content, $contentReplace);
+        $modify = \strtr($content, $contentReplace);
 
         $referenceSerivce = new ReferenceService();
         $reference = $referenceSerivce->getReference();

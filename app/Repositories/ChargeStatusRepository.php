@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\ChargeStatus;
 use App\Requests\ChargeStatusRequest;
+use Illuminate\Support\Facades\Auth;
 use PHPUnit\Exception;
 
 class ChargeStatusRepository
@@ -138,22 +139,25 @@ class ChargeStatusRepository
 
     public function getSelectStatusCharge()
     {
-
         $ChargeStatusDB = ChargeStatus::query()->get()->toarray();
         return $ChargeStatusDB;
     }
 
-    public function getSelectStatusChargeByAgreement($id = null)
+    public function getSelectStatusChargeByValueAgreement($id = null )
     {
-        $ChargeStatusDB = ChargeStatus::query()->whereNot("id", $id)->whereNotIn('id', [17])->get()->toarray();
-        return $ChargeStatusDB;
+
+        $chargeRepository = new ChargesFranchisingRepository();
+        $chargeReturnDB = $chargeRepository->show($id)['data'];
+
+        if($chargeReturnDB['total_amount_corrected'] >= Auth::user()->value_agreement ){
+            $ChargeStatusDB = ChargeStatus::query()->whereNot("id", $chargeReturnDB->status_id)->whereNotIn('id', [16, 17])->get()->toarray();
+            return $ChargeStatusDB;
+        } elseif ($chargeReturnDB['total_amount_corrected'] < Auth::user()->value_agreement){
+            $ChargeStatusDB = ChargeStatus::query()->whereNot("id", $chargeReturnDB->status_id)->whereNotIn('id', [11,12,13,14,16,$id])->orderBy('name', 'ASC')->get()->toarray();
+            return $ChargeStatusDB;
+        }
     }
 
-    public function getSelectStatusChargeComum($id = null)
-    {
-        $ChargeStatusDB = ChargeStatus::query()->whereNot("id", $id)->whereNotIn('id', [12,13,14,16])->orderBy('name', 'ASC')->get()->toarray();
-        return $ChargeStatusDB;
-    }
 
 
 }

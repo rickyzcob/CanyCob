@@ -7,7 +7,11 @@ use App\Models\Charges;
 use App\Models\Configurations;
 use App\Models\ProposalAccept;
 use App\Models\Releases;
+use App\Requests\ConferenceRequest;
+use App\Requests\ReleasesRequest;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use PHPUnit\Exception;
 
 class ChargesFranchisingRepository
@@ -19,7 +23,7 @@ class ChargesFranchisingRepository
             $franchisingDB = Charges::query()->with('releases','attendant', 'franchising');
 
             $franchisingDB->whereHas('releases', function ($query) {
-                    $query->whereIn('status_id', [2,3,6,8,9])->orderBy('created_at', 'DESC');
+                    $query->whereIn('status_id', [2,3,4,5,6,8,9,10])->orderBy('created_at', 'DESC');
                 });
 
             if (isset($filterData['name']) && $filterData['name'] != null) {
@@ -121,19 +125,49 @@ class ChargesFranchisingRepository
 
     }
 
+    public function addPaymentCode($request, $charge_id)
+    {
+        $releasesRequest = new ConferenceRequest();
+        $requestValidated = $releasesRequest->validate($request);
+
+        try {
+
+            $chargeDB = Charges::query()->where('id', $charge_id)->update(['payment_code' => $requestValidated['payment_code']]);
+
+            return [
+                'status' => 'success',
+                'data' => $chargeDB,
+                'code' => 200,
+                'message' => 'Codigo Adicionado com sucesso !'
+            ];
+        }catch (Exception $exception){
+            return [
+                'status' => 'error',
+                'code' => 400,
+                'message' => 'Erro na requisição'
+            ];
+        }
+
+    }
+
     public function changeStatus($charge_id, $status_id)
     {
         try{
-            $chargeReturnDB = Charges::query()->findOrFail($charge_id);
-            $configurationsDB = Configurations::query()->first();
+
+            DB::beginTransaction();
+            $chargeReturnDB = Charges::query()->with('agreementByCharge')->findOrFail($charge_id);
 
             $releasesDB = Releases::query()->where('charge_id', $charge_id)->get();
             $proposalAcceptDB = ProposalAccept::query()->find($chargeReturnDB['proposal_accept_id']);
 
             $getLastHistoric = ChargeHistoric::query()->where('type', 'Phone')->where('charge_id', $charge_id)->orderBy('created_at', 'DESC')->first();
 
+
             if($status_id == 9) {
+                DB::commit();
                 $chargeReturnDB->update([
+                    'agreement' => 0,
+                    'concluded' => 'Não',
                     'status_id' => $status_id
                 ]);
                 foreach($releasesDB as $itemRelease){
@@ -149,10 +183,11 @@ class ChargesFranchisingRepository
                     $itemRelease->update();
                 }
             } else if ($status_id == 12){
-                if ($chargeReturnDB->total_amount_corrected < $configurationsDB->value_agreement) {
+                DB::commit();
+                if ($chargeReturnDB->total_amount_corrected < Auth::user()->value_agreement) {
                     return [
                         'status' => 'error',
-                        'code' => 200,
+                        'code' => 400,
                         'message' => 'O Valor da Dívida é menor que o necessário para gerar o acordo.'
                     ];
                 }
@@ -166,6 +201,7 @@ class ChargesFranchisingRepository
                         $itemRelease->update();
                     }
                 } else {
+                    DB::rollBack();
                     return [
                         'status' => 'error',
                         'code' => 200,
@@ -182,16 +218,74 @@ class ChargesFranchisingRepository
                     $itemRelease->status_id = 8;
                     $itemRelease->update();
                 }
+            } else if ($status_id == 15) {
+                $request = [];
+
+                DB::commit();
+                $coinsRepository = new CoinsRepository();
+
+                if($chargeReturnDB->total_amount_corrected < Auth::user()->value_agreement) {
+                    if($chargeReturnDB['payment_code'] != null || $chargeReturnDB['status_id'] == 17) {
+
+                        $chargeReturnDB->update([
+                            'status_id' => $status_id,
+                            'concluded' => 'Sim'
+                        ]);
+
+                        $request['description'] = 'Pontuação por acordo concluído';
+                        $coinsReturnDB = $coinsRepository->create($request, 'Cobrança', $chargeReturnDB->attendant_id);
+
+                        foreach ($releasesDB as $itemRelease) {
+                            $itemRelease->status_id = 4;
+                            $itemRelease->update();
+                        }
+                    }  else {
+                        DB::rollBack();
+                        return [
+                            'status' => 'error',
+                            'code' => 400,
+                            'message' => 'Voce nao pode concluir a cobrança sem adicionar o codigo de pagamento do lançamento'
+                        ];
+                    }
+                } else if ($chargeReturnDB->total_amount_corrected > Auth::user()->value_agreement) {
+                    if($chargeReturnDB['agreementByCharge'] && ($chargeReturnDB['agreementByCharge']['status_id'] == 5 || $chargeReturnDB['agreementByCharge']['status_id'] == 4)) {
+
+                        $chargeReturnDB->update([
+                            'status_id' => $status_id,
+                            'concluded' => 'Sim'
+                        ]);
+
+                        $request['description'] = 'Pontuação por acordo concluído';
+                        $coinsReturnDB = $coinsRepository->create($request, 'Acordo', $chargeReturnDB->attendant_id);
+
+                        foreach ($releasesDB as $itemRelease) {
+                            $itemRelease->status_id = 4;
+                            $itemRelease->update();
+                        }
+                    }  else {
+                        DB::rollBack();
+                        return [
+                            'status' => 'error',
+                            'code' => 400,
+                            'message' => 'Voce nao pode concluir a cobrança sem que o Acordo estiver assinado ou concluído'
+                        ];
+                    }
+                }
+
             } else if ($status_id == 17) {
-                if($getLastHistoric['success'] == 'Sim') {
+                if($getLastHistoric && $getLastHistoric['success'] == 'Sim') {
+                    DB::commit();
+
                     $chargeReturnDB->update([
-                        'status_id' => $status_id
+                        'status_id' => $status_id,
+                        'agreement' => 1
                     ]);
                     foreach ($releasesDB as $itemRelease) {
                         $itemRelease->status_id = 10;
                         $itemRelease->update();
                     }
                 }  else {
+                    DB::rollBack();
                     return [
                         'status' => 'error',
                         'code' => 200,
@@ -225,7 +319,7 @@ class ChargesFranchisingRepository
             $franchisingDB->where('status_id', 9);
 
             $franchisingDB->whereHas('historics', function ($query) use ($now) {
-                $query->where('date_schedule', $now OR 'date_schedule', null);
+                $query->whereDate('date_schedule', $now);
             });
 
             $franchisingDB->whereHas('releases', function ($query) {
@@ -254,4 +348,51 @@ class ChargesFranchisingRepository
             ];
         }
     }
+
+    public function getChargesByConference()
+    {
+        $now = Carbon::now();
+        $end = \Carbon\Carbon::today()->addWeekday(3);
+
+        $date_start = Carbon::parse($now)->format('Y-m-d');
+        $date_end = Carbon::parse($end)->format('Y-m-d');
+
+
+        try {
+            $franchisingDB = Charges::query()->with('releases','attendant', 'franchising', 'historics');
+
+            $franchisingDB->where('status_id', 17);
+
+            $franchisingDB->whereHas('historics', function ($query) use ($date_start, $date_end) {
+                $query->whereDate('date_conference', '>=', $date_start AND 'date_conference', '<=', $date_end );
+
+            });
+
+            $franchisingDB->whereHas('releases', function ($query) {
+                $query->where('status_id', 10)->orderBy('created_at', 'DESC');
+            });
+
+            $franchisingDB->orderBy('created_at', 'DESC');
+
+            if(auth()->user()->can('view_charges_user')) {
+                $franchisingDB->where('attendant_id', auth()->user()->id);
+                $franchisingDB = $franchisingDB->get();
+            } else if (auth()->user()->can('view_charges_all')) {
+                $franchisingDB = $franchisingDB->get();
+            }
+
+            return [
+                'status' => 'success',
+                'data' => $franchisingDB,
+                'code' => 200
+            ];
+        } catch (Exception $exception) {
+            return [
+                'status' => 'error',
+                'code' => 400,
+                'message' => 'Erro na requisição'
+            ];
+        }
+    }
+
 }

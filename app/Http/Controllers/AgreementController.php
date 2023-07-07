@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 
 class AgreementController extends Controller
 {
-    public function show($reference = null)
+    public function show($subdomain = null, $reference = null)
     {
-        return view ('agreement.view', compact('reference'));
+        return view ('tenant.agreement.view', compact('reference'));
     }
 }

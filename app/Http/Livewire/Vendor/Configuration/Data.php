@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Vendor\Configuration;
 
 use App\Repositories\ConfigurationRepository;
+use App\Services\AddressService;
 use Livewire\Component;
 use WireUi\Traits\Actions;
 
@@ -10,7 +11,10 @@ class Data extends Component
 {
     use Actions;
 
-    public $state = [];
+    public $state = [
+        'entities_number' => '',
+        'zip_code' => ''
+    ];
 
     public $configuration;
 
@@ -24,8 +28,20 @@ class Data extends Component
             $this->state = $this->configuration->toArray();
         }
 
-        $this->state['value_agreement'] = formatMoney($this->state['value_agreement']);
         $this->state['goals_coins'] = formatCoin($this->state['goals_coins']);
+    }
+
+    public function updatedStateZipcode()
+    {
+        if($this->state['zip_code']){
+            $addressService  = new AddressService();
+            $addressServiceReturn = $addressService->consultCEP($this->state['zip_code']);
+
+            $this->state['address'] = $addressServiceReturn->logradouro;
+            $this->state['neighborhood'] = $addressServiceReturn->bairro;
+            $this->state['city'] = $addressServiceReturn->localidade;
+            $this->state['uf'] = $addressServiceReturn->uf;
+        }
     }
     public function update()
     {

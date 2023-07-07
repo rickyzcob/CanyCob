@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\ClickSign;
 use App\Models\Configurations;
 use App\Models\Tenant;
 use App\Requests\ConfigurationRequest;
@@ -15,9 +16,8 @@ class ConfigurationRepository
 
     public function getConfiguration()
     {
-        return Tenant::query()->findOrFail(Auth::user()->tenant->id);
+        return Tenant::query()->with('clickSign')->findOrFail(Auth::user()->tenant->id);
     }
-
     public function updateConfigurationData($request)
     {
         $userRequest = new ConfigurationRequest();
@@ -46,6 +46,8 @@ class ConfigurationRepository
             ];
         }
     }
+
+
 
     public function uploadLogo($logo)
     {
@@ -122,6 +124,4 @@ class ConfigurationRepository
         }
 
     }
-
-
 }

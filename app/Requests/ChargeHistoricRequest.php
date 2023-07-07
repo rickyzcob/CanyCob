@@ -17,6 +17,7 @@ class ChargeHistoricRequest
             'answered' => 'required',
             'success' => 'required',
             'date_schedule' => Rule::requiredIf($request['success'] == 'Não'),
+            'date_conference' => Rule::requiredIf($request['success'] == 'Sim'),
             'datetime' => 'sometimes',
             'type' => 'sometimes',
             'description' => 'required',

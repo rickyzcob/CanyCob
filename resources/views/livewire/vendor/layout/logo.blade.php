@@ -9,13 +9,13 @@
 {{--                    @if (isset( $logo->temporaryUrl() ))--}}
 {{--                        <img src="{{ $logo->temporaryUrl() }}" class="border-2 rounded w-56 h-44">--}}
                     @if($logo == null)
-                        <img src="{{ url('img/no-image.png') }}" class="border-2 rounded w-56 h-44" alt="{{ auth()->user()->image }}" >
+                        <img src="{{ url('img/no-image.png') }}" class="border-2 rounded w-44 h-44" alt="{{ auth()->user()->image }}" >
                     @else
                         <img src="{{ url('storage/'.$logo) }}" class="border-2 rounded-full w-56 h-44" alt="{{ auth()->user()->tenant->name }}" >
                     @endif
                 </div>
 
-                <div class="p-3 w-96">
+                <div class="py-2 w-auto">
                     <label
                         for="formFile"
                         class="mb-2 inline-block text-neutral-700 text-center dark:text-neutral-200"
@@ -26,7 +26,7 @@
                         wire:model="logo" />
                 </div>
 
-                @error('image')
+                @error('logo')
                 <div class="text-red-800 text-xs p-1">{{ $message }}</div>
                 @enderror
 

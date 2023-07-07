@@ -17,6 +17,7 @@ class Form extends Component
     public $state = [
         'status' => '',
         'type' => '',
+        'value_agreement' => '',
         'role_id' => '',
         'phone' => '',
         'document' => ''
@@ -33,6 +34,10 @@ class Form extends Component
 
         if($this->user){
             $this->state = $this->user->toArray();
+        }
+        if ($this->state['value_agreement'] != null){
+
+            $this->state['value_agreement'] = formatMoneyInput($this->user['value_agreement']);
         }
     }
 

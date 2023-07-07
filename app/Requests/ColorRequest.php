@@ -12,6 +12,7 @@ class ColorRequest
             'color' =>  'required'
         ]);
 
-        return $validator;  }
+        return $validator;
+    }
 
 }

@@ -7,7 +7,7 @@ class ReferenceService
     public function getReference()
     {
         $agora = new DateTime();
-        $reference = $agora->format('YmdHi');
+        $reference = $random = time() . rand(10*45, 100*98);
 
         return $reference;
     }

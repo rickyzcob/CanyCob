@@ -45,9 +45,8 @@ class NotifyChargeFranchising extends Notification
         return (new MailMessage)
                     ->subject('Proposta Odonto Incrível para você !' )
                     ->line('Olá ' .$this->proposal['partner']['name'].  '! Estamos com condições Imperdiveis para quitar seus debitos' )
-                    ->action('Vizualizar Proposta', route('proposal.show', $this->proposal['id']))
-                    ->line('Entre em contato agora para nao perder essa oportunidade')
-        ->line('Entre em contato agora para nao perder essa oportunidade');
+                    ->action('Vizualizar Proposta', route('proposal.show', ['subdomain' => session('tenant')['subdomain'], 'reference' => $this->proposal['reference']]))
+                    ->line('Entre em contato agora para nao perder essa oportunidade');
     }
 
     /**

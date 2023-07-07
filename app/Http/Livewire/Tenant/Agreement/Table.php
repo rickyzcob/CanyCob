@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Tenant\Agreement;
 
 use App\Http\Traits\WithModal;
 use App\Repositories\AgreementRepository;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
 use WireUi\Traits\Actions;
@@ -45,7 +46,13 @@ class Table extends Component
     public function generateDocument($id = null)
     {
         $agreementsRepository = new AgreementRepository();
-        $agreementReturnDB = $agreementsRepository->generateDocument($id);
+
+        if(Auth::user()->tenant->type_agreement == 'Normal') {
+            $agreementReturnDB = $agreementsRepository->genererateWord($id);
+        } elseif (Auth::user()->tenant->type_agreement == 'ClickSign') {
+            $agreementReturnDB = $agreementsRepository->generateDocument($id);
+        }
+
 
         if($agreementReturnDB['status'] == 'success') {
 
@@ -59,7 +66,7 @@ class Table extends Component
             $this->emit('refreshTableAgreement');
 
         } else if ($agreementReturnDB['status'] == 'error') {
-            $this->notification([
+            $this->dialog([
                 'title'       => 'Erro !',
                 'description' => $agreementReturnDB['message'],
                 'icon'        => 'error'
@@ -93,6 +100,55 @@ class Table extends Component
         }
     }
 
+    public function changeStatus($id = null, $status_id = null)
+    {
+        $agreementsRepository = new AgreementRepository();
+        $agreementReturnDB = $agreementsRepository->changeStatus($id, $status_id);
+
+        if($agreementReturnDB['status'] == 'success') {
+
+            $this->notification([
+                'title'       => 'Sucesso !',
+                'description' => $agreementReturnDB['message'],
+                'icon'        => 'success'
+            ]);
+            $this->emit('refreshCardTop');
+            $this->emit('refreshTableAgreement');
+
+        } else if ($agreementReturnDB['status'] == 'error') {
+            $this->notification([
+                'title'       => 'Erro !',
+                'description' => $agreementReturnDB['message'],
+                'icon'        => 'error'
+            ]);
+            $this->emit('closeModal');
+        }
+    }
+
+    public function downloadDocument($id = null)
+    {
+        $agreementsRepository = new AgreementRepository();
+        $agreementReturnDB = $agreementsRepository->downloadDocument($id);
+
+        if($agreementReturnDB['status'] == 'success') {
+
+            $this->notification([
+                'title'       => 'Sucesso !',
+                'description' => $agreementReturnDB['message'],
+                'icon'        => 'success'
+            ]);
+
+            return response()->download(storage_path($agreementReturnDB['data']['file']));
+
+        } else if ($agreementReturnDB['status'] == 'error') {
+            $this->notification([
+                'title'       => 'Erro !',
+                'description' => $agreementReturnDB['message'],
+                'icon'        => 'error'
+            ]);
+            $this->emit('closeModal');
+        }
+    }
     public function render()
     {
         $response = new \stdClass();

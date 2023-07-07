@@ -24,12 +24,9 @@ function formatMoney($value)
 }
 function firstName($value)
 {
-
     $name = explode(" ", $value);
     return $name[0] . " ". $name[1];
 }
-
-
 
 function formatMoneyInput($value)
 {

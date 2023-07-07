@@ -9,7 +9,7 @@ class ProposalAccept extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['reference', 'name', 'template_proposal_id', 'charge_id', 'partner_id', 'inflow', 'balance_value', 'installments', 'installment_value',
+    protected $fillable = ['type', 'reference', 'name', 'template_proposal_id', 'charge_id', 'partner_id', 'inflow', 'balance_value', 'installments', 'installment_value',
         'amount_corrected', 'content', 'vizualized', 'status', 'url', 'days', 'accept'];
 
     public function templateproposal()

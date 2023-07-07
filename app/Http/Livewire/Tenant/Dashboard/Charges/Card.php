@@ -16,17 +16,10 @@ class Card extends Component
         $chargesReturnDB = $chargesRepository->getDontChargesByUser()['data'];
         return $chargesReturnDB;
     }
-
-    public function getConfiguration()
-    {
-        $configurationRepository = new ConfigurationRepository();
-        return $configurationRepository->getConfiguration();
-    }
     public function render()
     {
         $response = new \stdClass();
         $response->charges = $this->getChargesbyUser();
-        $response->configuration = $this->getConfiguration();
 
         return view('livewire.tenant.dashboard.charges.card', ['response' => $response]);
     }

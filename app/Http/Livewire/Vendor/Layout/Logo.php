@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Vendor\Configuration;
+namespace App\Http\Livewire\Vendor\Layout;
 
 use App\Repositories\ConfigurationRepository;
 use Livewire\Component;
@@ -55,6 +55,6 @@ class Logo extends Component
 
     public function render()
     {
-        return view('livewire.vendor.configuration.logo');
+        return view('livewire.vendor.layout.logo');
     }
 }

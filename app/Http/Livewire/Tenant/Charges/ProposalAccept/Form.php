@@ -18,6 +18,8 @@ class Form extends Component
         'template_proposal_id' => '',
         'partner_id' => '',
         'installments' => '',
+        'amount_corrected' => '',
+        'type' => '',
         'inflow' => '',
         'days' => ''
     ];
@@ -31,12 +33,8 @@ class Form extends Component
             $chargeFranchisingReturnDB = $chargeFranchisingRepository->show($id)['data'];
             $this->charge = $chargeFranchisingReturnDB;
 
-            $this->state['amount_corrected'] = $this->charge['total_amount_corrected'];
+            $this->state['amount_corrected'] = formatMoneyInput($this->charge['total_amount_corrected']);
 
-//            $franchisingRepository = new FranchisingRepository();
-//            $franchisingReturnDB = $franchisingRepository->view($chargeFranchisingReturnDB->franchising_id)['data'];
-//
-//            $this->franchising = $franchisingReturnDB;
         }
     }
 

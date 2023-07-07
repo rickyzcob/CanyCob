@@ -229,7 +229,15 @@ return [
         'goals_coins' => 'coins',
         'value_agreement' => 'valor para acordo',
         'state.humor' => 'humor',
-        'state.description' => 'descrição'
+        'state.description' => 'descrição',
+        'days' => 'validade',
+        'payment_code' => 'indentificação de pagamento',
+        'state.file' => 'arquivo',
+        'generate_document' => 'token gerar documento',
+        'add_signatory' => 'token adicionar signatario',
+        'add_signatory_document' => 'token adicionar signatario ao documento',
+        'send_document_email' => 'token enviar email',
+        'template document ' => 'Token do Template Documento'
     ],
 
 ];

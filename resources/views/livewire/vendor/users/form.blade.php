@@ -58,15 +58,25 @@
                     @enderror
                 </div>
                 <div class="md:col-span-4 col-span-12">
-                    <x-native-select wire:model.defer="state.role_id" label="Permissão" >
-                        <option value=""></option>
-                        @foreach($response->roles as $itemRole)
-                            <option value="{{$itemRole['id']}}">{{$itemRole['name']}}</option>
-                        @endforeach
-                    </x-native-select>
-                    @error('role_id')
-                    <div class="text-red-800 text-xs p-1">{{ $message }}</div>
-                    @enderror
+                    <div class="styled-1">
+                        <x-native-select wire:model.defer="state.role_id" label="Permissão" >
+                            <option value=""></option>
+                            @foreach($response->roles as $itemRole)
+                                <option value="{{$itemRole['id']}}">{{$itemRole['name']}}</option>
+                            @endforeach
+                        </x-native-select>
+                        @error('role_id')
+                        <div class="text-red-800 text-xs p-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                <div class="md:col-span-4 col-span-12">
+                    <div class="styled-1">
+                        <x-inputs.currency  prefix="R$ " thousands="." decimal="," wire:model.defer="state.value_agreement" label="Valor Acordo"/>
+                        @error('value_agreement')
+                        <div class="text-red-800 text-xs p-1">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
                 <div class="md:col-span-12 col-span-12">
                 <div class="flex items-start justify-between border-b-2 mt-3 ">

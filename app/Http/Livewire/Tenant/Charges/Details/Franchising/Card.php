@@ -24,7 +24,6 @@ class Card extends Component
         if ($reference){
             $chargeFranchisingRepository = new ChargesFranchisingRepository();
             $chargeFranchisingReturnDB = $chargeFranchisingRepository->showByReference($reference)['data'];
-//            dd($chargeFranchisingReturnDB);
             $this->charge = $chargeFranchisingReturnDB;
 
             $franchisingRepository = new FranchisingRepository();

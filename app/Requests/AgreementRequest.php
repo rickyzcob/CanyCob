@@ -13,6 +13,7 @@ class AgreementRequest
 
         $validator =  Validator::validate($request, [
             'partner_id' => 'required',
+            'type' => 'required',
             'amount_corrected' => 'required',
             'inflow' => 'sometimes|gte:0|lte:amount_corrected|decimal:2',
             'installment_value' => 'sometimes|gte:0|lte:amount_corrected|decimal:2',

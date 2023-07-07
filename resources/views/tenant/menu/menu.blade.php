@@ -98,7 +98,7 @@
             <div  @mouseover="open = true" class="flex items-center primary-text-color  gap-1 p-2 h-14 cursor-pointer
     {{ request()->is('relatorios*') ? 'primary-active primary-text-active ' : 'primary-text-color' }}"
                   :class="{ 'primary-text-color-active primary-color-active': open }">
-                <span class="material-icons text-base ">post_add</span>
+                <span class="material-icons text-base ">pending_actions</span>
                 Relatorios
             </div>
         <div x-show="open"

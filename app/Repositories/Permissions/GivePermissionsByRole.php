@@ -14,7 +14,17 @@ class GivePermissionsByRole
 
     public function permissionsAdministrator()
     {
-        $permmissions = ['tenant_add_user',
+        $permmissions = [
+            'tenant_add_user',
+            'tenant_dashboard_view_panel',
+            'tenant_dashboard_view_panel_all',
+            'tenant_dashboard_view_panel_user',
+            'tenant_dashboard_view_agreement',
+            'tenant_dashboard_view_graph',
+            'tenant_dashboard_view_ranking',
+            'tenant_dashboard_view_panel_charges',
+            'tenant_dashboard_view_charge',
+            'tenant_dashboard_view_conference',
             'tenant_edit_user',
             'tenant_view_user',
             'tenant_delete_user',

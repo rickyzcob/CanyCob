@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Tenant\Dashboard\Humor;
 
 use App\Http\Traits\WithModal;
 use App\Repositories\CoinsRepository;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
 use WireUi\Traits\Actions;
@@ -24,7 +25,7 @@ class Card extends Component
         ]);
 
         $coinsRepository = new CoinsRepository();
-        $coinsReturnDB = $coinsRepository->create($validatedData['state']);
+        $coinsReturnDB = $coinsRepository->create($validatedData['state'], 'Humor', Auth::user()->id);
 
         if($coinsReturnDB['status'] == 'success') {
             $this->emit('refreshCardRanking');

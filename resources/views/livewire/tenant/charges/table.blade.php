@@ -6,6 +6,7 @@
             <th>CNPJ</th>
             <th>Valor Devido</th>
             <th>Correção</th>
+            <th>Cadastro</th>
             <th>Status</th>
             <div class="justify-items-center">
                 <th>Açoes</th>
@@ -20,6 +21,7 @@
                 <td>{{ $itemCharge['franchising']['cnpj'] }}</td>
                 <td> {{ formatMoney($itemCharge['total_amount']) }}</td>
                 <td> {{ formatMoney($itemCharge['total_amount_corrected']) }}</td>
+                <td> {{ formatDate($itemCharge['created_at']) }}</td>
                 <td> <x-badge outline color="{{$itemCharge['status']['color']}}" label="{{$itemCharge['status']['name']}}" /></td>
                 <td width="200px">
                     <div class="flex flex-wrap justify-items-center gap-x-2">

@@ -36,7 +36,7 @@
                     @enderror
                 </div>
                 <div class="md:col-span-4 col-span-12">
-                    <x-inputs.number wire:model.defer="state.installments" label="Parcelas" />
+                        <x-inputs.number wire:model.defer="state.installments" label="Parcelas" />
                     @error('installments')
                     <div class="text-red-800 text-xs p-1">{{ $message }}</div>
                     @enderror
