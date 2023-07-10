@@ -909,6 +909,9 @@ select {
 .col-span-12 {
   grid-column: span 12 / span 12;
 }
+.col-span-2 {
+  grid-column: span 2 / span 2;
+}
 .col-span-3 {
   grid-column: span 3 / span 3;
 }
@@ -1121,9 +1124,6 @@ select {
 }
 .h-5 {
   height: 1.25rem;
-}
-.h-52 {
-  height: 13rem;
 }
 .h-6 {
   height: 1.5rem;
@@ -1431,6 +1431,9 @@ select {
      -moz-user-select: none;
           user-select: none;
 }
+.resize {
+  resize: both;
+}
 .list-disc {
   list-style-type: disc;
 }
@@ -1444,6 +1447,9 @@ select {
 }
 .grid-cols-12 {
   grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 .grid-cols-3 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -5364,6 +5370,10 @@ input[type="number"].appearance-number-none {
 
   .md\:grid {
     display: grid;
+  }
+
+  .md\:h-52 {
+    height: 13rem;
   }
 
   .md\:h-auto {

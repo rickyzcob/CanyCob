@@ -124,10 +124,10 @@ class CoinsRepository
 
     public function getHumorByUserDaily()
     {
-        $today = date('d');
+        $today = date('Y-m-d');
 
         try {
-            $coinsDB = Coins::query()->with('user')->where('type', 'Humor')->whereDay('created_at', $today)->get();
+            $coinsDB = Coins::query()->with('user')->where('type', 'Humor')->whereDate('created_at', $today)->get();
 
 //            $coinsDB->whereHas('user', function ($query) {
 //                $query->where('tenant_id', Auth::user()->tenant->id)->orderBy('created_at', 'DESC');

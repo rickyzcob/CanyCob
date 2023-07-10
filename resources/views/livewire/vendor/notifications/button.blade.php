@@ -14,7 +14,7 @@
              x-transition:enter.duration.500ms
              x-transition:leave.duration.800ms
              x-cloak
-             class="absolute right-0 mt-2 bg-white rounded-br-lg rounded-bl-lg shadow-lg overflow-hidden z-20 w-72"  >
+             class="absolute right-0 mt-2 bg-white rounded-br-lg rounded-bl-lg shadow-lg overflow-hidden z-20 w-72 max-h-64"  >
             <div class="scrollbar_notification" id="style-1">
                 @forelse($response->notifications as $notification)
 {{--                    @dd($notification['data'])--}}

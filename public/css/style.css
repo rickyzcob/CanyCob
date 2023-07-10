@@ -177,7 +177,7 @@ mini-stat-icon {
 .scrollbar_notification
 {
     padding-right: 4px;
-
+    height: 200px;
     width: auto;
     overflow-y: scroll;
     overflow-x: hidden;
