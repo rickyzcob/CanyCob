@@ -112,6 +112,16 @@ p {
     background-color: #ddd;
     color:gray;
 }
+input{
+    width: 20px;
+    height: 20px;
+}
+input:checked{
+    background-color: red;
+    width: 20px;
+    height: 20px;
+}
+
 
 /*#customers th {*/
 /*    padding-top: 12px;*/

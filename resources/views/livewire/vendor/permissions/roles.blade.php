@@ -13,8 +13,10 @@
                                 <div class="gap-3 py-2">
                                     <input type="checkbox" label="{{$itemPermission['label']}}" value="{{$itemPermission->id}}" wire:model.defer="permissions" />
                                     <label for="vehicle1"> {{$itemPermission['label']}}</label>
-{{--                                    <x-checkbox id="right-label" label="{{$itemPermission['label']}}" value="{{$itemPermission->id}}" wire:model="permissions" />--}}
+{{--                                    <x-checkbox id="right-label" label="{{$itemPermission['label']}}"  wire:model.defer="permissions" />--}}
                                 </div>
+
+
                             @endforeach
                         </div>
                     @endforeach

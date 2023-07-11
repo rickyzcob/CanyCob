@@ -18,7 +18,7 @@
             <div class="scrollbar_notification" id="style-1">
                 @forelse($response->notifications as $notification)
 {{--                    @dd($notification['data'])--}}
-                <div wire:click="markAsRead('{{ $notification['id'] }}', '{{$notification['data']['proposal']['proposal_accept']['id']}}')" class="flex items-center px-4 py-3 border-b hover:bg-gray-100 -mx-2 cursor-pointer">
+                <div wire:click="markAsRead('{{ $notification['id'] }}', '{{$notification['data']['proposal']['reference']}}')" class="flex items-center px-4 py-3 border-b hover:bg-gray-100 -mx-2 cursor-pointer">
 {{--                    <img class="h-8 w-8 rounded-full object-cover mx-1" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80" alt="avatar">--}}
                     <p class="text-gray-600 text-sm mx-2">
                         <span class="font-bold" href="#">{{ $notification['data']['proposal']['proposal_accept']['partner']['name'] }}</span>  da Unidade: {{ $notification['data']['proposal']['franchising']['name'] }}, Aceitou a proposta formal. {{ formatdiffForHumans($notification['created_at']) }}

@@ -27,18 +27,26 @@
                         <div class="p-2 text-center">
                             @livewire($component, $params)
                         </div>
+
                     @endif
+
+{{--                    <div wire:loading  wire:target="$emit('{{ $function }}', {{ $params['id'] }})">--}}
+{{--                        Processing Payment...--}}
+{{--                    </div>--}}
                 </div>
-                <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 gap-5">
                     @if($showCentralModal)
                         @if($function == 'closeCentralModal')
                             <button type="button" class="inline-flex w-full justify-center rounded-md border border-transparent bg-sky-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm" spinner wire:click="$emit('{{ $function }}', {{ $params['id'] }})">Fechar</button>
                         @else
-                            <button type="button" class="inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm" spinner wire:click="$emit('{{ $function }}', {{ $params['id'] }})">Enviar</button>
+                            <x-button green icon="check" wire:click="$emit('{{ $function }}', {{ $params['id'] }})" spinner wire:loading.attr="disabled">Enviar</x-button>
                             <button type="button" class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-sky-700 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" wire:click="closeCentralModal">Cancelar</button>
+
                         @endif
                     @endif
                 </div>
+
+
             </div>
         </div>
     </div>

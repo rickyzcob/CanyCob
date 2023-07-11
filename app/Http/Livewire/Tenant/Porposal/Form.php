@@ -38,16 +38,8 @@ class Form extends Component
             $this->emitTo('notifications.button','NotificationMarkedAsRead');
 
             ProposalAccept::dispatch('Proposta Aceita !');
-
+            $this->emit('refreshButtonAccept');
             $this->emit('closeCentralModal');
-//            $this->emit('');
-
-//            $this->dialog([
-//                'title'       => 'Sucesso !',
-//                'description' => $proposalReturnDB['message'],
-//                'icon'        => 'success',
-//            ]);
-
 
 
         } else if ($proposalReturnDB['status'] == 'error') {

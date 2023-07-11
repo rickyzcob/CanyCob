@@ -33,7 +33,7 @@ class Button extends Component
         return $this->count;
     }
 
-    public function markAsRead($notificationID = null, $proposalID = null)
+    public function markAsRead($notificationID = null, $reference = null)
     {
         $notifyRepository = new NotifyRepository();
         $notifyReturnDB = $notifyRepository->markAsRead($notificationID);
@@ -42,8 +42,9 @@ class Button extends Component
 
             $this->emit('refreshButtonNotifications');
             $this->emitSelf('NotificationMarkedAsRead', Auth::user()->unreadNotifications()->count());
-//            $url = route('formalized.show', $proposalID);
-//            return Redirect::away($url);
+////            $url = route('formalized.show', $proposalID);
+//            redirect()->route('login');
+            return redirect()->route('charges.show', ['subdomain' => session('tenant')['subdomain'], 'reference' => $reference] );
         } else if ($notifyReturnDB['status'] == 'error') {
             $this->notification([
                 'title'       => 'Erro ao marcar como lido !',

@@ -25,7 +25,7 @@
                             <x-button.circle sm a href="{{route('formalized.show', ['subdomain' => session('tenant')['subdomain'], 'reference' => $response->proposal['reference']])}}" target="_blank" positive icon="eye"  />
                             @endcan
                             @can('send_email_proposal_accept_charges')
-                            <x-button.circle wire:click="sentProposalMail({{ $response->proposal['id'] }})" sm cyan icon="arrow-circle-up" spinner />
+                            <x-button.circle wire:click="sentProposalAcceptMail({{ $response->proposal['id'] }})" sm cyan icon="arrow-circle-up" spinner />
                             @endcan
                             @if(['status'] == 'Ativo')
                                 @can('block_proposal_accept_charges')

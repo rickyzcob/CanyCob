@@ -6,7 +6,11 @@ use App\Models\ChargeHistoric;
 use App\Models\Charges;
 use App\Models\Configurations;
 use App\Models\ProposalAccept;
+use App\Models\Proposals;
 use App\Models\Releases;
+use App\Notifications\NotifyChargeFranchising;
+use App\Notifications\NotifyProposalAccept;
+use App\Notifications\NotifySendProposalAccept;
 use App\Requests\ConferenceRequest;
 use App\Requests\ReleasesRequest;
 use Carbon\Carbon;
@@ -345,6 +349,46 @@ class ChargesFranchisingRepository
                 'status' => 'error',
                 'code' => 400,
                 'message' => 'Erro na requisição'
+            ];
+        }
+    }
+
+    public function sentProposalAcept($id = null)
+    {
+        $proposalDB = ProposalAccept::query()->with('partner', 'charge.attendant')->findOrFail($id);
+        $mytime = Carbon::now()->format('d/m/Y');
+
+        try {
+            if($proposalDB['partner']['email'] == null){
+                return [
+                    'status' => 'error',
+                    'code' => 400,
+                    'message' => 'O sócio Cadastrado nao tem um email valido'
+                ];
+
+            } elseif ($proposalDB['status'] == 'Inativo'){
+                return [
+                    'status' => 'error',
+                    'code' => 400,
+                    'message' => 'Proposta está Inativa'
+                ];
+            } else {
+                $partner = $proposalDB['partner'];
+                $sent = $partner->notify( new NotifySendProposalAccept($proposalDB));
+
+                return [
+                    'status' => 'success',
+                    'data' => $sent,
+                    'code' => 200,
+                    'message' => 'Termo enviado com sucesso !'
+                ];
+            }
+
+        } catch (Exception $exception) {
+            return [
+                'status' => 'error',
+                'code' => 400,
+                'message' => 'Erro ao enviar o email'
             ];
         }
     }

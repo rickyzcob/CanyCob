@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Charges;
+use App\Models\Fees;
 use App\Models\PartnersFranchisings;
 use App\Models\ProposalAccept;
 use App\Models\Proposals;
@@ -114,6 +115,27 @@ class ProposalAcceptRepository
 
         }
     }
+
+    public function show($id)
+    {
+        try {
+            $proposalAcceptDB = ProposalAccept::query()->find($id);
+
+            return [
+                'status' => 'success',
+                'data' => $proposalAcceptDB,
+                'code' => 200,
+
+            ];
+        }catch (Exception $exception){
+            return [
+                'status' => 'error',
+                'code' => 400,
+                'message' => 'Erro na requisição'
+            ];
+        }
+
+    }
     public function delete($id = null, $charge_id)
     {
         try {
@@ -131,7 +153,7 @@ class ProposalAcceptRepository
             ];
 
         } catch (\Exception $exception) {
-            dd($exception);
+
             return [
                 'status' => 'error',
                 'code' => 400,

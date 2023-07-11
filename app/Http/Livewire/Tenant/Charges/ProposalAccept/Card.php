@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Tenant\Charges\ProposalAccept;
 
 use App\Http\Traits\WithModal;
 use App\Repositories\ChargesFranchisingRepository;
+use App\Repositories\ChargesHistoricsRepository;
 use App\Repositories\ConfigurationRepository;
 use App\Repositories\ProposalAcceptRepository;
 use Livewire\Component;
@@ -82,6 +83,30 @@ class Card extends Component
                 'icon'        => 'error'
             ]);
             $this->emit('closeDeleteModal');
+        }
+    }
+
+    public function sentProposalAcceptMail($id = null)
+    {
+        $proposalRepository = new ChargesFranchisingRepository();
+        $proposalReturnDB = $proposalRepository->sentProposalAccept($id);
+
+        if($proposalReturnDB['status'] == 'success') {
+
+            $this->notification([
+                'title'       => 'Termo de Aceite !',
+                'description' => $proposalReturnDB['message'],
+                'icon'        => 'success'
+            ]);
+
+            $this->emit('refreshTableChargeHistoric');
+            $this->emit('refreshCardPrecification');
+        } else if ($proposalReturnDB['status'] == 'error') {
+            $this->dialog([
+                'title'       => 'Atenção !',
+                'description' => $proposalReturnDB['message'],
+                'icon'        => 'error'
+            ]);
         }
     }
 

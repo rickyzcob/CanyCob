@@ -3,6 +3,7 @@
         <div class="grid grid-cols-12 gap-4 p-5 ">
             <div class="md:col-start-4  md:col-span-6 col-span-12">
                 <x-inputs.maskable
+                    wire:loading.attr="disabled"
 
                     mask="['###.###.###-##']"
                     wire:model.defer="cpf" />
