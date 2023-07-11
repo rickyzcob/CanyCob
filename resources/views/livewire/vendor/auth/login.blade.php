@@ -57,7 +57,7 @@
             {{--                </div>--}}
 
             <div class="flex justify-items-center py-2">
-                <x-button type="submit" sky label="Acessar" />
+                <x-button type="submit" spinner="submit" sky label="Acessar" />
             </div>
 {{--@dd(session('tenant')['subdomain'])--}}
             <div class="py-2">
