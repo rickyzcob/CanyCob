@@ -1,8 +1,8 @@
 <div>
     <x-card cardClasses="h-[462px] border-l-4 border-red-600">
-    <div x-data="{ tab_charge: window.location.hash ? window.location.hash.substring(1) : 'charges' }" id="tab_wrapper_charges"
+    <div x-data="{ tab_charge: 'charges' }" id="tab_wrapper_charges"
          class="grid grid-cols-4 text-gray-500 border-b-2 mb-2 gap-1">
-        <button :class="{ 'border-teste': tab_charge === 'charges' }" @click.prevent="tab_charge = 'charges'; window.location.hash = 'charges'"
+        <button :class="{ 'border-teste': tab_charge === 'charges' }" @click.prevent="tab_charge = 'charges'"
                 class="p-2 flex items-center justify-center"
         >
             <div class="mr-2">
@@ -10,7 +10,7 @@
             </div>
             Em Cobrança
         </button>
-        <button :class="{ 'border-teste': tab_charge === 'conference' }" @click.prevent="tab_charge = 'conference'; window.location.hash = 'conference'"
+        <button :class="{ 'border-teste': tab_charge === 'conference' }" @click.prevent="tab_charge = 'conference'"
                 class="p-2 flex items-center justify-center"
         >
             <div class=" mr-2">

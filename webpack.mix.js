@@ -13,6 +13,7 @@ require("dotenv").config();
  */
 
 mix.js('resources/js/app.js', 'public/js')
+    .sourceMaps(true, 'source-map') //this line
     .postCss('resources/css/app.css', 'public/css', [
-        //
+        require("tailwindcss"),
     ]);

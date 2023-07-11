@@ -1,7 +1,7 @@
 <div>
-    <div x-data="{ tab: window.location.hash ? window.location.hash.substring(1) : 'chargesPhone' }" id="tab_wrapper"
+    <div x-data="{ tab : 'chargesPhone' }" id="tab_wrapper"
          class="grid grid-cols-3 text-gray-500 gap-5">
-        <button :class="{ 'primary-color primary-text-color': tab === 'chargesPhone' }" @click.prevent="tab = 'chargesPhone'; window.location.hash = 'chargesPhone'"
+        <button :class="{ 'primary-color primary-text-color': tab === 'chargesPhone' }" @click.prevent="tab = 'chargesPhone'"
                 class="p-2 rounded  shadow-md flex items-center justify-center"
         >
             <div class="mr-2">
@@ -9,7 +9,7 @@
             </div>
             Telefones
         </button>
-        <button :class="{ 'primary-color primary-text-color': tab === 'chargesEmail' }" @click.prevent="tab = 'chargesEmail'; window.location.hash = 'chargesEmail'"
+        <button :class="{ 'primary-color primary-text-color': tab === 'chargesEmail' }" @click.prevent="tab = 'chargesEmail'"
                 class="p-2 rounded  shadow-md flex items-center justify-center"
         >
             <div class=" mr-2">
@@ -17,7 +17,7 @@
             </div>
             Emails
         </button>
-        <button :class="{ 'primary-color primary-text-color': tab === 'chargesWhatsapp' }" @click.prevent="tab = 'chargesWhatsapp'; window.location.hash = 'chargesWhatsapp'"
+        <button :class="{ 'primary-color primary-text-color': tab === 'chargesWhatsapp' }" @click.prevent="tab = 'chargesWhatsapp'"
                 class="p-2 rounded shadow-md  flex items-center justify-center"
         >
             <div class="h-6 w-6 mr-2">
