@@ -353,7 +353,7 @@ class ChargesFranchisingRepository
         }
     }
 
-    public function sentProposalAcept($id = null)
+    public function sentProposalAccept($id = null)
     {
         $proposalDB = ProposalAccept::query()->with('partner', 'charge.attendant')->findOrFail($id);
         $mytime = Carbon::now()->format('d/m/Y');
