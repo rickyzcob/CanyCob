@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>{{ config('app.name', 'Laravel') }} - @yield('title')</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="{{url('favicon/favicon-16x16.png')}}">
 
     <link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css">
 
