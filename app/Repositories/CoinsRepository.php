@@ -3,16 +3,53 @@
 namespace App\Repositories;
 
 use App\Models\Coins;
+use App\Models\HistoricMonthCoins;
+use App\Models\Partners;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use PHPUnit\Exception;
 
 class CoinsRepository
 {
-    public function create($request, $type, $user_id)
+
+    public function index($filterData = null, $pageSize, $orderBy)
     {
 
+        try {
+            $userDB = User::query()->whereStatus('Ativo')->whereType('Colaborador')
+                ->orderBy('coins', 'DESC');
 
+            if (isset($filterData['name']) && $filterData['name'] != null) {
+                $userDB->where('name', 'like', '%'.$filterData['name'].'%');
+            }
+            if (isset($filterData['email']) && $filterData['email'] != null) {
+                $userDB->where('email', 'like', '%'.$filterData['email'].'%');
+            }
+            if (isset($filterData['cpf']) && $filterData['cpf'] != null) {
+                $userDB->where('cpf', 'like', '%'.$filterData['cpf'].'%');
+            }
+
+            $userDB->orderBy($orderBy['column'], $orderBy['order']);
+
+            $userDB = $userDB->paginate($pageSize);
+
+            return [
+                'status' => 'success',
+                'data' => $userDB,
+                'code' => 200
+            ];
+        } catch (\PharIo\Version\Exception $exception) {
+            return [
+                'status' => 'error',
+                'code' => 400,
+                'message' => 'Erro na Requisição'
+            ];
+        }
+    }
+
+    public function create($request, $type, $user_id)
+    {
         if($type == 'Humor') {
             $request['type'] = $type;
             if(isset($request['description'] ) && $request['description'] != null){
@@ -86,7 +123,83 @@ class CoinsRepository
             return [
                 'status' => 'error',
                 'code' => 400,
-                'message' => 'Erro ao Cadastrar'
+                'message' => 'Erro na Requisição'
+            ];
+        }
+    }
+
+    public function getHistoricMonthlyCoinsByUser($user_id = null, $pageSize = null)
+    {
+        $month = date('m');
+
+        try {
+            $usersDB = Coins::query()->where('user_id', $user_id)->whereMonth('created_at', $month);
+            $usersDB = $usersDB->orderBy('created_at', 'DESC');
+
+            if($pageSize) {
+                $usersDB = $usersDB->paginate($pageSize);
+            } else {
+                $usersDB = $usersDB->get();
+            }
+
+
+            return [
+                'status' => 'success',
+                'data' => $usersDB,
+                'code' => 200
+            ];
+        } catch (Exception $exception) {
+            return [
+                'status' => 'error',
+                'code' => 400,
+                'message' => 'Erro na Requisição'
+            ];
+        }
+    }
+
+    public function reseMonthCoins()
+    {
+        $lastDay = Carbon::now()->endOfMonth();
+        $day = date('d');
+        $date = date('d-m-Y');
+
+        try {
+            $usersDB = User::query()->whereStatus('Ativo')->whereType('Colaborador');
+            $usersDB = $usersDB->orderBy('created_at', 'DESC');
+            $usersDB = $usersDB->get();
+
+            if($day == $lastDay->day )  {
+
+                foreach ($usersDB as $itemUser) {
+                    HistoricMonthCoins::query()->create([
+                        'user_id' => $itemUser->id,
+                        'coins' => $itemUser->coins,
+                        'date' => $date
+                    ]);
+                    $itemUser->coins = 0 ;
+                    $itemUser->update();
+                }
+
+                return [
+                    'status' => 'success',
+                    'data' => $usersDB,
+                    'message' => 'Pontuação resetada com sucesso',
+                    'code' => 200
+                ];
+            } else {
+                return [
+                    'status' => 'error',
+                    'message' => 'Voce precisa estar no último dia útil do mês para resetar a pontuação',
+                    'code' => 400
+                ];
+            }
+
+
+        } catch (Exception $exception) {
+            return [
+                'status' => 'error',
+                'code' => 400,
+                'message' => 'Erro na Requisição'
             ];
         }
     }

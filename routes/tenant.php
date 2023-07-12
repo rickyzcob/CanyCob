@@ -49,6 +49,7 @@ Route::domain('{subdomain}.' . env('APP_URL'))->group(function ($router) {
         Route::view('configuracoes/permissoes', 'tenant.permissions.index')->name('permissions.index');
         Route::view('configuracoes/layout', 'tenant.layout.index')->name('layout.index');
         Route::view('configuracoes/parametros', 'tenant.configuration.index')->name('configuration.index');
+        Route::view('configuracoes/ranking', 'tenant.ranking.index')->name('ranking.index');
 
         Route::view('relatorios/cobranca', 'tenant.report.charges.index')->name('report.charges.index');
         Route::view('relatorios/lancamentos', 'tenant.report.releases.index')->name('report.releases.index');

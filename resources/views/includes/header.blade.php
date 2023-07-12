@@ -119,6 +119,12 @@
                                     <span class="material-icons text-base pr-2">people</span>
                                     Usuários
                                 </a>
+
+                            <a href="{{route('ranking.index', session('tenant')['subdomain'])}}"
+                               class="block flex items-center px-4 py-2 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-600  border-b-2 border-gray-200">
+                                <span class="material-icons text-base pr-2">star_half</span>
+                                Ranking
+                            </a>
 {{--                            @endcan--}}
                         </div>
                     </div>
