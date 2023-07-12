@@ -27,6 +27,7 @@ Route::domain('{subdomain}.' . env('APP_URL'))->group(function ($router) {
 
     Route::middleware(['auth'])->group(function () {
 
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
         Route::view('cadastros/lancamentos', 'tenant.releases.index')->name('releases.index');

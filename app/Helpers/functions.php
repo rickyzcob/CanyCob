@@ -25,7 +25,12 @@ function formatMoney($value)
 function firstName($value)
 {
     $name = explode(" ", $value);
-    return $name[0] . " ". $name[1];
+
+    if(count($name) > 1){
+        return $name[0] . " ". $name[1];
+    } else {
+        return $name[0];
+    }
 }
 
 function formatMoneyInput($value)
