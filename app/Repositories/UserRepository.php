@@ -101,15 +101,15 @@ class UserRepository
             return [
                 'status' => 'success',
                 'data' => $userDB,
-                'code' => 202,
-                'message' => 'Categoria atualizada com sucesso !'
+                'code' => 200,
+                'message' => 'Função atualizada com sucesso !'
             ];
 
         } catch (\Exception $exception) {
 
             return [
                 'status' => 'error',
-                'code' => 200,
+                'code' => 400,
                 'message' => 'Erro ao Atualizar'
             ];
         }

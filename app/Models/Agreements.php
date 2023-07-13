@@ -29,7 +29,7 @@ class Agreements extends Model
 
     public function charge()
     {
-        return $this->belongsTo(Charge::class);
+        return $this->belongsTo(Charges::class);
     }
 
     public function status()

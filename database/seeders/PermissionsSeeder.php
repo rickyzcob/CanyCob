@@ -26,6 +26,7 @@ class PermissionsSeeder extends Seeder
         $group = GroupPermissions::create(['name' => 'Dashboard']);
 
         $permissions = [
+            ['name' => 'tenant_dashboard_view', 'label' => 'Visualizar Dashboard'],
             ['name' => 'tenant_dashboard_view_panel', 'label' => 'Visualizar Painel Informativo'],
             ['name' => 'tenant_dashboard_view_panel_all', 'label' => 'Painel Informativo dados geral'],
             ['name' => 'tenant_dashboard_view_panel_user', 'label' => 'Painel Informativo dados usuários'],
@@ -83,10 +84,56 @@ class PermissionsSeeder extends Seeder
         $group = GroupPermissions::create(['name' => 'Configurações - Cor e Logo']);
 
         $permissions = [
-            ['name' => 'tenant_add_configuration', 'label' => 'Adicionar'],
-            ['name' => 'tenant_edit_configuration', 'label' => 'Editar'],
+            ['name' => 'tenant_edit_configuration_color', 'label' => 'Editar Cor'],
+            ['name' => 'tenant_edit_configuration_logo', 'label' => 'Editar Logotipo'],
             ['name' => 'tenant_view_configuration', 'label' => 'Visualizar'],
-            ['name' => 'tenant_delete_configuration', 'label' => 'Deletar'],
+        ];
+
+        foreach ($permissions as $permission) {
+            Permission::create([
+                'group_permissions_id' => $group->id,
+                'name' => $permission['name'],
+                'label' => $permission['label']
+            ]);
+        }
+
+        $group = GroupPermissions::create(['name' => 'Configurações - Parametros']);
+
+        $permissions = [
+
+            ['name' => 'tenant_edit_configuration_params', 'label' => 'Editar'],
+            ['name' => 'tenant_view_configuration_params', 'label' => 'Visualizar'],
+        ];
+
+        foreach ($permissions as $permission) {
+            Permission::create([
+                'group_permissions_id' => $group->id,
+                'name' => $permission['name'],
+                'label' => $permission['label']
+            ]);
+        }
+
+        $group = GroupPermissions::create(['name' => 'Configurações - Ranking']);
+
+        $permissions = [
+
+            ['name' => 'tenant_reset_ranking', 'label' => 'Resetar Ranking'],
+            ['name' => 'tenant_view_ranking', 'label' => 'Visualizar'],
+        ];
+
+        foreach ($permissions as $permission) {
+            Permission::create([
+                'group_permissions_id' => $group->id,
+                'name' => $permission['name'],
+                'label' => $permission['label']
+            ]);
+        }
+
+        $group = GroupPermissions::create(['name' => 'Permissões - Humor']);
+
+        $permissions = [
+
+            ['name' => 'tenant_view_humor', 'label' => 'Visualizar'],
         ];
 
         foreach ($permissions as $permission) {
@@ -152,6 +199,7 @@ class PermissionsSeeder extends Seeder
             ]);
         }
 
+
         $group = GroupPermissions::create(['name' => 'Permissões - Lançamentos']);
 
         $permissions = [
@@ -188,7 +236,7 @@ class PermissionsSeeder extends Seeder
             ['name' => 'tenant_send_term_agreement', 'label' => 'Enviar Confissão Divida'],
             ['name' => 'tenant_download_term_agreement', 'label' => 'Baixar Confissão Divida'],
             ['name' => 'tenant_export_word_agreement', 'label' => ' Exportar Word '],
-            ['name' => 'tenant_export_pdf_agreement', 'label' => ' Exportar PDF ']
+            ['name' => 'tenant_export_pdf_agreement', 'label' => ' Exportar PDF '],
         ];
 
         foreach ($permissions as $permission) {
@@ -228,6 +276,7 @@ class PermissionsSeeder extends Seeder
             ['name' => 'tenant_delete_proposal_accept_charges', 'label' => 'Deletar Termo de Aceite'],
             ['name' => 'tenant_send_email_proposal_accept_charges', 'label' => 'Envia email de Termo de Aceite'],
             ['name' => 'tenant_simulation_charges', 'label' => 'Simulação de Acordos'],
+            ['name' => 'tenant_details_charges', 'label' => 'Vizualizar Detalhes da Cobrança'],
 
         ];
 
@@ -239,22 +288,7 @@ class PermissionsSeeder extends Seeder
             ]);
         }
 
-        $group = GroupPermissions::create(['name' => 'Permissões - Humor']);
 
-        $permissions = [
-            ['name' => 'tenant_add_humor', 'label' => 'Adicionar'],
-            ['name' => 'tenant_edit_humor', 'label' => 'Editar'],
-            ['name' => 'tenant_view_humor', 'label' => 'Visualizar'],
-            ['name' => 'tenant_delete_humor', 'label' => 'Deletar ']
-        ];
-
-        foreach ($permissions as $permission) {
-            Permission::create([
-                'group_permissions_id' => $group->id,
-                'name' => $permission['name'],
-                'label' => $permission['label']
-            ]);
-        }
 
         $group = GroupPermissions::create(['name' => 'Relatórios - Histórico Cobrança']);
 

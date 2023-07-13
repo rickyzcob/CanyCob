@@ -15,10 +15,20 @@
         @foreach($response->users as $itemUser)
             <tr>
                 <td>
-                    <x-avatar size="w-18 h-18 text-2xl" label="AB" />
-                    {{ $itemUser['name'] }}
+                    <div class="flex items-center gap-2">
+                        @if($itemUser->image == null)
+                            <x-avatar md  src="{{ url('img/user-default.png') }}" />
+                        @else
+                            <x-avatar md src="{{ url('storage/'.$itemUser->image) }}" />
+                        @endif
+                        {{ $itemUser['name'] }}
+                    </div>
                 </td>
-                <td></td>
+                <td>
+                    @if($itemUser['role'])
+                        {{ $itemUser['role']['name'] }}
+                    @endif
+                </td>
                 <td>
                     <div class="flex items-center gap-1">
                         <span @class([ $itemUser['status'] == 'Ativo' ? 'rounded-full bg-green-600 border-4 border-green-200 w-1 p-2' : 'rounded-full bg-red-600 border-4 border-red-200 w-1 p-2'])>
@@ -30,12 +40,12 @@
                 <td>{{ formatDate($itemUser['created_at']) }}</td>
                 <td width="150px">
                     <div class="flex flex-wrap justify-items-center gap-x-2">
-                        @can('tenant_edit_user')
+                        @canany(['tenant_edit_user', 'admin_edit_user'])
                             <x-button.circle wire:click="openModal('vendor.users.form', {'id': {{ $itemUser['id'] }} } )" primary icon="pencil" />
-                        @endcan
-                        @can('tenant_delete_user')
+                        @endcanany
+                        @canany(['tenant_delete_user', 'admin_delete_user'])
                             <x-button.circle negative icon="x-circle" wire:click="openConfirmModal({{ $itemUser['id'] }}, 'Apagar Registro' , 'Você tem certeza que deseja apagar o seguinte o registro, {{ $itemUser['name'] }} ?', 'confirmDeleteUser')" />
-                        @endcan
+                        @endcanany
                     </div>
                 </td>
             </tr>

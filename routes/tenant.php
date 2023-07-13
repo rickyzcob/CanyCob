@@ -27,36 +27,34 @@ Route::domain('{subdomain}.' . env('APP_URL'))->group(function ($router) {
 
     Route::middleware(['auth'])->group(function () {
 
-        Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
-        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+        Route::get('/', [DashboardController::class, 'index'])->middleware('permission:tenant_dashboard_view')->name('dashboard.index');
+        Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('permission:tenant_dashboard_view')->name('dashboard.index');
 
-        Route::view('cadastros/lancamentos', 'tenant.releases.index')->name('releases.index');
-        Route::view('cadastros/franqueados', 'tenant.franchising.index')->name('franchising.index');
-        Route::view('cadastros/socios', 'tenant.partners.index')->name('partners.index');
-        Route::view('cadastros/statusdecobranca', 'tenant.chargestatuses.index')->name('chargestatuses.index');
-        Route::view('cadastros/juros', 'tenant.fees.index')->middleware('permission:view_fees')->name('fees.index');
+        Route::view('cadastros/lancamentos', 'tenant.releases.index')->middleware('permission:tenant_view_releases')->name('releases.index');
+        Route::view('cadastros/franqueados', 'tenant.franchising.index')->middleware('permission:tenant_view_franchising')->name('franchising.index');
+        Route::view('cadastros/socios', 'tenant.partners.index')->middleware('permission:tenant_view_partner')->name('partners.index');
+        Route::view('cadastros/statusdecobranca', 'tenant.chargestatuses.index')->middleware('permission:tenant_view_fees')->name('chargestatuses.index');
+        Route::view('cadastros/juros', 'tenant.fees.index')->middleware('permission:tenant_view_fees')->name('fees.index');
 
-        Route::view('/cobrancas', 'tenant.charges.index')->name('charges.index');
-        Route::view('/acordos', 'tenant.agreement.index')->name('agreement.index');
-        Route::get('/acordos/{reference}/vizualizar', [AgreementController::class, 'show'])->name('agreement.show');
+        Route::view('/cobrancas', 'tenant.charges.index')->middleware('permission:tenant_view_charges')->name('charges.index');
+        Route::get('/cobrancas/{reference}/detalhes', [DetailsChargesCrontroller::class, 'show'])->middleware('permission:tenant_details_charges')->name('charges.show');
 
-//        Route::get('/cobrancas/detalhes', function ($reference) {
-//            return 'Post ' . $reference . ' in second subdomain';
-//        })->name('charges.show');
+        Route::view('/acordos', 'tenant.agreement.index')->middleware('permission:tenant_view_agreement')->name('agreement.index');
+        Route::get('/acordos/{reference}/vizualizar', [AgreementController::class, 'show'])->middleware('permission:tenant_view_details_agreement')->name('agreement.show');
 
-        Route::get('/cobrancas/{reference}/detalhes', [DetailsChargesCrontroller::class, 'show'])->name('charges.show');
+        Route::view('humor', 'tenant.humor.index')->middleware('permission:tenant_view_humor')->name('humor.index');
 
-        Route::view('configuracoes/usuarios', 'tenant.user.index')->name('user.index');
-        Route::view('configuracoes/permissoes', 'tenant.permissions.index')->name('permissions.index');
-        Route::view('configuracoes/layout', 'tenant.layout.index')->name('layout.index');
-        Route::view('configuracoes/parametros', 'tenant.configuration.index')->name('configuration.index');
-        Route::view('configuracoes/ranking', 'tenant.ranking.index')->name('ranking.index');
+        Route::view('configuracoes/usuarios', 'tenant.user.index')->middleware('permission:tenant_view_user')->name('user.index');
+        Route::view('configuracoes/permissoes', 'tenant.permissions.index')->middleware('permission:tenant_view_permission')->name('permissions.index');
+        Route::view('configuracoes/layout', 'tenant.layout.index')->middleware('permission:tenant_view_configuration')->name('layout.index');
+        Route::view('configuracoes/parametros', 'tenant.configuration.index')->middleware('permission:tenant_view_configuration_params')->name('configuration.index');
+        Route::view('configuracoes/ranking', 'tenant.ranking.index')->middleware('permission:tenant_view_ranking')->name('ranking.index');
 
-        Route::view('relatorios/cobranca', 'tenant.report.charges.index')->name('report.charges.index');
-        Route::view('relatorios/lancamentos', 'tenant.report.releases.index')->name('report.releases.index');
-        Route::view('relatorios/acordos', 'tenant.report.agreements.index')->name('report.agreements.index');
-        Route::view('relatorios/humor', 'tenant.report.humor.index')->name('report.humor.index');
-        Route::view('humor', 'tenant.humor.index')->name('humor.index');
+        Route::view('relatorios/cobranca', 'tenant.report.charges.index')->middleware('permission:tenant_view_report_charges')->name('report.charges.index');
+        Route::view('relatorios/lancamentos', 'tenant.report.releases.index')->middleware('permission:tenant_view_report_releases')->name('report.releases.index');
+        Route::view('relatorios/acordos', 'tenant.report.agreements.index')->middleware('permission:tenant_view_report_agreements')->name('report.agreements.index');
+        Route::view('relatorios/humor', 'tenant.report.humor.index')->middleware('permission:tenant_view_report_humor')->name('report.humor.index');
+
 
         Route::view('notificacoes', 'tenant.notifications.index')->name('notifications.index');
 

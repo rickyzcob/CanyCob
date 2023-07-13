@@ -47,8 +47,6 @@ class RolesRepository
         $roleRequest = new RoleRequest();
         $requestValidated = $roleRequest->validate($request);
 
-        $requestValidated['guard_name'] = session('tenant')['subdomain'];
-
         try {
 
             $rolesDB = Role::query()->create($requestValidated);
@@ -108,11 +106,13 @@ class RolesRepository
             return [
                 'status' => 'success',
                 'data' => $roleDB,
-                'code' => 202,
-                'message' => 'Categoria atualizada com sucesso !'
+                'code' => 200,
+                'message' => 'Permissões atualizadas com sucesso !'
             ];
 
         }catch (\Exception $exception) {
+
+            dd($exception);
             return [
                 'status' => 'error',
                 'code' => 200,

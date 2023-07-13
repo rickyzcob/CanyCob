@@ -84,7 +84,7 @@ class Form extends Component
         if($userReturnDB['status'] == 'success') {
 
             $this->notification([
-                'title'       => 'Cadastrado com Sucesso !',
+                'title'       => 'Atualizado com Sucesso !',
                 'description' => $userReturnDB['message'],
                 'icon'        => 'success'
             ]);
@@ -92,7 +92,7 @@ class Form extends Component
             $this->emit('refreshTableUsers');
         } else if ($userReturnDB['status'] == 'error') {
             $this->notification([
-                'title'       => 'Erro ao cadastrar !',
+                'title'       => 'Erro ao atualizar !',
                 'description' => $userReturnDB['message'],
                 'icon'        => 'error'
             ]);

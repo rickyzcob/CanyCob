@@ -18,6 +18,7 @@ class Role extends Model implements RoleContract
 {
     use HasPermissions;
     use RefreshesPermissionCache;
+use TenantTrait;
 
     protected $guarded = [];
 

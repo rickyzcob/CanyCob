@@ -201,9 +201,9 @@ class DashboardRepository
 
         if(auth()->user()->can('tenant_dashboard_view_panel_all') && auth()->user()->can('tenant_dashboard_view_panel_user')){
             $chargeDB = $chargeDB->sum('total_amount');
-        }else if(auth()->user()->can('tenant_view_charges_user') && !auth()->user()->can('tenant_view_charges_all')) {
-            $chargeDB->where('attendant_id', auth()->user()->id)->sum('total_amount');;
-        } else if (auth()->user()->can('tenant_view_charges_all') && !auth()->user()->can('tenant_view_charges_user')) {
+        }else if(auth()->user()->can('tenant_dashboard_view_panel_user') && !auth()->user()->can('tenant_dashboard_view_panel_all')) {
+            $chargeDB = $chargeDB->where('attendant_id', auth()->user()->id)->sum('total_amount');
+        } else if (auth()->user()->can('tenant_dashboard_view_panel_all') && !auth()->user()->can('tenant_dashboard_view_panel_user')) {
             $chargeDB = $chargeDB->sum('total_amount');
         }
 
@@ -216,9 +216,9 @@ class DashboardRepository
 
         if(auth()->user()->can('tenant_dashboard_view_panel_all') && auth()->user()->can('tenant_dashboard_view_panel_user')){
             $chargeDB = $chargeDB->sum('total_amount');
-        }else if(auth()->user()->can('tenant_view_charges_user') && !auth()->user()->can('tenant_view_charges_all')) {
-            $chargeDB->where('attendant_id', auth()->user()->id)->sum('total_amount');;
-        } else if (auth()->user()->can('tenant_view_charges_all') && !auth()->user()->can('tenant_view_charges_user')) {
+        }else if(auth()->user()->can('tenant_dashboard_view_panel_user') && !auth()->user()->can('tenant_view_charges_all')) {
+            $chargeDB = $chargeDB->where('attendant_id', auth()->user()->id)->sum('total_amount');
+        } else if (auth()->user()->can('tenant_view_charges_all') && !auth()->user()->can('tenant_dashboard_view_panel_user')) {
             $chargeDB = $chargeDB->sum('total_amount');
         }
 
@@ -231,9 +231,13 @@ class DashboardRepository
 
         if(auth()->user()->can('tenant_dashboard_view_panel_all') && auth()->user()->can('tenant_dashboard_view_panel_user')){
             $agreementDB = $agreementDB->sum('agreements_amount');
-        }else if(auth()->user()->can('tenant_view_charges_user') && !auth()->user()->can('tenant_view_charges_all')) {
-            $agreementDB->where('attendant_id', auth()->user()->id)->sum('agreements_amount');;
-        } else if (auth()->user()->can('tenant_view_charges_all') && !auth()->user()->can('tenant_view_charges_user')) {
+        }else if(auth()->user()->can('tenant_dashboard_view_panel_user') && !auth()->user()->can('tenant_view_charges_all')) {
+            $agreementDB->whereHas('charge', function ($query){
+                $query->where('attendant_id', auth()->user()->id);
+
+            });
+            $agreementDB = $agreementDB->sum('agreements_amount');
+        } else if (auth()->user()->can('tenant_view_charges_all') && !auth()->user()->can('tenant_dashboard_view_panel_user')) {
             $agreementDB = $agreementDB->sum('agreements_amount');
         }
 
@@ -246,11 +250,12 @@ class DashboardRepository
 
         if(auth()->user()->can('tenant_dashboard_view_panel_all') && auth()->user()->can('tenant_dashboard_view_panel_user')){
             $historicsChargeDB = $historicsChargeDB->count();
-        }else if(auth()->user()->can('tenant_view_charges_user') && !auth()->user()->can('tenant_view_charges_all')) {
+        }else if(auth()->user()->can('tenant_dashboard_view_panel_user') && !auth()->user()->can('tenant_view_charges_all')) {
             $historicsChargeDB->whereHas('charge', function ($query) {
-                $query->where('attendant_id', auth()->user()->id)->count();
+                $query->where('attendant_id', auth()->user()->id);
             });
-        } else if (auth()->user()->can('tenant_view_charges_all') && !auth()->user()->can('tenant_view_charges_user')) {
+            $historicsChargeDB = $historicsChargeDB->count();
+        } else if (auth()->user()->can('tenant_view_charges_all') && !auth()->user()->can('tenant_dashboard_view_panel_user')) {
             $historicsChargeDB = $historicsChargeDB->count();
         }
 

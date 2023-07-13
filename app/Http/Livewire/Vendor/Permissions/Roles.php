@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Vendor\Permissions;
 use App\Http\Traits\WithModal;
 use App\Models\GroupPermissions;
 use App\Repositories\RolesRepository;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use WireUi\Traits\Actions;
 
@@ -26,7 +27,7 @@ class Roles extends Component
     }
     public function getRoles()
     {
-        $groupPermissions = GroupPermissions::query()->with('permissions')->get();
+        $groupPermissions = GroupPermissions::query()->with('permissions')->where('scope', Auth::user()->tenant->scope)->get();
         return $groupPermissions;
     }
 

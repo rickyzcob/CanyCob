@@ -98,7 +98,7 @@
                                     Cor e Logo
                                 </a>
 {{--                            @endcan--}}
-
+                            @if(auth()->user()->tenant->scope == 'Cliente')
                             {{--                            @can('view_configuration')--}}
                             <a href="{{route('configuration.index', session('tenant')['subdomain'])}}"
                                class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-600  border-b-2 border-gray-20">
@@ -106,6 +106,7 @@
                                Configurações Sistema
                             </a>
                             {{--                            @endcan--}}
+                            @endif
 {{--                            @can('view_permission')--}}
                                 <a href="{{route('permissions.index', session('tenant')['subdomain'])}}"
                                    class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-600  border-b-2 border-gray-20">
@@ -119,12 +120,13 @@
                                     <span class="material-icons text-base pr-2">people</span>
                                     Usuários
                                 </a>
-
+                            @if(auth()->user()->tenant->scope == 'Cliente')
                             <a href="{{route('ranking.index', session('tenant')['subdomain'])}}"
                                class="block flex items-center px-4 py-2 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-600  border-b-2 border-gray-200">
                                 <span class="material-icons text-base pr-2">star_half</span>
                                 Ranking
                             </a>
+                            @endif
 {{--                            @endcan--}}
                         </div>
                     </div>

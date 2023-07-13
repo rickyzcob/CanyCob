@@ -15,15 +15,15 @@
                 <td>{{ $itemRole['name'] }}</td>
                 <td width="150px">
                     <div class="flex flex-wrap justify-items-center gap-x-2">
-{{--                        @can('tenant_roles_permission')--}}
+                        @canany(['tenant_roles_permission', 'admin_roles_permission'])
                         <x-button.circle wire:click="openModal('vendor.permissions.roles', {'id': {{ $itemRole['id'] }} } )"  positive icon="archive" />
-{{--                        @endcan--}}
-{{--                        @can('tenant_edit_permission')--}}
+                        @endcanany
+                        @canany(['tenant_edit_permission', 'admin_edit_permission'])
                         <x-button.circle wire:click="openModal('vendor.permissions.form', {'id': {{ $itemRole['id'] }} } )" warning icon="pencil-alt" />
-{{--                        @endcan--}}
-{{--                        @can('tenant_delete_permission')--}}
+                        @endcanany
+                        @canany(['tenant_delete_permission', 'admin_delete_permission'])
                         <x-button.circle negative icon="x-circle" wire:click="openConfirmModal({{ $itemRole['id'] }}, 'Apagar Registro' , 'Você tem certeza que deseja apagar o seguinte o registro, {{ $itemRole['name'] }} ?', 'confirmDeleteRole')" />
-{{--                        @endcan--}}
+                        @endcanany
                     </div>
                 </td>
             </tr>
