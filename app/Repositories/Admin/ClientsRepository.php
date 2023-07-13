@@ -4,6 +4,7 @@ namespace App\Repositories\Admin;
 
 use App\Models\Tenant;
 use App\Models\Tenants;
+use App\Models\User;
 use App\Repositories\Permissions\CreateRolesRepository;
 use App\Repositories\Permissions\GivePermissionsByRole;
 use App\Requests\ClientRequest;
@@ -58,15 +59,12 @@ class ClientsRepository
             $createRolesRepository = new  CreateRolesRepository();
             $roleReturnDB = $createRolesRepository->createRolesbyClient($clientDB->id, 'web');
 
-//            $createPermissionsRepository = new CreatePermissionsRepository();
-//            $createPermissionsRepository->createPermissionsByClient($clientDB->subdomain);
-
             $roleDB = Role::query()->where('tenant_id', $clientDB->id)->where('name', 'Administrador')->first();
 
             $givPermissionsByProle = new GivePermissionsByRole();
-            $givPermissionsByProle->givePermissionsAdministrator($roleDB->id);
+            $givPermissionsByProle->givePermissions($clientDB->id);
 
-            $userDB = $clientDB->user()->create([
+            $userDB = User::query()->create([
                 'tenant_id' => $clientDB->id,
                 'name' => $requestValidated['user']['name'],
                 'email' => $requestValidated['user']['email'],

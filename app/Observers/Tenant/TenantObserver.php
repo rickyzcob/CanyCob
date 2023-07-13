@@ -12,6 +12,8 @@ class TenantObserver
         $tenant = new ManagerTenant();
         $tenantReturn = $tenant->identify();
 
-        $model->setAttribute('tenant_id', $tenantReturn);
+        if($tenantReturn->scope == 'Cliente'){
+            $model->setAttribute('tenant_id', $tenantReturn->id);
+        }
     }
 }

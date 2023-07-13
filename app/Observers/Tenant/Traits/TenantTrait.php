@@ -12,6 +12,7 @@ trait TenantTrait
         parent::boot();
 
         static::addGlobalScope(new TenantScope);
+
         static::observe(new TenantObserver());
 
     }

@@ -13,7 +13,8 @@ class TenantScope implements Scope
     {
         $tenant = new ManagerTenant();
         $tenantReturn = $tenant->identify();
-
-        $builder->where('tenant_id', $tenantReturn);
+        if($tenantReturn->scope == 'Cliente') {
+            $builder->where('tenant_id', $tenantReturn->id);
+        }
     }
 }

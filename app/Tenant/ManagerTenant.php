@@ -30,7 +30,7 @@ class ManagerTenant
     public function identify()
     {
         $tenant = $this->tenant();
-        return $tenant->id;
+        return $tenant;
     }
 
     public function isSubdomainAdmin()
