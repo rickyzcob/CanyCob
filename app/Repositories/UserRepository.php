@@ -232,6 +232,8 @@ class UserRepository
         try {
             $historicMonthCoins = HistoricMonthCoins::query()->where('user_id', $id)->delete();
 
+            //teste
+
             $userDB = User::query()->findOrFail($id);
 
             if($userDB->file != null){
