@@ -15,12 +15,18 @@ class ManagerTenant
     public function tenant()
     {
         $subdomain = $this->subdomain();
-        $tenant = Tenant::where('subdomain', $subdomain)->where('status', 'Ativo')->first();
+//        dd(env('APP_URL'));
+        if($subdomain != env('APP_URL')){
+            $tenant = Tenant::where('subdomain', $subdomain)->where('status', 'Ativo')->first();
 
-        if(!$tenant){
-            return abort(404);
+            if(!$tenant){
+                return abort(404);
+            }
+            return $tenant;
+        } else {
+            return $subdomain;
         }
-        return $tenant;
+
 }
     public function getTenantIdentify()
     {

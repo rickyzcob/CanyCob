@@ -13,6 +13,7 @@ use WireUi\Traits\Actions;
 class Table extends Component
 {
     use Actions, WithModal, WithPagination;
+
     public $filters;
 
     public $pageSize = 10;

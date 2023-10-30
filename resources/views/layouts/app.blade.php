@@ -14,7 +14,8 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo&display=swap" rel="stylesheet">
+{{--    <link href="https://fonts.googleapis.com/css2?family=Heebo&display=swap" rel="stylesheet">--}}
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <script src="{{ asset('js/app.js') }}" ></script>
@@ -22,14 +23,8 @@
 {{--    @vite(['resources/css/app.css', 'resources/js/app.js'])--}}
 
 
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
-{{--    <script src="https://unpkg.com/@jaames/iro@beta/dist/iro.js"></script>--}}
-{{--    <script src="{{url('js/iro.js')}}"></script>--}}
-
-
-
-
+    <script src="https://unpkg.com/@jaames/iro@beta/dist/iro.js"></script>
+    <script src="{{url('js/iro.js')}}"></script>
 
     @livewireStyles
 
@@ -40,7 +35,7 @@
         }
 
         body {
-            font-family: 'Heebo', sans-serif;
+            font-family: 'Nunito', sans-serif;
         }
     </style>
 
@@ -56,7 +51,7 @@
 @include('includes.header')
 
 
-    @yield('content')
+@yield('content')
 
 
 

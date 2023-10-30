@@ -2,7 +2,7 @@
     <table class="tables">
         <thead>
         <tr>
-            <th>Nome</th>
+            <th>Nome</th>a
             <th>Status</th>
             <div class="justify-items-center">
                 <th>Açoes</th>

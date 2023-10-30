@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\HistoricMonthCoins;
 use App\Models\User;
 use App\Requests\UserRequest;
 use Illuminate\Support\Facades\DB;
@@ -229,6 +230,8 @@ class UserRepository
     public function delete($id = null)
     {
         try {
+            $historicMonthCoins = HistoricMonthCoins::query()->where('user_id', $id)->delete();
+
             $userDB = User::query()->findOrFail($id);
 
             if($userDB->file != null){
@@ -243,14 +246,15 @@ class UserRepository
                 'status' => 'success',
                 'data' => $userDB,
                 'code' => 202,
-                'message' => 'Categoria apagado com sucesso !'
+                'message' => 'Usuário deletado com sucesso!'
             ];
 
         }catch (\Exception $exception) {
+dd($exception);
             return [
                 'status' => 'error',
                 'code' => 200,
-                'message' => 'Erro ao aágar'
+                'message' => 'Erro ao deletar'
             ];
         }
     }

@@ -20,11 +20,13 @@ class TenantMiddleware
         $tenantReturn = new ManagerTenant();
         $tenant = $tenantReturn->tenant();
 
-        if(!$tenant){
-            return abort(404);
-        }
+        if($tenant != env('APP_URL')) {
+            if (!$tenant) {
+                return abort(404);
+            }
 
-        $this->setSession($tenant->only('name', 'subdomain', 'color', 'text_color', 'scope', 'logo'));
+            $this->setSession($tenant->only('name', 'subdomain', 'color', 'text_color', 'scope', 'logo'));
+        }
 
         return $next($request);
     }
