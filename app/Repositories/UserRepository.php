@@ -232,8 +232,6 @@ class UserRepository
         try {
             $historicMonthCoins = HistoricMonthCoins::query()->where('user_id', $id)->delete();
 
-            //teste
-
             $userDB = User::query()->findOrFail($id);
 
             if($userDB->file != null){
@@ -250,9 +248,7 @@ class UserRepository
                 'code' => 202,
                 'message' => 'Usuário deletado com sucesso!'
             ];
-
         }catch (\Exception $exception) {
-dd($exception);
             return [
                 'status' => 'error',
                 'code' => 200,
