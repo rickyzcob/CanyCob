@@ -1,5 +1,4 @@
 <div>
-{{--    @dd(session('tenant'))--}}
     <x-card>
         <form wire:submit.prevent="update">
             <div class="flex items-start justify-between border-b-2 mb-5 ">
@@ -21,14 +20,18 @@
     </x-card>
 </div>
 
-@push('body-scripts')
-    @once
-        <script>
+@push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
+    <script src="{{url('js/iro.js')}}"></script>
+
+        <script type="text/javascript">
+            var colorS = {{ Js::from($color) }};
+
             var colorPicker = new iro.ColorPicker(".colorPicker", {
 
                 width: 550,
                 boxHeight: 250,
-                color: "rgb(255, 0, 0)",
+                color: colorS,
                 borderWidth: 1,
                 borderColor: "#fff",
                 display: "block",
@@ -46,6 +49,8 @@
                     }
                 ]
             });
+
+
 
             var values = document.getElementById("values");
             var hexInput = document.getElementById("hexInput");
@@ -66,7 +71,6 @@
 
                 hexInput.value = color.hexString;
                 rgbValue.value = color.rgbString;
-
             });
 
             function setColor() {
@@ -94,7 +98,7 @@
             colorPicker.on('color:change', setColor);
 
         </script>
-    @endonce
+
 @endpush
 
 

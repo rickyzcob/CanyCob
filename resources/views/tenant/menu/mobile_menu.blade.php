@@ -43,6 +43,14 @@
             </a>
         </div>
         @endcan
+        @can('tenant_view_schedule')
+            <div x-data="{open:false}" class="mx-auto bg-white border-b-2 border-gray-200 gap-4">
+                <a href="{{route('schedule.index', session('tenant')['subdomain'])}}"  class="flex items-center bg-white ">
+                    <span class="material-icons text-base ">calendar_month</span>
+                    <p class="pl-1 py-2">Agenda</p>
+                </a>
+            </div>
+        @endcan
         @can('tenant_view_agreement')
         <div x-data="{open:false}" class="mx-auto bg-white border-b-2 border-gray-200 gap-4">
             <a href="{{route('agreement.index', session('tenant')['subdomain'])}}"  class="flex items-center bg-white ">

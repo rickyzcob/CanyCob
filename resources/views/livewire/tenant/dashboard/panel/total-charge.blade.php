@@ -1,6 +1,6 @@
 <div>
     <div class="md:col-span-3">
-        <div class="relative px-3 rounded shadow-lg max-w-sm h-full bg-sky-500">
+        <div class="relative px-3 rounded h-96 shadow-lg max-w-sm h-full bg-sky-500">
             <div class="flex justify-between items-center">
                 <div class="text-white">
                     <h6 class="uppercase font-semibold text-white">Cobranças</h6>

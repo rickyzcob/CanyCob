@@ -1,5 +1,5 @@
-<div class="col-span-12 justify-center ">
-    <x-card padding="0" >
+<div >
+    <x-card cardClasses="h-[885px]" padding="0">
         <x-slot name="header">
             <div class="flex flex-col justify-center items-center bg-green-500 text-white rounded-t gap-1 py-2">
                 <p class="text-white">Ranking do mês</p>

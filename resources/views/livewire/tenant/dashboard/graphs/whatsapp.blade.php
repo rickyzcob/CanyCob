@@ -1,18 +1,16 @@
 <div>
-    <div class=" justify-center items-center">
-        <div class="ml-4" id="chargesWhatsapp"> </div>
-    </div>
+    <x-card cardClasses="h-64 border-l-4 border-green-700">
+        <div class=" justify-center items-center">
+            <div class="ml-4" id="chargesWhatsapp"> </div>
+        </div>
+    </x-card>
 </div>
 {{--@dd($response)--}}
-@push('body-scripts')
-    @once
+@push('scripts')
         <script>
 
             var days =  {{ Js::from($response->chargeWhatsapp['day']) }};
             var countWhats = {{ Js::from($response->chargeWhatsapp['totalWhatsapp']) }};
-            {{--var countEmails = {{ Js::from($response->chargeEmail['totalEmail']) }};/s/--}}
-            {{--var countWhatsapp = {{ Js::from($response->chargeEmail['totalWhatsapp']) }};--}}
-
 
             var options = {
                 series: [
@@ -96,5 +94,4 @@
             chartChargesWhats.render();
 
         </script>
-    @endonce
 @endpush

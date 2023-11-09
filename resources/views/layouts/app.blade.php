@@ -17,14 +17,15 @@
 {{--    <link href="https://fonts.googleapis.com/css2?family=Heebo&display=swap" rel="stylesheet">--}}
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <script src="{{ asset('js/app.js') }}" ></script>
+    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+    <script src="{{ mix('js/app.js') }}" ></script>
 
-{{--    @vite(['resources/css/app.css', 'resources/js/app.js'])--}}
+    <link href="{{ asset('vendor/fullcalendar/css/fullcalendar.min.css')}}" rel="stylesheet">
 
 
-    <script src="https://unpkg.com/@jaames/iro@beta/dist/iro.js"></script>
-    <script src="{{url('js/iro.js')}}"></script>
+
+
+
 
     @livewireStyles
 
@@ -70,10 +71,11 @@
 </body>
 </html>
 
-@stack('body-scripts')
+@stack('scripts')
 
 <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <script src="{{url('js/sortable.js')}}"></script>
 

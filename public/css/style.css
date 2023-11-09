@@ -164,10 +164,20 @@ mini-stat-icon {
     z-index: 10;
 }
 
+.scrollbar-agreements
+{
+    padding-right: 4px;
+    height: 233px;
+    width: auto;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    z-index: 10;
+}
+
 .scrollbar-charges
 {
     padding-right: 4px;
-    height: 380px;
+    height: 450px;
     width: auto;
     overflow-y: scroll;
     overflow-x: hidden;

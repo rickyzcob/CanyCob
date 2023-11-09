@@ -58,6 +58,7 @@
                 </div>
                 <div class="md:col-span-2">
                     @can('tenant_dashboard_view_ranking')
+{{--                        @livewire('tenant.dashboard.agreements.card')--}}
                     @livewire('tenant.dashboard.ranking.card')
                     @endcan
                 </div>

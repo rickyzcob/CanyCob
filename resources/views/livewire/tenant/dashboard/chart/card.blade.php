@@ -27,19 +27,18 @@
             Whatsapp
         </button>
 
-        <div class="col-span-3">
-            <div x-show="tab === 'chargesPhone'"
-                 class="shadow-xl border border-gray-100 font-light p-8 rounded text-gray-500 bg-white ">
+        <div class="col-span-3 h-64">
+
+
+            <div x-show="tab === 'chargesPhone'">
                 @livewire('tenant.dashboard.graphs.phone')
             </div>
 
-            <div x-show="tab === 'chargesEmail'"
-                 class="shadow-xl border border-gray-100 font-light p-8 rounded text-gray-500 bg-white">
+            <div x-show="tab === 'chargesEmail'">
                 @livewire('tenant.dashboard.graphs.email')
             </div>
 
-            <div x-show="tab === 'chargesWhatsapp'"
-                 class="shadow-xl border border-gray-100 font-light p-8 rounded text-gray-500 bg-white">
+            <div x-show="tab === 'chargesWhatsapp'">
                 @livewire('tenant.dashboard.graphs.whatsapp')
             </div>
         </div>

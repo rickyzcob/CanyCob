@@ -16,6 +16,16 @@
     </a>
     @endcan
 
+    @can('tenant_view_schedule')
+        <a href="{{route('schedule.index', session('tenant')['subdomain'])}}"
+           class="flex items-center primary-text-color gap-1 p-2 h-14 cursor-point
+        {{ Request::routeIs('schedule.index')  ? 'primary-active primary-text-active ' : 'primary-text-color' }}">
+
+            <span class="material-icons text-base ">calendar_month</span>
+            Agenda
+        </a>
+    @endcan
+
     @can('tenant_view_agreement')
     <a href="{{route('agreement.index', session('tenant')['subdomain'])}}"
        class="flex items-center primary-text-color  gap-1 p-2 h-14 cursor-point

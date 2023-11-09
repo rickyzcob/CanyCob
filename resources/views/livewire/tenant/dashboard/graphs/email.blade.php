@@ -1,10 +1,11 @@
 <div>
-    <div class=" justify-center items-center">
-        <div class="ml-4" id="chargesEmail"> </div>
-    </div>
+    <x-card cardClasses="h-64 border-l-4 border-yellow-500">
+        <div class=" justify-center items-center">
+            <div class="ml-4" id="chargesEmail"> </div>
+        </div>
+    </x-card>
 </div>
-@push('body-scripts')
-    @once
+@push('scripts')
         <script>
 
             var days =  {{ Js::from($response->chargeEmail['day']) }};
@@ -95,5 +96,4 @@
             chartChargesEmail.render();
 
         </script>
-    @endonce
 @endpush

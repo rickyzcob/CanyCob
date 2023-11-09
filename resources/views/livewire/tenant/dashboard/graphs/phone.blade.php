@@ -1,17 +1,18 @@
 <div>
+    <x-card cardClasses="h-64 border-l-4 border-red-700">
     <div class=" justify-center items-center">
         <div class="ml-4" id="chargesPhone"> </div>
     </div>
+    </x-card>
 </div>
-{{--@dd($response)--}}
-@push('body-scripts')
-    @once
-        <script>
+
+
+@push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+        <script type="text/javascript">
 
             var days =  {{ Js::from($response->chargePhones['day']) }};
             var countPhones = {{ Js::from($response->chargePhones['totalPhone']) }};
-            {{--var countEmails = {{ Js::from($response->chargeEmail['totalEmail']) }};/s/--}}
-            {{--var countWhatsapp = {{ Js::from($response->chargeEmail['totalWhatsapp']) }};--}}
 
 
             var options = {
@@ -20,11 +21,7 @@
                         name: "Telefone",
                         data: countPhones
                     }
-                    // {
-                    //     name: "Whatsapp",
-                    //     data: countWhatsapp
-                    // }
-                ],
+                    ],
                 chart: {
                     toolbar: false,
                     height: 183,
@@ -96,5 +93,4 @@
             chartChargesPhone.render();
 
         </script>
-    @endonce
 @endpush

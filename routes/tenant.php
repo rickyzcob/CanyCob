@@ -39,6 +39,8 @@ Route::domain('{subdomain}.' . env('APP_URL'))->group(function ($router) {
         Route::view('/cobrancas', 'tenant.charges.index')->middleware('permission:tenant_view_charges')->name('charges.index');
         Route::get('/cobrancas/{reference}/detalhes', [DetailsChargesCrontroller::class, 'show'])->middleware('permission:tenant_details_charges')->name('charges.show');
 
+        Route::view('/agenda', 'tenant.schedule.index')->middleware('permission:tenant_view_schedule')->name('schedule.index');
+
         Route::view('/acordos', 'tenant.agreement.index')->middleware('permission:tenant_view_agreement')->name('agreement.index');
         Route::get('/acordos/{reference}/vizualizar', [AgreementController::class, 'show'])->middleware('permission:tenant_view_details_agreement')->name('agreement.show');
 
