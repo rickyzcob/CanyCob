@@ -20,14 +20,13 @@ class UserRequest
             'role_id' =>' required',
             'email' => [
                 'required',
-                'email:rfc,dns',
+//                'email:rfc,dns',
                 "unique :users,email,{$id},id"
             ],
             'phone' => 'required',
             'document' => 'required',
             'password' => [
-                Rule::excludeIf(fn () => $id != null),
-                'required',
+                Rule::requiredIf(fn () => $id == null),
                 'string',
                 Password::min(8)
                     ->mixedCase()
@@ -69,7 +68,7 @@ class UserRequest
                     ->symbols()
                     ->uncompromised(),
                 'confirmed',
-                new ValidCurrentUserPassword()
+//                new ValidCurrentUserPassword()
             ],
         ]);
 

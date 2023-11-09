@@ -58,13 +58,14 @@
                 </div>
                 <div class="md:col-span-2">
                     @can('tenant_dashboard_view_ranking')
-{{--                        @livewire('tenant.dashboard.agreements.card')--}}
                     @livewire('tenant.dashboard.ranking.card')
                     @endcan
                 </div>
            </div>
         </div>
+        @if(auth()->user()->type  == "Colaborador")
         @livewire('components.central-modal', ['showCentralModal' => $coinsReturnDB, 'component' => 'tenant.dashboard.humor.card',  'title' => '', 'message' => '', 'function' => 'addHumor', 'params' => ['id' => null]])    </section>
+        @endif
 @stop
 
 

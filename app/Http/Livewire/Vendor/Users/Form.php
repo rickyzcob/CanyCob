@@ -20,7 +20,8 @@ class Form extends Component
         'value_agreement' => '',
         'role_id' => '',
         'phone' => '',
-        'document' => ''
+        'document' => '',
+        'password' => ''
     ];
 
     public $user;
