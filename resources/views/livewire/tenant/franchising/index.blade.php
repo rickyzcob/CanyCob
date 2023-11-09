@@ -8,12 +8,14 @@
                 <li class="text-gray-100">Franqueados</li>
             </ol>
         </nav>
-        <div class="card p-5 gap-4 p-2">
+        <div class="card p-5 gap-4 mb-4">
             <div class="flex items-start justify-between  border-b-2 mb-2 ">
                 <h1 class="text-lg text-gray-600 font-semibold py-2">Franqueados</h1>
-                <x-button icon="home" positive label="Cadastrar" x-data={}
-                          x-on:click="livewire.emitTo('components.open-modal', 'showModal', 'tenant.franchising.form', {'id' : null})">
-                </x-button>
+                @can('tenant_add_franchising')
+                    <x-button icon="plus-circle" positive label="Cadastrar" x-data={}
+                              x-on:click="livewire.emitTo('components.open-modal', 'showModal', 'tenant.franchising.form', {'id' : null})">
+                    </x-button>
+                @endcan
             </div>
 
             @livewire('tenant.franchising.filter')

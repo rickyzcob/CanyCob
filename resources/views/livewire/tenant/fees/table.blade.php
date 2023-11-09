@@ -29,10 +29,10 @@
                 </td>
                 <td width="150px">
                     <div class="flex flex-wrap justify-items-center gap-x-2">
-                        @can('edit_fees')
+                        @can('tenant_edit_fees')
                         <x-button.circle warning wire:click="openModal('tenant.fees.form', {'id': {{ $itemFees['id'] }} } )" warning icon="pencil-alt" />
                         @endcan
-                        @can('delete_fees')
+                        @can('tenant_delete_fees')
                         <x-button.circle negative icon="x-circle" wire:click="openConfirmModal({{ $itemFees['id'] }}, 'Apagar Registro' , 'Você tem certeza que deseja apagar o seguinte o registro, {{ $itemFees['name'] }} ?', 'confirmDeleteFees')" />
                         @endcan
                     </div>

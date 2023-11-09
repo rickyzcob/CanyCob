@@ -21,8 +21,12 @@
                 <td>{{ formatCPFCNPJ($itemPartner['cpf']) }}</td>
                 <td width="150px">
                     <div class="flex flex-wrap justify-items-center gap-x-2">
-                        <x-button.circle wire:click="openModal('tenant.partners.form', {'id': {{ $itemPartner['id'] }} } )" primary icon="pencil" />
-                        <x-button.circle wire:click="$emit('showDeleteModal', {{ $itemPartner['id'] }}, 'Apagar Registro' , 'Você tem certeza que deseja apagar o seguinte o registro, {{ $itemPartner['name'] }} ?')" negative icon="x" />
+                        @can('tenant_edit_partner')
+                            <x-button.circle wire:click="openModal('tenant.partners.form', {'id': {{ $itemPartner['id'] }} } )" primary icon="pencil" />
+                        @endcan
+                        @can('tenant_delete_partner')
+                            <x-button.circle wire:click="$emit('showDeleteModal', {{ $itemPartner['id'] }}, 'Apagar Registro' , 'Você tem certeza que deseja apagar o seguinte o registro, {{ $itemPartner['name'] }} ?')" negative icon="x" />
+                        @endcan
                     </div>
                 </td>
             </tr>

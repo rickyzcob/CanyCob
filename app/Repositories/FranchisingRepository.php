@@ -2,9 +2,8 @@
 
 namespace App\Repositories;
 
-use App\Http\Repository\FranchisingRequest;
-use App\Http\Requests\ProductRequest;
 use App\Models\Franchisings;
+use App\Requests\FranchisingRequest;
 use Illuminate\Support\Facades\Storage;
 use PHPUnit\Exception;
 
@@ -56,9 +55,9 @@ class FranchisingRepository
 
         try {
 
-            if($requestValidated['image'] != null){
-                $requestValidated['image'] = $requestValidated['image']->store('Franchising', 'public');
-            }
+//            if($requestValidated['image'] != null){
+//                $requestValidated['image'] = $requestValidated['image']->store('Franchising', 'public');
+//            }
 
             $franchisingDB = Franchisings::query()->create($requestValidated);
 

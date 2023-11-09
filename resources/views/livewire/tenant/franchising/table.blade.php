@@ -26,10 +26,18 @@
                 <td width="250px">
                     <div class="flex flex-wrap justify-items-center gap-x-2">
                         <x-button sm gray icon="eye" primary />
-                        <x-button sm blue icon="user-circle" primary wire:click="openModal('tenant.franchising.partners.table', {'id': {{ $itemPaymentFranchising['id'] }} } )"/>
-                        <x-button sm orange icon="user" primary wire:click="openModal('tenant.franchising.contacts.table', {'id': {{ $itemPaymentFranchising['id'] }} } )"/>
-                        <x-button sm warning icon="pencil-alt" wire:click="openModal('tenant.franchising.form', {'id': {{ $itemPaymentFranchising['id'] }} } )" />
-                        <x-button sm wire:click="$emit('showDeleteModal', {{ $itemPaymentFranchising['id'] }}, 'Apagar Registro' , 'Você tem certeza que deseja apagar o seguinte o registro, {{ $itemPaymentFranchising['name'] }} ?')" negative icon="x" />
+                        @can('tenant_partners_franchising')
+                            <x-button sm blue icon="user-circle" primary wire:click="openModal('tenant.franchising.partners.table', {'id': {{ $itemPaymentFranchising['id'] }} } )"/>
+                        @endcan
+                        @can('tenant_collaborators_franchising')
+                            <x-button sm orange icon="user" primary wire:click="openModal('tenant.franchising.contacts.table', {'id': {{ $itemPaymentFranchising['id'] }} } )"/>
+                        @endcan
+                        @can('tenant_edit_franchising')
+                            <x-button sm warning icon="pencil-alt" wire:click="openModal('tenant.franchising.form', {'id': {{ $itemPaymentFranchising['id'] }} } )" />
+                        @endcan
+                        @can('tenant_delete_franchising')
+                            <x-button sm wire:click="$emit('showDeleteModal', {{ $itemPaymentFranchising['id'] }}, 'Apagar Registro' , 'Você tem certeza que deseja apagar o seguinte o registro, {{ $itemPaymentFranchising['name'] }} ?')" negative icon="x" />
+                        @endcan
                     </div>
                 </td>
             </tr>

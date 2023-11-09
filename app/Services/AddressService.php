@@ -13,9 +13,45 @@ class AddressService
     {
         $countZip = strlen($postalCode);
 
-        if($countZip == 8) {
-            $request = file_get_contents('https://viacep.com.br/ws/'.$postalCode.'/json/');
-            return json_decode($request);
+        if($countZip === 8) {
+            $client = new Client();
+            $request = new Request('GET', 'https://viacep.com.br/ws/'.$postalCode.'/json/'); // create request
+
+            $response = $client->send($request);
+
+            $return = [];
+
+            $result = json_decode($response->getBody()->getContents());
+
+            if(isset($result->erro)){
+                return [
+                    'code' => 400,
+                    'title' => 'Cep Não Encontrado',
+                    'message' => 'Por favor verifique se o cep foi digitado corretamente!'
+                ];
+
+            } else {
+//                $region = $this->getRegion($result->uf);
+
+                $return['logradouro'] = $result->logradouro ?? '';
+                $return['bairro'] = $result->bairro ?? '';
+                $return['localidade'] = $result->localidade ?? '';
+                $return['uf'] = $result->uf ?? '';
+//                $return['regiao'] = $region ?? '';
+
+                return [
+                    'code' => 200,
+                    'data' => $return
+                ];
+            }
+
+
+        } else {
+            return [
+                'code' => 400,
+                'title' => 'Cep Não Encontrado',
+                'message' => 'Por favor verifique se o cep foi digitado corretamente!'
+            ];
         }
     }
 

@@ -11,10 +11,11 @@
         <div class="card p-5 gap-4 p-2">
             <div class="flex items-start justify-between  border-b-2 mb-2 ">
                 <h1 class="text-lg text-gray-600 font-semibold py-2">Sócios</h1>
+                @can('tenant_add_partner')
                 <x-button icon="user-add" positive label="Cadastrar" x-data={}
-                          x-on:click="livewire.emitTo('components.open-modal', 'showModal', 'partners.form', {'id' : null})">
+                          x-on:click="livewire.emitTo('components.open-modal', 'showModal', 'tenant.partners.form', {'id' : null})">
                 </x-button>
-
+                @endcan
 {{--                <x-button positive icon="user-add" label="Cadastrar" wire:click.prevent="openModal('partners.form', {'id': null } )"  />--}}
             </div>
 
