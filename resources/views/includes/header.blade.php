@@ -78,7 +78,7 @@
                         </form>
                     </div>
                 </div>
-                @canany(['view_configuration', 'view_permission', 'view_user'])
+                @canany(['tenant_view_configuration', 'tenant_view_configuration_params', 'tenant_view_permission', 'tenant_view_user', 'tenant_view_ranking'])
                     <div x-data="{ open: false }"  class="relative">
                         <div  @click="open = true" class="flex items-center justify-center primary-color primary-text-color h-14 w-14 cursor-pointer
                             {{ request()->is('configuracoes*') ? 'primary-text-active primary-active' : 'primary-text-color' }}"
@@ -99,7 +99,7 @@
                                 </a>
                             @endcan
                             @if(auth()->user()->tenant->scope == 'Cliente')
-                            @can('view_configuration')
+                            @can('tenant_view_configuration_params')
                             <a href="{{route('configuration.index', session('tenant')['subdomain'])}}"
                                class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-600  border-b-2 border-gray-20">
                                 <span class="material-icons text-base pr-2">settings_suggest</span>
@@ -107,28 +107,28 @@
                             </a>
                             @endcan
                             @endif
-                            @can('view_permission')
+                            @can('tenant_view_permission')
                                 <a href="{{route('permissions.index', session('tenant')['subdomain'])}}"
                                    class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-600  border-b-2 border-gray-20">
                                     <span class="material-icons text-base pr-2">engineering</span>
                                     Permissões
                                 </a>
                             @endcan
-                            @can('view_user')
+                            @can('tenant_view_user')
                                 <a href="{{route('user.index', session('tenant')['subdomain'])}}"
                                    class="block flex items-center px-4 py-2 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-600  border-b-2 border-gray-200">
                                     <span class="material-icons text-base pr-2">people</span>
                                     Usuários
                                 </a>
                             @endcan
-                                @can('tenant_view_ranking')
-                            @if(auth()->user()->tenant->scope == 'Cliente')
-                            <a href="{{route('ranking.index', session('tenant')['subdomain'])}}"
-                               class="block flex items-center px-4 py-2 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-600  border-b-2 border-gray-200">
-                                <span class="material-icons text-base pr-2">star_half</span>
-                                Ranking
-                            </a>
-                            @endif
+                            @can('tenant_view_ranking')
+                                @if(auth()->user()->tenant->scope == 'Cliente')
+                                <a href="{{route('ranking.index', session('tenant')['subdomain'])}}"
+                                   class="block flex items-center px-4 py-2 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-600  border-b-2 border-gray-200">
+                                    <span class="material-icons text-base pr-2">star_half</span>
+                                    Ranking
+                                </a>
+                                @endif
                             @endcan
                         </div>
                     </div>

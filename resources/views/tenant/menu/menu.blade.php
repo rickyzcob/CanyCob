@@ -45,7 +45,7 @@
             Humor
         </a>
     @endcan
-    @canany(['tenant_view_releases', 'tenant_iew_franchising', 'tenant_view_partner', 'tenant_view_type_status_charges', 'tenant_view_fees'])
+    @canany(['tenant_view_releases', 'tenant_view_franchising', 'tenant_view_partner', 'tenant_view_type_status_charges', 'tenant_view_fees'])
     <div x-data="{ open: false }" @mouseleave="open = false" class="relative">
         <div  @mouseover="open = true" class="flex items-center primary-text-color  gap-1 p-2 h-14 cursor-pointer
         {{ request()->is('cadastros*') ? 'primary-active primary-text-active ' : 'primary-text-color' }}"
@@ -88,10 +88,10 @@
             </a>
             @endcan
 {{--                @can('tenant_view_type_status_charges')--}}
-            <a href="{{route('chargestatuses.index', session('tenant')['subdomain'])}}"
-               class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-600  border-b-2 border-gray-20">
-                Status da Cobrança
-            </a>
+{{--            <a href="{{route('chargestatuses.index', session('tenant')['subdomain'])}}"--}}
+{{--               class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-600  border-b-2 border-gray-20">--}}
+{{--                Status da Cobrança--}}
+{{--            </a>--}}
 {{--                @endcan--}}
         </div>
     </div>
