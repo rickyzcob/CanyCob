@@ -1,7 +1,7 @@
 <div>
     <x-card cardClasses="h-[323px] border-l-4 border-violet-600">
         <div class="flex items-start justify-between border-b-2 mb-2">
-            <h1 class="text-base text-gray-600 font-semibold py-2">Acompanhamento dos acordos emitidos 2</h1>
+            <h1 class="text-base text-gray-600 font-semibold py-2">Acompanhamento dos acordos emitidos</h1>
         </div>
         <div class="scrollbar-agreements" id="style-1">
             <ul class="max-w-full flex flex-col">
