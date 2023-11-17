@@ -1,0 +1,118 @@
+.calendar {
+    float: left;
+    margin-bottom: 0;
+}
+
+.none-border .modal-footer {
+    border-top: none;
+}
+
+
+.fc-toolbar {
+    margin-bottom: 5px;
+}
+
+.fc-toolbar h2 {
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 20px;
+    text-transform: uppercase;
+}
+
+.fc-day {
+    background: #ffffff;
+}
+
+.fc-toolbar .fc-state-active, .fc-toolbar .ui-state-active,
+.fc-toolbar button:focus, .fc-toolbar button:hover,
+.fc-toolbar .ui-state-hover {
+    z-index: 0;
+}
+
+.fc-widget-header {
+    border: 1px solid #d5d5d5;
+    background-color: #f9f9f9;
+}
+
+.fc-widget-content {
+    border: 1px solid #d5d5d5;
+}
+
+.fc th.fc-widget-header {
+    font-size: 14px;
+    line-height: 20px;
+    padding: 10px 0;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.fc .fc-button-primary {
+    font-size: 1em;
+    font-weight: 400;
+    height: 38px;
+    background-color: var(--user-primary-color);
+    border-color: var(--user-primary-color);
+    color: var(--text-primary-color);
+}
+
+.fc-state-active, .fc-state-down {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    background-color: #35a989;
+    border-color: #35a989;
+    color: #ffffff;
+}
+
+.fc-text-arrow {
+    font-family: arial;
+    font-size: 16px;
+}
+
+.fc-state-hover {
+    background: #e9ecef;
+}
+
+.fc-state-highlight {
+    background: #f0f0f0;
+}
+
+.fc-cell-overlay {
+    background: #f0f0f0;
+}
+
+.fc-unthemed .fc-today {
+    background: #ffffff;
+}
+
+.fc-event {
+    border-radius: 2px;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+    margin: 5px 0;
+    padding: 5px 5px;
+    text-align: center;
+    background-color: var(--user-primary-color);
+    color: #ffffff !important;
+    -webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.08);
+}
+
+.fc-event .fc-time {
+    font-weight: 500;
+}
+
+.external-event {
+    color: #ffffff;
+    cursor: move;
+    margin: 10px 0;
+    padding: 6px 10px;
+}
+
+.fc-basic-view td.fc-week-number span {
+    padding-right: 5px;
+}
+
+.fc-basic-view td.fc-day-number {
+    padding-right: 5px;
+}

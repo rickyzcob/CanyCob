@@ -6,6 +6,7 @@
             <th>Função</th>
             <th>Status</th>
             <th>Data de Cadastro</th>
+            <th>Cor Legenda</th>
             <div class="justify-items-center">
                 <th>Açoes</th>
             </div>
@@ -18,7 +19,7 @@
                     <div class="flex items-center gap-2">
                         @if($itemUser->image == null)
                             <x-avatar md  src="{{ url('img/user-default.png') }}" />
-                        @else
+                           @else
                             <x-avatar md src="{{ url('storage/'.$itemUser->image) }}" />
                         @endif
                         {{ $itemUser['name'] }}
@@ -38,6 +39,7 @@
                     </div>
                 </td>
                 <td>{{ formatDate($itemUser['created_at']) }}</td>
+                <td><x-badge color="red" label="Black" /></td>
                 <td width="150px">
                     <div class="flex flex-wrap justify-items-center gap-x-2">
                         @canany(['tenant_edit_user', 'admin_edit_user'])

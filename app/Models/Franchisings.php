@@ -9,9 +9,11 @@ class Franchisings extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['tenant_id', 'user_id', 'attendant_id', 'status_id', 'termination_id', 'sale_id', 'name', 'supervisor', 'address', 'number', 'complement',
-        'cep', 'state', 'city', 'bairro', 'regiao', 'google_maps', 'populacao', 'cluster', 'country', 'razao_social', 'cnpj', 'cro', 'insc', 'responsavel_tecnico',
-        'responsavel_tecnico_cro', 'phone01', 'phone02', 'whatsapp', 'site', 'email', 'email_site', 'description', 'image', 'status'];
+    protected $fillable = [
+        'tenant_id', 'attendant_id', 'status_id', 'name', 'corporate_name', 'employer_number', 'state_registration', 'zip_code',
+        'address', 'number', 'complement', 'state', 'city', 'neighborhood', 'region', 'google_maps', 'country',  'phone01',
+        'phone02', 'whatsapp', 'site', 'email', 'email_site', 'description', 'image', 'status'
+    ];
 
     public function statusFran()
     {

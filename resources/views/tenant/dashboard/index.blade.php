@@ -63,9 +63,8 @@
                 </div>
            </div>
         </div>
-        @if(auth()->user()->type  == "Colaborador")
-        @livewire('components.central-modal', ['showCentralModal' => $coinsReturnDB, 'component' => 'tenant.dashboard.humor.card',  'title' => '', 'message' => '', 'function' => 'addHumor', 'params' => ['id' => null]])    </section>
-        @endif
+
+
 @stop
 
 

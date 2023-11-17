@@ -12,6 +12,6 @@ class DashboardController extends Controller
         $coinsRepository = new CoinsRepository();
         $coinsReturnDB = $coinsRepository->getLastCoinByHumor();
 
-        return view('tenant.dashboard.index',compact('coinsReturnDB'));
+        return view('tenant.dashboard.index', compact('coinsReturnDB'));
     }
 }

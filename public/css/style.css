@@ -402,3 +402,9 @@ mini-stat-icon {
     /*border: 2px solid #f00;*/
     /*--tw-ring-offset-shadow: 0 0 3pt 2pt cornflowerblue;*/
 }
+
+.fc .fc-prevMonth-button,
+.fc .fc-nextMonth-button {
+    font-size: 18px;
+    background: #0b5ee7;
+}

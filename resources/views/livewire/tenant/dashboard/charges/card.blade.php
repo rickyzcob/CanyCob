@@ -19,7 +19,7 @@
                 @foreach($response->charges as $itemCharge)
                     <tr>
                         <td>{{ $itemCharge['franchising']['name'] }}</td>
-                        <td>{{ $itemCharge['franchising']['cnpj'] }}</td>
+                        <td>{{ $itemCharge['franchising']['employer_number'] }}</td>
                         <td> {{ formatMoney($itemCharge['total_amount']) }}</td>
                         <td> {{ formatMoney($itemCharge['total_amount_corrected']) }}</td>
                         <td> <x-badge outline color="{{$itemCharge['status']['color']}}" label="{{$itemCharge['status']['name']}}" /></td>

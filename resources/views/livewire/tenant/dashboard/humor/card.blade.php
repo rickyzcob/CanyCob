@@ -5,7 +5,7 @@
                 <h1 class="text-sky-800" >Como você está se sentindo ?</h1>
             </div>
             <div class="p-5">
-                <form>
+                <form wire:submit.prevent="submit">
                     <div class="flex items-center justify-center gap-2 w-96 p-3">
                         <label>
                             <input type="radio" wire:model.defer="state.humor" name="humor" value="1">
@@ -34,7 +34,7 @@
                     <div class="p-2 w-full">
                         <x-textarea wire:model.defer="state.description" placeholder="Nos conte o que te faz sentir assim !!! " />
                     </div>
-                </form>
+
             </div>
 
             <div>
@@ -49,6 +49,10 @@
                 <x-avatar md src="https://picsum.photos/299?size=24x" />
                 <x-avatar md src="https://picsum.photos/280?size=24x" />
             </div>
+
+            <x-button type="submit" icon="check" positive label="Enviar" />
+
+            </form>
         </div>
     </x-card>
 </div>

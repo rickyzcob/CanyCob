@@ -221,7 +221,7 @@ class CoinsRepository
         } catch (Exception $exception){
             return [
                 'status' => 'error',
-                'code' => 200,
+                'code' => 400,
                 'message' => 'Erro na requisição'
             ];
         }

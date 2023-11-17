@@ -21,8 +21,8 @@
                 </div>
 
                 <div class="md:col-span-12 col-span-12">
-                    <x-input  wire:model.defer="state.razao_social" label="Razão Social"/>
-                    @error('razao_social')
+                    <x-input  wire:model.defer="state.corporate_name" label="Razão Social"/>
+                    @error('corporate_name')
                     <div class="text-red-800 text-xs p-1">{{ $message }}</div>
                     @enderror
                 </div>
@@ -31,15 +31,15 @@
                     <x-inputs.maskable
                         mask="['##.###.###/####-##']"
                         emitFormatted="True"
-                        wire:model.lazy="state.cnpj" label="CNPJ"/>
-                    @error('cnpj')
+                        wire:model.lazy="state.employer_number" label="CNPJ"/>
+                    @error('employer_number')
                     <div class="text-red-800 text-xs p-1">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="md:col-span-4 col-span-12">
-                    <x-input maxlength="9"  wire:model.defer="state.insc" label="Ins. Estadual"/>
-                    @error('insc')
+                    <x-input maxlength="9"  wire:model.defer="state.state_registration" label="Ins. Estadual"/>
+                    @error('state_registration')
                     <div class="text-red-800 text-xs p-1">{{ $message }}</div>
                     @enderror
                 </div>
@@ -58,7 +58,7 @@
 
                 <div class="md:col-span-4 col-span-12">
                     <div class="styled-1">
-                        <x-native-select   class="sty" label="Atendente" wire:model.defer="state.attendant_id">
+                        <x-native-select label="Atendente" wire:model.defer="state.attendant_id">
                             <option value="" ></option>
                             @foreach($response->attendants as $itemAttendant)
                             <option value="{{ $itemAttendant['id'] }}" >{{ $itemAttendant['name'] }}</option>
@@ -68,44 +68,6 @@
                         <div class="text-red-800 text-xs p-1">{{ $message }}</div>
                         @enderror
                     </div>
-                </div>
-
-                <div class="md:col-span-4 col-span-12">
-                    <x-input wire:model.defer="state.supervisor" label="Supervisor"/>
-                    @error('supervisor')
-                    <div class="text-red-800 text-xs p-1">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="md:col-span-4 col-span-12">
-                    <x-input  wire:model.defer="state.cro" label="CRO"/>
-                    @error('cro')
-                    <div class="text-red-800 text-xs p-1">{{ $message }}</div>
-                    @enderror
-                </div>
-
-
-
-
-
-                <div class="md:col-span-12 col-span-12">
-                    <div class="flex items-start justify-between border-b-2 mt-5">
-                        Responsável CRO
-                    </div>
-                </div>
-
-                <div class="md:col-span-6 col-span-12">
-                    <x-input wire:model.defer="state.responsavel_tecnico" label="Responsável CRO"/>
-                    @error('responsavel_tecnico')
-                    <div class="text-red-800 text-xs p-1">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="md:col-span-6 col-span-12">
-                    <x-input  wire:model.defer="state.responsavel_tecnico_cro" label="CRO"/>
-                    @error('responsavel_tecnico_cro')
-                    <div class="text-red-800 text-xs p-1">{{ $message }}</div>
-                    @enderror
                 </div>
 
                 <div class="md:col-span-12 col-span-12">
@@ -118,8 +80,8 @@
                     <x-inputs.maskable
                         icon="location-marker"
                         mask="['#####-###']"
-                        wire:model.lazy="state.cep" label="CEP"/>
-                    @error('cep')
+                        wire:model.lazy="state.zip_code" label="CEP"/>
+                    @error('zip_code')
                     <div class="text-red-800 text-xs p-1">{{ $message }}</div>
                     @enderror
                 </div>
@@ -146,8 +108,8 @@
                 </div>
 
                 <div class="md:col-span-5 col-span-12">
-                    <x-input wire:model.defer="state.bairro" label="Bairro"/>
-                    @error('bairro')
+                    <x-input wire:model.defer="state.neighborhood" label="Bairro"/>
+                    @error('neighborhood')
                     <div class="text-red-800 text-xs p-1">{{ $message }}</div>
                     @enderror
                 </div>
@@ -169,13 +131,6 @@
                 <div class="md:col-span-2 col-span-12">
                     <x-input wire:model.defer="state.state" label="Estado"/>
                     @error('state')
-                    <div class="text-red-800 text-xs p-1">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="md:col-span-2 col-span-12">
-                    <x-input wire:model.defer="state.populacao" label="População"/>
-                    @error('populacao')
                     <div class="text-red-800 text-xs p-1">{{ $message }}</div>
                     @enderror
                 </div>
@@ -233,21 +188,9 @@
                     @enderror
                 </div>
 
-
-
-{{--                <div class="md:col-span-6 col-span-12">--}}
-{{--                    <x-inputs.maskable--}}
-{{--                        mask="['(##) ####-####', '(##) #####-####']"--}}
-{{--                        emitFormatted="True"--}}
-{{--                        label="Telefone"--}}
-{{--                        wire:model.defer="state.phone"  />--}}
-{{--                    @error('phone')--}}
-{{--                    <div class="text-red-800 text-xs p-1">{{ $message }}</div>--}}
-{{--                    @enderror--}}
-{{--                </div>--}}
-
-                <div class="col-span-12">
+                <div class="col-span-12 items-start gap-5" >
                     <x-button type="submit" icon="check" spinner="save" positive label="{{ $franchising ? 'Atualizar' : 'Cadastrar' }}" />
+                    <x-button wire:click="getDataCNPJ()" spinner icon="information-circle" warning label="Dados Receita" />
                 </div>
             </div>
         </form>

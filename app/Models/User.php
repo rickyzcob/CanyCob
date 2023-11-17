@@ -31,6 +31,7 @@ class User extends Authenticatable
         'image',
         'phone',
         'document',
+        'color',
         'role_id'
     ];
 

@@ -60,6 +60,7 @@ Route::domain('{subdomain}.' . env('APP_URL'))->group(function ($router) {
 
         Route::view('notificacoes', 'tenant.notifications.index')->name('notifications.index');
 
+
         Route::view('meu-perfil', 'tenant.profile.index')->name('profile.index');
 
         Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
@@ -68,7 +69,7 @@ Route::domain('{subdomain}.' . env('APP_URL'))->group(function ($router) {
 
     Route::get('/proposta/{reference}/vizualizar', [ProposalChargesController::class, 'show'])->name('proposal.show');
     Route::get('/formalizar/{reference}/vizualizar', [PorposalFormalizedController::class, 'show'])->name('formalized.show');
-
+    Route::view('frontend', 'frontend.index')->name('notifications.index');
 });
 
 

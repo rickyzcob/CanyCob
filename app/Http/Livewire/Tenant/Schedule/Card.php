@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Tenant\Schedule;
 
 use App\Models\Event;
+use App\Repositories\ChargesHistoricsRepository;
 use Livewire\Component;
 
 class Card extends Component
@@ -45,12 +46,24 @@ class Card extends Component
      *
      * @return response()
      */
+
+    public function getSheduleChartes()
+    {
+        $chargesHistoricRepository = new ChargesHistoricsRepository();
+        $chargesHistoricReturnDB = $chargesHistoricRepository->getChargesBySchedule();
+
+        return $chargesHistoricReturnDB;
+
+    }
     public function render()
     {
+
+        $response = new \stdClass();
+        $response->schedule = json_encode($this->getSheduleChartes());
         $events = Event::select('id','title','start')->get();
 
-        $this->events = json_encode($events);
+        $this->events = json_encode($this->getSheduleChartes());
 
-        return view('livewire.tenant.schedule.card');
+        return view('livewire.tenant.schedule.card', ['response' => $response]);
     }
 }

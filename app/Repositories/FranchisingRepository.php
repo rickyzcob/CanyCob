@@ -2,8 +2,10 @@
 
 namespace App\Repositories;
 
+use App\Jobs\ImportReleasesJob;
 use App\Models\Franchisings;
 use App\Requests\FranchisingRequest;
+use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Storage;
 use PHPUnit\Exception;
 
@@ -182,6 +184,15 @@ class FranchisingRepository
                 'code' => 401,
             ];
         }
+    }
+
+    public function import($file)
+    {
+        sleep(2);
+
+        $batch = Bus::batch([
+            new ImportReleasesJob($file),
+        ])->dispatch();
     }
 
 }

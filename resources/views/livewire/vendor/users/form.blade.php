@@ -78,6 +78,14 @@
                         @enderror
                     </div>
                 </div>
+                <div class="md:col-span-4 col-span-12">
+                    <div class="styled-1">
+                        <x-color-picker wire:model.defer="state.color" label="Selecione a Cor"  />
+                        @error('color')
+                        <div class="text-red-800 text-xs p-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
                 <div class="md:col-span-12 col-span-12">
                 <div class="flex items-start justify-between border-b-2 mt-3 ">
                     Senha

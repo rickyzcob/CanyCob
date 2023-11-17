@@ -3,6 +3,8 @@
 namespace App\Repositories;
 
 use App\Models\ChargeHistoric;
+use App\Models\Charges;
+use App\Models\ChargeSchedule;
 use App\Models\Partners;
 use App\Models\Proposals;
 use App\Notifications\NotifyChargeFranchising;
@@ -11,6 +13,7 @@ use App\Requests\SimulateRequest;
 use App\Services\SendWhatsappService;
 use App\Services\SimulationService;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use PHPUnit\Exception;
 
 class ChargesHistoricsRepository
@@ -50,13 +53,27 @@ class ChargesHistoricsRepository
         $requestValidated['charge_id'] = $charge_id;
 
         try {
+            $chargeDB = Charges::query()->with('franchising', 'attendant')->findOrFail($charge_id);
+            $chargeDB->update([
+                'date_schedule' => $requestValidated['date_schedule']
+            ]);
 
             $chargeHistoricDB = auth()->user()->historicCharge()->create($requestValidated);
+
+            if($chargeHistoricDB['success'] == 'Não'){
+                ChargeSchedule::query()->create([
+                    'user_id' => $chargeHistoricDB->user_id,
+                    'charge_id' => $chargeDB->id,
+                    'title' => $chargeDB->franchising->name,
+                    'start' => $chargeDB->date_schedule,
+                    'backgroundColor' => $chargeDB->attendant->color,
+                ]);
+            }
 
             return [
                 'status' => 'success',
                 'data' => $chargeHistoricDB,
-                'code' => 202,
+                'code' => 200,
                 'message' => 'Histórico cadastrado com sucesso !'
             ];
 
@@ -66,7 +83,7 @@ class ChargesHistoricsRepository
             return [
                 'status' => 'error',
                 'data' => $exception,
-                'code' => 200,
+                'code' => 400,
                 'message' => 'Erro ao Cadastrar'
             ];
 
@@ -247,6 +264,36 @@ class ChargesHistoricsRepository
                 'message' => 'Erro ao fazer a simulação'
             ];
         }
+    }
+
+    public function getChargesBySchedule()
+    {
+        try {
+            $chargeScheduleDB = ChargeSchedule::query()->get();
+
+            $return = [];
+
+            foreach ($chargeScheduleDB as $key => $item) {
+                $return[$key]['id'] = $item->id;
+                $return[$key]['title' ]= $item->title;
+                $return[$key]['start'] = $item->start;
+                $return[$key]['color'] = 'hsl('.$item->backgroundColor.')';
+//                $return[$key]['allDay'] = true;
+
+
+            }
+
+//            dd($return);
+            return $return;
+
+        } catch ( Exception $exception) {
+            return [
+                'status' => 'error',
+                'code' => 400,
+                'message' => 'Erro ao fazer a simulação'
+            ];
+        }
+
     }
 
 }

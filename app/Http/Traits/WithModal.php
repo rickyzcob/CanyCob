@@ -8,6 +8,16 @@ trait
     public $showDeleteModal = false;
     public $type = '';
 
+    public function openLeftModal($component, $params = [], $modal = null)
+    {
+        $this->emitTo('components.left-modal', 'showLeftModal', $component,  $params);
+    }
+
+    public function closeLeftModal($modal = null)
+    {
+        $this->emitTo('components.left-modal', 'closeLeftModal');
+    }
+
     public function openModal($component, $params = [], $modal = null)
     {
         if($modal == null) {;

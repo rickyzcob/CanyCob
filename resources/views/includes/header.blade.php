@@ -1,5 +1,5 @@
 <header class="relative top-0 z-20 ">
-    <nav class="fixed primary-color navbar navbar-expand-lg shadow-md flex items-center w-full h-16 justify-between border-b-8">
+    <nav class="fixed primary-color navbar navbar-expand-lg shadow-md flex items-center w-full h-16 justify-between border-b-8 ">
         <div class="container flex flex-wrap items-center justify-between mx-auto ">
 
             <button @click="isMobileOpen = !isMobileOpen">

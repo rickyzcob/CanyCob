@@ -82,8 +82,6 @@ class DashboardRepository
                 $return['day'][$key] = formatDate($itemCharge['datetime']) ;
 
                 $return['totalPhone'][$key] += $itemCharge['count'];
-
-
             }
         } else {
             $return['totalPhone'] = 0;

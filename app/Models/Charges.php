@@ -10,7 +10,7 @@ class Charges extends Model
 {
     use HasFactory, TenantTrait;
 
-    protected $fillable = ['reference', 'franchising_id', 'attendant_id', 'proposal_accept_id', 'agreement_id', 'total_amount', 'patyment_code', 'total_amount_corrected', 'notes', 'imported', 'status_id', 'concluded', 'agreement'];
+    protected $fillable = ['reference', 'franchising_id', 'attendant_id', 'proposal_accept_id', 'agreement_id', 'total_amount', 'payment_code', 'total_amount_corrected', 'notes', 'imported', 'status_id', 'concluded', 'date_schedule', 'agreement'];
 
     public function attendant()
     {
@@ -39,6 +39,11 @@ class Charges extends Model
     public function historics()
     {
         return $this->hasMany(ChargeHistoric::class, 'charge_id');
+    }
+
+    public function lastHistoric()
+    {
+        return $this->hasOne(ChargeHistoric::class, 'charge_id');
     }
 
     public function totalHistorics()

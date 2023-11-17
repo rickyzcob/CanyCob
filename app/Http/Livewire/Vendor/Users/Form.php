@@ -21,7 +21,8 @@ class Form extends Component
         'role_id' => '',
         'phone' => '',
         'document' => '',
-        'password' => ''
+        'password' => '',
+        'color' => ''
     ];
 
     public $user;

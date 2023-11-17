@@ -11,11 +11,19 @@
         <div class="card p-5 gap-4 mb-4">
             <div class="flex items-start justify-between  border-b-2 mb-2 ">
                 <h1 class="text-lg text-gray-600 font-semibold py-2">Franqueados</h1>
-                @can('tenant_add_franchising')
-                    <x-button icon="plus-circle" positive label="Cadastrar" x-data={}
-                              x-on:click="livewire.emitTo('components.open-modal', 'showModal', 'tenant.franchising.form', {'id' : null})">
+                <div>
+                    @can('tenant_add_franchising')
+                        <x-button icon="plus-circle" positive label="Cadastrar" x-data={}
+                                  x-on:click="livewire.emitTo('components.open-modal', 'showModal', 'tenant.franchising.form', {'id' : null})">
+                        </x-button>
+                    @endcan
+
+                    <x-button icon="upload" info label="Importar"
+                              x-on:click="livewire.emitTo('components.open-modal', 'showModal', 'tenant.franchising.import.form', {'id' : null})">
                     </x-button>
-                @endcan
+
+                    <x-button warning wire:click="$emit('exportFranchisingForExcel')"  label="Exportar" icon="document" spinner/>
+                </div>
             </div>
 
             @livewire('tenant.franchising.filter')

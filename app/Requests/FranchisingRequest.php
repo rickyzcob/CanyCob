@@ -10,32 +10,26 @@ class FranchisingRequest
     {
         $validator =  Validator::validate($request, [
             'name' => 'required',
-            'razao_social' => 'required',
+            'corporate_name' => 'required',
             'attendant_id' => 'required',
-            'supervisor' => 'sometimes|nullable',
-            'status' => 'required',
-            'cnpj' => 'required',
-            'insc' => 'required',
-            'cro' => 'sometimes|nullable',
-            'resposavel_tecnico' => 'sometimes|nullable',
-            'responsavel_tecnico_cro' => 'sometimes|nullable',
-            'cep' => 'required',
+            'email' => 'required',
+            'employer_number' => 'required',
+            'state_registration' => 'sometimes|nullable',
+            'zip_code' => 'required',
             'address' => 'required',
             'number' => 'required',
             'complement' => 'sometimes|nullable',
             'country' => 'required',
             'city' => 'required',
             'state' => 'required',
-            'populacao' => 'sometimes|nullable',
             'phone01' => 'required',
             'phone02' => 'sometimes|nullable',
-            'whatsapp' => 'required',
+            'whatsapp' => 'sometimes|nullable',
             'site' => 'sometimes|nullable',
             'email_site' => 'sometimes|nullable',
-            'email' => 'required',
+            'status' => 'required',
 
         ]);
-
         return $validator;
     }
 

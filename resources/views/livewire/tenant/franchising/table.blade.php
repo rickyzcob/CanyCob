@@ -22,7 +22,7 @@
                 <td>Sim</td>
                 <td>{{ $itemPaymentFranchising['phone01'] }}</td>
                 <td> @if ($itemPaymentFranchising['statusFran'])  <x-badge color="{{$itemPaymentFranchising['statusFran']['color']}}"  label=" {{ $itemPaymentFranchising['statusFran']['name'] }}" />  @else <x-badge secondary label="Sem Status" /> @endif</td>
-                <td>{{ $itemPaymentFranchising['status'] }}</td>
+                <td><x-badge color="{{$itemPaymentFranchising['status'] == 'Ativo' ? 'positive': 'negative'}}" label="{{ $itemPaymentFranchising['status'] }}" /> </td>
                 <td width="250px">
                     <div class="flex flex-wrap justify-items-center gap-x-2">
                         <x-button sm gray icon="eye" primary />

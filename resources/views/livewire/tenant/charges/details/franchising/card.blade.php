@@ -10,11 +10,11 @@
         </div>
         <div class="flex items-start justify-between mb-2">
             <div class="justify-between items-center w-full">
-                <p> <span class="font-bold"> Razão Social : </span>{{$franchising['razao_social']}}</p>
-                <p> <span class="font-bold"> Endereço : </span> {{$franchising['address']}} - {{$franchising['number']}} - {{$franchising['complement']}} - {{$franchising['cep']}} </p>
-                <p> <span class="font-bold"> Região : </span> {{$franchising['regiao']}} </p>
+                <p> <span class="font-bold"> Razão Social : </span>{{$franchising['corporate_name']}}</p>
+                <p> <span class="font-bold"> Endereço : </span> {{$franchising['address']}} - {{$franchising['number']}} - {{$franchising['complement']}} - {{$franchising['zip_code']}} </p>
+                <p> <span class="font-bold"> Região : </span> {{$franchising['region']}} </p>
                 <p> <span class="font-bold"> Telefones : </span> {{$franchising['phone01']}} - {{$franchising['phone02']}}</p>
-                <p> <span class="font-bold"> CNPJ : </span> {{$franchising['cnpj']}} <span class="font-bold"> Inscrição Estadual : </span> {{$franchising['insc']}} </p>
+                <p> <span class="font-bold"> CNPJ : </span> {{$franchising['employer_number']}} <span class="font-bold"> Inscrição Estadual : </span> {{$franchising['state_registration']}} </p>
                 <p> <span class="font-bold"> {{$franchising['city']}} - {{$franchising['state']}}  </span>  </p>
             </div>
         </div>

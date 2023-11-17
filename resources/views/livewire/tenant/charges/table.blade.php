@@ -27,7 +27,7 @@
                     <div class="flex flex-wrap justify-items-center gap-x-2">
                         <x-button a href="{{route('charges.show', ['subdomain' => session('tenant')['subdomain'], 'reference' => $itemCharge['reference'] ])}}" sm gray icon="eye" primary />
                         <x-button sm teal icon="cash" primary wire:click="openModal('tenant.charges.releases.table', {'charge_id': {{ $itemCharge['id'] }} } )"/>
-                        <x-button sm orange icon="document-report" primary wire:click="openModal('tenant.charges.historic.table', {'charge_id': {{ $itemCharge['id']  }} } )"/>
+                        <x-button sm orange icon="document-report" primary wire:click="openLeftModal('tenant.charges.historic.table', {'charge_id': {{ $itemCharge['id']  }} } )"/>
                         <x-button sm cyan icon="folder" primary wire:click="openModal('tenant.charges.proposal.table', {'charge_id': {{ $itemCharge['id']  }} } )"/>
                     </div>
                 </td>

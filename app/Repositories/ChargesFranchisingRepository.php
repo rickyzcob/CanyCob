@@ -314,17 +314,24 @@ class ChargesFranchisingRepository
 
     public function getDontChargesByUser()
     {
-        $now = Carbon::now();
-//        $date = \Carbon\Carbon::today()->subDays(10);
 
+        $now = Carbon::now();
+        //        $date = \Carbon\Carbon::today()->subDays(10);
+
+//        dd($now->toDateTimeString());
         try {
-            $franchisingDB = Charges::query()->with('releases','attendant', 'franchising', 'historics');
+            $franchisingDB = Charges::query()->with(['releases','attendant', 'franchising',
+                'lastHistoric' => function ($query) {
+                    $query->where('success', 'Não');
+                    $query->orderBy('created_at', 'DESC')->first();
+                }]);
 
             $franchisingDB->where('status_id', 9);
+            $franchisingDB->whereDate('date_schedule', $now);
 
-            $franchisingDB->whereHas('historics', function ($query) use ($now) {
-                $query->whereDate('date_schedule', $now);
-            });
+//            $franchisingDB->whereHas('lastHistoric', function ($query) use ($now) {
+//                $query->whereDate('date_schedule', $now);
+//            });
 
             $franchisingDB->whereHas('releases', function ($query) {
                 $query->whereIn('status_id', [2,3,6,8,9])->orderBy('created_at', 'DESC');
@@ -339,6 +346,7 @@ class ChargesFranchisingRepository
                 $franchisingDB = $franchisingDB->get();
             }
 
+//            dd($franchisingDB);
             return [
                 'status' => 'success',
                 'data' => $franchisingDB,

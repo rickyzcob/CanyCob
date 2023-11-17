@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\HistoricMonthCoins;
 use App\Models\User;
 use App\Requests\UserRequest;
+use App\Services\ChangeColorsService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithPagination;
@@ -87,7 +88,8 @@ class UserRepository
         $userRequest = new UserRequest();
         $requestValidated = $userRequest->validate($request, $id);
 
-//        dd($requestValidated);
+        $changeColorService = new ChangeColorsService();
+        $requestValidated['color'] = $changeColorService->hexToHsl($requestValidated['color']);
 
         try {
             $userDB = User::query()->findOrFail($id);

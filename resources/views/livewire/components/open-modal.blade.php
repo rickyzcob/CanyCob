@@ -1,5 +1,5 @@
 <div>
-    <div class="fixed top-16 right-0 z-10 md:w-[720px] w-full bg-white text-gray-500 h-screen overscroll-contain overflow-y-auto p-4 pb-20 drop-shadow-md"
+    <div class="fixed top-16 right-0 z-10 md:w-[720px] w-full bg-neutral-50  text-gray-500 h-screen overscroll-contain overflow-y-auto p-4 pb-20 drop-shadow-md"
          x-data="{show: @entangle('showModal')}"
          x-show="show"
          x-cloak

@@ -17,14 +17,8 @@
 {{--    <link href="https://fonts.googleapis.com/css2?family=Heebo&display=swap" rel="stylesheet">--}}
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-    <script src="{{ mix('js/app.js') }}" ></script>
-
-    <link href="{{ asset('vendor/fullcalendar/css/fullcalendar.min.css')}}" rel="stylesheet">
-
-
-
-
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <script src="{{ asset('js/app.js') }}" ></script>
 
 
     @livewireStyles
@@ -48,22 +42,24 @@
         @keydown.escape.window="isMobileOpen = false"
 >
 <x-notifications/>
+
 <x-dialog z-index="z-50" blur="md" align="center" />
 @include('includes.header')
 
+@if(auth()->user()->type  == "Colaborador")
+@livewire('tenant.dashboard.humor.button')
+@endif
 
 @yield('content')
 
-
-
 @include('includes.footer')
 
+@livewire('components.left-modal')
 @livewire('components.open-modal')
 @livewire('components.open-modal2')
 @livewire('components.open-modal3')
 @livewire('components.confirm-modal')
 @livewire('components.central-modal')
-{{--@livewire('notifications.read')--}}
 
 @wireUiScripts
 @livewireScripts

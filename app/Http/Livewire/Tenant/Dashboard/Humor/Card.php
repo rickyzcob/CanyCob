@@ -29,7 +29,7 @@ class Card extends Component
 
         if($coinsReturnDB['status'] == 'success') {
             $this->emit('refreshCardRanking');
-            $this->emit('closeCentralModal');
+            $this->emit('closeHumorModal');
             $this->notification([
                 'title'       => 'Obrigado !',
                 'description' => $coinsReturnDB['message'],

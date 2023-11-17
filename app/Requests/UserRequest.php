@@ -25,6 +25,7 @@ class UserRequest
             ],
             'phone' => 'required',
             'document' => 'required',
+            'color' => 'required',
             'password' => [
                 Rule::requiredIf(fn () => $id == null),
                 'string',
