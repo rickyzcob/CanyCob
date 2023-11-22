@@ -10,7 +10,8 @@ class Filter extends Component
     use WithPagination;
 
     public $state = [
-        'status' => ''
+        'status' => '',
+        'employer_number' => ''
     ];
 
     public function submit()

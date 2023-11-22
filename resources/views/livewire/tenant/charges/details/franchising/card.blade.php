@@ -1,10 +1,13 @@
 <div>
     <x-card cardClasses="md:h-52 border-l-4 border-orange-400">
         <div class="flex items-start justify-between border-b-2 mb-2">
-            <h1 class="text-base text-gray-600 font-semibold py-2 ">Dados Cadastrais</h1>
+            <div class="flex items-center text-base text-orange-600 font-bold gap-x-2">
+                <span class="material-icons text-base ">arrow_circle_down</span>
+                <h1 class="text-base  py-1">Dados cadastrais</h1>
+            </div>
             @if($charge['agreement'] == 0)
                 @can('edit_franchising_charges')
-            <x-button.circle wire:click="openModal('tenant.franchising.form', {'id': {{$franchising['id']}} })" sm warning icon="pencil-alt" />
+            <x-button.circle wire:click="openModal('tenant.franchising.form', {'id': {{$franchising['id']}} })" xs warning icon="pencil-alt" />
                 @endcan
             @endif
         </div>

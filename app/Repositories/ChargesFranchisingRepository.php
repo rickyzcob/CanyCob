@@ -76,13 +76,13 @@ class ChargesFranchisingRepository
             return [
                 'status' => 'success',
                 'data' => $ChargeStatusDB,
-                'code' => 202,
+                'code' => 200,
             ];
         }catch (Exception $exception){
             return [
                 'status' => 'error',
-                'code' => 200,
-                'message' => 'Erro ao buscar o Produto'
+                'code' => 400,
+                'message' => 'Erro na requisição'
             ];
         }
 

@@ -17,11 +17,13 @@
             <tr>
                 <td>
                     <div class="flex items-center gap-2">
-                        @if($itemUser->image == null)
-                            <x-avatar md  src="{{ url('img/user-default.png') }}" />
-                           @else
-                            <x-avatar md src="{{ url('storage/'.$itemUser->image) }}" />
-                        @endif
+                        <div style="border: 3px solid ; border-color: hsl({{ $itemUser->color }}); border-radius: 99px;">
+                            @if($itemUser->image == null)
+                           <img class="rounded-full w-10 h-10" src="{{ url('img/user-default.png') }}">
+                            @else
+                                <img class="rounded-full w-10 h-10" src="{{  url('storage/'.$itemUser->image) }}">
+                            @endif
+                        </div>
                         {{ $itemUser['name'] }}
                     </div>
                 </td>
@@ -43,7 +45,7 @@
                 <td width="150px">
                     <div class="flex flex-wrap justify-items-center gap-x-2">
                         @canany(['tenant_edit_user', 'admin_edit_user'])
-                            <x-button.circle wire:click="openModal('vendor.users.form', {'id': {{ $itemUser['id'] }} } )" primary icon="pencil" />
+                            <x-button.circle wire:click="openModal('vendor.users.form', {'id': {{ $itemUser['id'] }} } )" orange icon="pencil-alt" />
                         @endcanany
                         @canany(['tenant_delete_user', 'admin_delete_user'])
                             <x-button.circle negative icon="x-circle" wire:click="openConfirmModal({{ $itemUser['id'] }}, 'Apagar Registro' , 'Você tem certeza que deseja apagar o seguinte o registro, {{ $itemUser['name'] }} ?', 'confirmDeleteUser')" />

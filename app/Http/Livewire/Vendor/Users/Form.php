@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Vendor\Users;
 use App\Http\Traits\WithModal;
 use App\Repositories\RolesRepository;
 use App\Repositories\UserRepository;
+use App\Services\ChangeColorsService;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use WireUi\Traits\Actions;
@@ -37,9 +38,13 @@ class Form extends Component
         if($this->user){
             $this->state = $this->user->toArray();
         }
-        if ($this->state['value_agreement'] != null){
-
+        $changeColorService = new ChangeColorsService();
+        if ($this->state['value_agreement'] != null ){
             $this->state['value_agreement'] = formatMoneyInput($this->user['value_agreement']);
+        }
+
+        if ($this->state['color'] != null){
+            $this->state['color'] = $changeColorService->convertHSLtoRGBorHEX($this->state['color']);
         }
     }
 

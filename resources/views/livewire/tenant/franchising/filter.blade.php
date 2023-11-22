@@ -1,8 +1,12 @@
 <div>
     <form wire:submit.prevent="submit">
         <div class="grid grid-cols-12 gap-4 py-3 content-end text-gray-600">
-            <div class="md:col-span-4 col-span-12">
+            <div class="md:col-span-3 col-span-12">
                 <x-input wire:model.defer="state.name" label="Nome" />
+            </div>
+            <div class="md:col-span-2 col-span-12">
+                <x-inputs.maskable wire:model.defer="state.employer_number" mask="##.###.###/####-##"  emitFormatted="true" label="CNPJ" />
+
             </div>
             <div class="md:col-span-2 col-span-12">
                 <x-select

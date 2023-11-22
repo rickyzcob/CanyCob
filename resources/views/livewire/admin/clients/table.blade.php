@@ -34,7 +34,7 @@
                 <td width="150px">
                     <div class="flex flex-wrap justify-items-center gap-x-2">
 {{--                        @can('edit_user')--}}
-                            <x-button.circle wire:click="openModal('admin.clients.form', {'id': {{ $itemClient['id'] }} } )" primary icon="pencil" />
+                            <x-button.circle wire:click="openModal('admin.clients.form', {'id': {{ $itemClient['id'] }} } )" orange icon="pencil-alt" />
 {{--                        @endcan--}}
 {{--                        @can('delete_user')--}}
                             <x-button.circle negative icon="x-circle" wire:click="openConfirmModal({{ $itemClient['id'] }}, 'Apagar Registro' , 'Você tem certeza que deseja apagar o seguinte o registro, {{ $itemClient['name'] }} ?', 'confirmDeleteUser')" />

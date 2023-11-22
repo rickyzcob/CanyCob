@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\ChargeSchedule;
 use App\Models\HistoricMonthCoins;
 use App\Models\User;
 use App\Requests\UserRequest;
@@ -93,6 +94,15 @@ class UserRepository
 
         try {
             $userDB = User::query()->findOrFail($id);
+
+            if($userDB->color != $requestValidated['color']) {
+                $chargeSchedule = ChargeSchedule::query()->where('user_id', $userDB->id)->get();
+
+                foreach ($chargeSchedule as $item) {
+                    $item->backgroundColor  = $requestValidated['color'];
+                    $item->update();
+                }
+            }
 
             if($userDB->role_id == null){
                 $userDB->assignRole($requestValidated['role_id']);

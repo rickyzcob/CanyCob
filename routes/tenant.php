@@ -30,6 +30,7 @@ Route::domain('{subdomain}.' . env('APP_URL'))->group(function ($router) {
         Route::get('/', [DashboardController::class, 'index'])->middleware('permission:tenant_dashboard_view')->name('dashboard.index');
         Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('permission:tenant_dashboard_view')->name('dashboard.index');
 
+        Route::view('cadastros/tipodelancamentos', 'tenant.type-releases.index')->middleware('permission:tenant_view_type_releases')->name('type_releases.index');
         Route::view('cadastros/lancamentos', 'tenant.releases.index')->middleware('permission:tenant_view_releases')->name('releases.index');
         Route::view('cadastros/franqueados', 'tenant.franchising.index')->middleware('permission:tenant_view_franchising')->name('franchising.index');
         Route::view('cadastros/socios', 'tenant.partners.index')->middleware('permission:tenant_view_partner')->name('partners.index');
@@ -69,7 +70,7 @@ Route::domain('{subdomain}.' . env('APP_URL'))->group(function ($router) {
 
     Route::get('/proposta/{reference}/vizualizar', [ProposalChargesController::class, 'show'])->name('proposal.show');
     Route::get('/formalizar/{reference}/vizualizar', [PorposalFormalizedController::class, 'show'])->name('formalized.show');
-    Route::view('frontend', 'frontend.index')->name('notifications.index');
+//    Route::view('frontend', 'frontend.index')->name('notifications.index');
 });
 
 

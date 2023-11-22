@@ -48,11 +48,11 @@ abstract class BaseButton extends Component
     private function mergeClasses(ComponentAttributeBag $attributes): ComponentAttributeBag
     {
         return $attributes->class([
-            'outline-none inline-flex justify-center items-center group',
+            'rounded-tr-full rounded-br-full rounded-bl-full outline-none inline-flex justify-center items-center group',
             'transition-all ease-in duration-150 focus:ring-2 focus:ring-offset-2',
             'hover:shadow-sm disabled:opacity-80 disabled:cursor-not-allowed',
-            'rounded-full' => !$this->squared && $this->rounded,
-            'rounded'      => !$this->squared && !$this->rounded,
+            'rounded-tr-full rounded-br-full rounded-bl-full' => !$this->squared && $this->rounded,
+            'rounded-tr-full rounded-br-full rounded-bl-full'      => !$this->squared && !$this->rounded,
             'w-full'       => $this->full,
             $this->size($attributes),
             $this->color($attributes),

@@ -93,6 +93,7 @@ class Select extends NativeSelect
                     'value'       => $this->getOptionValue($index, $rawOption),
                     'template'    => data_get($rawOption, 'template'),
                     'disabled'    => data_get($rawOption, 'disabled'),
+                    'selected'    => data_get($rawOption, 'selected'),
                     'readonly'    => data_get($rawOption, 'readonly') || data_get($rawOption, 'disabled'),
                     'description' => $this->getOptionDescription($rawOption),
                 ];

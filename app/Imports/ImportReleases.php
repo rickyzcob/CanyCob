@@ -22,7 +22,7 @@ class ImportReleases implements ToModel, WithHeadingRow, WithChunkReading
         return new Releases([
             'name' => $row['name'],
             'tenant_id' => Auth::user()->tenant->id,
-            'cnpj' => $row['cnpj'],
+            'employer_number' => $row['cnpj'],
             'status_id' => 3,
             'due_date' => $row['due_date'],
             'amount' => $row['amount'],

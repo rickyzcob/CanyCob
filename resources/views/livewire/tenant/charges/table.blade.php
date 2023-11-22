@@ -18,7 +18,7 @@
         @foreach($response->charges as $itemCharge)
             <tr>
                 <td>{{ $itemCharge['franchising']['name'] }}</td>
-                <td>{{ $itemCharge['franchising']['cnpj'] }}</td>
+                <td>{{ $itemCharge['franchising']['employer_number'] }}</td>
                 <td> {{ formatMoney($itemCharge['total_amount']) }}</td>
                 <td> {{ formatMoney($itemCharge['total_amount_corrected']) }}</td>
                 <td> {{ formatDate($itemCharge['created_at']) }}</td>
@@ -45,7 +45,7 @@
             itens
         </div>
         <div>
-            {{ $response->charges    ->links() }}
+            {{ $response->charges->links() }}
         </div>
     </div>
 </div>

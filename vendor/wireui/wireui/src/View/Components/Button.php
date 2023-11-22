@@ -8,7 +8,7 @@ class Button extends BaseButton
     {
         return [
             self::DEFAULT => <<<EOT
-                border text-slate-500 hover:bg-slate-100 ring-slate-200 dark:ring-slate-600 dark:border-slate-500
+                border rounded-full text-slate-500 hover:bg-slate-100 ring-slate-200 dark:ring-slate-600 dark:border-slate-500
                 dark:ring-offset-slate-800 dark:text-slate-400 dark:hover:bg-slate-700
             EOT,
 

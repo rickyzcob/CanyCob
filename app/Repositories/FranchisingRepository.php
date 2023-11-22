@@ -23,13 +23,9 @@ class FranchisingRepository
             if(isset($filterData['status']) && $filterData['status'] != null){
                 $franchisingDB->where('status', $filterData['status']);
             }
-            if(isset($filterData['category_id']) && $filterData['category_id'] != null){
-                $franchisingDB->where('category_id', $filterData['category_id']);
+            if(isset($filterData['employer_number']) && $filterData['employer_number'] != null){
+                $franchisingDB->where('employer_number', $filterData['employer_number']);
             }
-            if(isset($filterData['brand_id']) && $filterData['brand_id'] != null){
-                $franchisingDB->where('brand_id', $filterData['brand_id']);
-            }
-
             $franchisingDB->orderBy($orderBy['column'], $orderBy['order']);
 
             $franchisingDB = $franchisingDB->paginate($pageSize);

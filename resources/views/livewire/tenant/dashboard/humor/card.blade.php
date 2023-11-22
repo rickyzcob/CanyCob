@@ -42,12 +42,12 @@
             </div>
 
             <div class="flex mb-5 -space-x-3">
-                <x-avatar md src="https://picsum.photos/295?size=24x" />
-                <x-avatar md src="https://picsum.photos/300?size=24x" />
-                <x-avatar md src="https://picsum.photos/301?size=24x" />
-                <x-avatar md src="https://picsum.photos/305?size=24x" />
-                <x-avatar md src="https://picsum.photos/299?size=24x" />
-                <x-avatar md src="https://picsum.photos/280?size=24x" />
+{{--                <x-avatar md src="https://picsum.photos/295?size=24x" />--}}
+{{--                <x-avatar md src="https://picsum.photos/300?size=24x" />--}}
+{{--                <x-avatar md src="https://picsum.photos/301?size=24x" />--}}
+{{--                <x-avatar md src="https://picsum.photos/305?size=24x" />--}}
+{{--                <x-avatar md src="https://picsum.photos/299?size=24x" />--}}
+{{--                <x-avatar md src="https://picsum.photos/280?size=24x" />--}}
             </div>
 
             <x-button type="submit" icon="check" positive label="Enviar" />

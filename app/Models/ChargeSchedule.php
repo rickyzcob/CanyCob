@@ -10,11 +10,16 @@ class ChargeSchedule extends Model
 {
     use HasFactory, TenantTrait;
 
-    protected $fillable = ['tenant_id', 'user_id', 'charge_id', 'title', 'start', 'backgroundColor'];
+    protected $fillable = ['tenant_id', 'user_id', 'charge_id', 'title', 'start', 'imported', 'charged'];
 
     public function charge()
     {
         return $this->belongsTo(Charges::class);
+    }
+
+    public function historic()
+    {
+        return $this->belongsTo(ChargeHistoric::class, 'charge_historic_id');
     }
 
     public function user()

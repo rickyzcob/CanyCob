@@ -14,8 +14,21 @@
 
             <div class="grid grid-cols-12 gap-4">
                 <div class="md:col-span-12 col-span-12">
-                    <div class="flex justify-center">
-                        <div class="mb-3 w-96">
+                    <div class="styled-1">
+                        <x-native-select wire:model.defer="state.type_release_id" label="Tipo de Lançamento" >
+                            <option value=""></option>
+                            @foreach($response->typeReleases as $itemTypeRelease)
+                                <option value="{{$itemTypeRelease['id']}}">{{$itemTypeRelease['name']}}</option>
+                            @endforeach
+                        </x-native-select>
+{{--                        @error('state.type_release_id')--}}
+{{--                        <div class="text-red-800 text-xs p-1">{{ $message }}</div>--}}
+{{--                        @enderror--}}
+                    </div>
+                </div>
+                <div class="md:col-span-12 col-span-12">
+                    <div class="flex justify-start">
+                        <div class="mb-3">
                             <label
                                 for="formFile"
                                 class="mb-2 inline-block text-neutral-700 dark:text-neutral-200"
@@ -27,7 +40,7 @@
                         </div>
                     </div>
                     @error('state.file')
-                    <div class="text-red-800 text-sm p-1">{{ $message }}</div>
+                    <div class="text-red-600 text-sm p-1">{{ $message }}</div>
                     @enderror
                 </div>
 

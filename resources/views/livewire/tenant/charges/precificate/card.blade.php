@@ -1,10 +1,10 @@
 <div>
     <x-card cardClasses="md:h-52 border-l-4 border-blue-500">
         <div class="flex items-start justify-between border-b-2 mb-2">
-            <h1 class="text-base text-gray-600 font-semibold py-2 ">Informações</h1>
+            <h1 class="text-base text-gray-600 font-semibold py-1">Informações</h1>
             @if($response->charge['agreement'] == 0)
                 @can('change_precification_charges')
-            <x-button wire:click="openModal('tenant.charges.precificate.form', {'charge_id': {{$response->charge['id']}} })" info sm icon="information-circle" label="Atualizar Valores"/>
+                    <x-button wire:click="openModal('tenant.charges.precificate.form', {'charge_id': {{$response->charge['id']}} })" info xs icon="information-circle" label="Atualizar Valores"/>
                 @endcan
             @endif
         </div>

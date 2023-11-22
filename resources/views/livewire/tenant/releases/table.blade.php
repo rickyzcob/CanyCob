@@ -24,7 +24,7 @@
                     Sem Nome
                     @endif
                 </td>
-                <td> {{ $itemRelease['cnpj'] }} </td>
+                <td> {{ $itemRelease['employer_number'] }} </td>
                 <td> {{ formatMoney($itemRelease['amount'] )}} </td>
                 <td> {{ formatMoney($itemRelease['amount_corrected'] )}} </td>
                 <td> {{ formatDate($itemRelease['due_date']) }} </td>

@@ -6,6 +6,14 @@ use Illuminate\Support\Facades\Validator;
 
 class ReleasesRequest
 {
+    public function validate($request, $id = null)
+    {
+        $validator =  Validator::validate($request, [
+            'type_release_id' => 'required',
+        ]);
+
+        return $validator;
+    }
     public function validatePrecification($request, $id = null)
     {
         $validator =  Validator::validate($request, [

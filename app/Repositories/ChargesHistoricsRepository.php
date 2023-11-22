@@ -266,24 +266,31 @@ class ChargesHistoricsRepository
         }
     }
 
-    public function getChargesBySchedule()
+    public function getChargesBySchedule($filterData = null)
     {
         try {
-            $chargeScheduleDB = ChargeSchedule::query()->get();
+            $chargeScheduleDB = ChargeSchedule::query()->with('user');
+
+            if(isset($filterData['user_id']) && $filterData['user_id'] != null ) {
+                $chargeScheduleDB->whereIn('user_id', $filterData['user_id']);
+            }
+
+            $chargeScheduleDB = $chargeScheduleDB->get();
 
             $return = [];
 
             foreach ($chargeScheduleDB as $key => $item) {
+//                dd($item->user);
                 $return[$key]['id'] = $item->id;
+                $return[$key]['charge_id'] = $item->charge_id;
+                $return[$key]['charge_historic_id'] = $item->charge_historic_id;
                 $return[$key]['title' ]= $item->title;
                 $return[$key]['start'] = $item->start;
-                $return[$key]['color'] = 'hsl('.$item->backgroundColor.')';
-//                $return[$key]['allDay'] = true;
-
+                $return[$key]['user_id'] = $item->user_id;
+                $return[$key]['color'] = 'hsl('.$item->user->color.')';
 
             }
 
-//            dd($return);
             return $return;
 
         } catch ( Exception $exception) {

@@ -58,6 +58,13 @@
             x-transition:leave.duration.800ms
              x-cloak
             class="absolute z-40 w-48 py-2 rounded-br-lg rounded-bl-lg bg-white shadow-xl">
+            @can('tenant_view_type_releases')
+            <a href="{{route('type_releases.index', session('tenant')['subdomain'])}}"
+
+               class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-600  border-b-2 border-gray-200">
+                Tipo de Lançamentos
+            </a>
+            @endcan
             @can('tenant_view_releases')
             <a href="{{route('releases.index', session('tenant')['subdomain'])}}"
 

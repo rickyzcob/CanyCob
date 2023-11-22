@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Tenant\Releases;
 
 use App\Repositories\ReleasesRepository;
+use App\Repositories\TypeReleasesRepository;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
@@ -15,6 +16,7 @@ class Import extends Component
 
     public $state = [
         'file' => '',
+        'type_release_id' => ''
     ];
 
     public $batchId;
@@ -25,15 +27,17 @@ class Import extends Component
 
     public function submit()
     {
+
         $this->validate([
             'state.file' => 'required',
+            'state.type_release_id' => 'required'
         ]);
 
         $this->importing = true;
         $this->importFilePath = $this->state['file']->store('imports');
 
         $releaseRepository = new ReleasesRepository();
-        $releaseReturnDB = $releaseRepository->import($this->importFilePath);
+        $releaseReturnDB = $releaseRepository->import($this->state['type_release_id'], $this->importFilePath);
 
         if($releaseReturnDB['status'] == 'success') {
 
@@ -77,8 +81,17 @@ class Import extends Component
         }
     }
 
+    public function getSelectTypeReleases()
+    {
+        $typeReleasesRepository = new TypeReleasesRepository();
+        return $typeReleasesRepository->getSelectTypeReleasesActive();
+    }
+
     public function render()
     {
-        return view('livewire.tenant.releases.import');
+        $response = new \stdClass();
+        $response->typeReleases = $this->getSelectTypeReleases();
+
+        return view('livewire.tenant.releases.import',['response' => $response]);
     }
 }

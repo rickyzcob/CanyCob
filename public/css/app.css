@@ -4443,10 +4443,6 @@ input[type="number"].appearance-number-none {
 .group:focus .group-focus\:ring-offset-2 {
   --tw-ring-offset-width: 2px;
 }
-.peer:checked ~ .peer-checked\:border-gray-200 {
-  --tw-border-opacity: 1;
-  border-color: rgb(229 231 235 / var(--tw-border-opacity));
-}
 .peer:checked ~ .peer-checked\:bg-gray-200 {
   --tw-bg-opacity: 1;
   background-color: rgb(229 231 235 / var(--tw-bg-opacity));

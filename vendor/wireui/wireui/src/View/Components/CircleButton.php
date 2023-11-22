@@ -62,7 +62,7 @@ class CircleButton extends Button
     {
         return [
             '2xs'         => 'w-2 h-2',
-            'xs'          => 'w-3 h-3',
+            'xs'          => 'w-3.5 h-3.5',
             'sm'          => 'w-3.5 h-3.5',
             self::DEFAULT => 'w-4 h-4',
             'md'          => 'w-4 h-4',

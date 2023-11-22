@@ -4,65 +4,48 @@ namespace App\Http\Livewire\Tenant\Schedule;
 
 use App\Models\Event;
 use App\Repositories\ChargesHistoricsRepository;
+use App\Repositories\UserRepository;
+use Illuminate\Support\Carbon;
 use Livewire\Component;
 
 class Card extends Component
 {
-    public $events = '';
 
-    public function getevent()
+    public $events;
+    public $filters;
+
+    protected $listeners = [
+        'refreshTableReleases' => '$refresh',
+        'filterCardSchedule'
+    ];
+
+    public function mount()
     {
-        $events = Event::select('id','title','start')->get();
-
-        return  json_encode($events);
+        $this->events = json_encode($this->getScheduleCharges());
     }
 
-    /**
-     * Write code on Method
-     *
-     * @return response()
-     */
-    public function addevent($event)
+    public function filterCardSchedule($filterData = null)
     {
-        $input['title'] = $event['title'];
-        $input['start'] = $event['start'];
-        Event::create($input);
+        $this->filters = $filterData;
     }
 
-    /**
-     * Write code on Method
-     *
-     * @return response()
-     */
-    public function eventDrop($event, $oldEvent)
-    {
-        $eventdata = Event::find($event['id']);
-        $eventdata->start = $event['start'];
-        $eventdata->save();
-    }
-
-    /**
-     * Write code on Method
-     *
-     * @return response()
-     */
-
-    public function getSheduleChartes()
+    public function getScheduleCharges($users = null)
     {
         $chargesHistoricRepository = new ChargesHistoricsRepository();
-        $chargesHistoricReturnDB = $chargesHistoricRepository->getChargesBySchedule();
+        $chargesHistoricReturnDB = $chargesHistoricRepository->getChargesBySchedule($this->filters);
+
+        if($this->filters != null) {
+            $this->dispatchBrowserEvent('schedule-updated', ['filter' =>  $chargesHistoricReturnDB]);
+            $this->emit('refreshCalendar');
+        }
 
         return $chargesHistoricReturnDB;
 
     }
     public function render()
     {
-
         $response = new \stdClass();
-        $response->schedule = json_encode($this->getSheduleChartes());
-        $events = Event::select('id','title','start')->get();
-
-        $this->events = json_encode($this->getSheduleChartes());
+        $response->schedule = json_encode($this->getScheduleCharges());
 
         return view('livewire.tenant.schedule.card', ['response' => $response]);
     }

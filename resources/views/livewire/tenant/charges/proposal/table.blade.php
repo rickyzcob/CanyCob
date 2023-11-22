@@ -1,10 +1,10 @@
 <div>
     <x-card cardClasses="h-80 border-l-4 border-violet-600">
         <div class="flex items-start justify-between border-b-2 mb-2">
-            <h1 class="text-base text-gray-600 font-semibold py-2">Propostas Emitidas</h1>
+            <h1 class="text-base text-gray-600 font-semibold py-1">Propostas Emitidas</h1>
             @if($charge['agreement'] == 0)
                 @can('add_proposal_charges')
-               <x-button wire:click="openModal('tenant.charges.proposal.form', {'id': {{$charge['id']}} })" violet sm icon="plus-circle" label="Nova Proposta" />
+               <x-button wire:click="openModal('tenant.charges.proposal.form', {'id': {{$charge['id']}} })" violet xs icon="plus-circle" label="Nova Proposta" />
                 @endcan
             @endif
         </div>
