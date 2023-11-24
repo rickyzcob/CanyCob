@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreign('charge_id')->references('id')->on('charges');
             $table->unsignedBigInteger('type_release_id');
             $table->foreign('type_release_id')->references('id')->on('type_releases');
-            $table->decimal('value');
+            $table->decimal('value',10,2)->default(0);
             $table->timestamps();
         });
     }

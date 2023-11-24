@@ -10,7 +10,7 @@ class ChargeSchedule extends Model
 {
     use HasFactory, TenantTrait;
 
-    protected $fillable = ['tenant_id', 'user_id', 'charge_id', 'title', 'start', 'imported', 'charged'];
+    protected $fillable = ['tenant_id', 'user_id', 'charge_id', 'charge_historic_id', 'title', 'start', 'imported', 'charged'];
 
     public function charge()
     {

@@ -10,13 +10,16 @@ class ChargeHistoricRequest
     public function validate($request, $id = null)
     {
         $validator =  Validator::validate($request, [
-            'type' => 'sometimes',
+            'contact' => 'required',
             'name' => 'required_if:type,Unidade',
             'phone' => 'required',
             'partner_id' => 'required_if:type,Sócio',
             'answered' => 'required',
             'success' => 'required',
-            'date_schedule' => Rule::requiredIf($request['success'] == 'Não'),
+            'date_schedule' => [
+                Rule::requiredIf($request['success'] == 'Não'),
+                'after:today'
+            ],
             'date_conference' => Rule::requiredIf($request['success'] == 'Sim'),
             'datetime' => 'sometimes',
             'type' => 'sometimes',

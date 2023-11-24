@@ -242,7 +242,13 @@ return [
         'add_signatory' => 'token adicionar signatario',
         'add_signatory_document' => 'token adicionar signatario ao documento',
         'send_document_email' => 'token enviar email',
-        'template document ' => 'Token do Template Documento'
+        'template document ' => 'Token do Template Documento',
+        'answered' => 'atendeu',
+        'success' => 'sucesso',
+        'origin' => 'origem',
+        'date_conference' => 'data de conferencia',
+        'date_schedule' => 'reagendar',
+        'today' => 'hoje'
     ],
 
 ];

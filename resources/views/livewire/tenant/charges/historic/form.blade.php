@@ -109,7 +109,7 @@
                             parse-format="YYYY-MM-DD HH:mm"
                             wire:model.defer="state.date_schedule"
                         />
-                        @error('success')
+                        @error('date_schedule')
                         <div class="text-red-800 text-sm p-1">{{ $message }}</div>
                         @enderror
                     </div>
@@ -120,7 +120,7 @@
                                 parse-format="YYYY-MM-DD HH:mm"
                                 wire:model.defer="state.date_conference"
                             />
-                            @error('success')
+                            @error('date_conference')
                             <div class="text-red-800 text-sm p-1">{{ $message }}</div>
                             @enderror
                         </div>

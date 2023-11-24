@@ -10,7 +10,7 @@ class ChargeHistoric extends Model
 {
     use HasFactory, TenantTrait;
 
-    protected $fillable = ['charge_id', 'partner_id',  'name', 'datetime', 'phone', 'email', 'type', 'success', 'description', 'origin', 'date_schedule', 'date_conference'];
+    protected $fillable = ['charge_id', 'partner_id', 'contact', 'name', 'datetime', 'phone', 'email', 'type', 'success', 'description', 'origin', 'date_schedule', 'date_conference'];
 
     public function charge()
     {

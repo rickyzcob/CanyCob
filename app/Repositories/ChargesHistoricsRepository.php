@@ -36,7 +36,7 @@ class ChargesHistoricsRepository
         }
     }
 
-    public function create($request, $charge_id = null)
+    public function create($request, $event_id = null, $charge_id = null)
     {
         $chargeHistoricRequest = new ChargeHistoricRequest();
         $requestValidated = $chargeHistoricRequest->validate($request);
@@ -53,12 +53,19 @@ class ChargesHistoricsRepository
         $requestValidated['charge_id'] = $charge_id;
 
         try {
+
             $chargeDB = Charges::query()->with('franchising', 'attendant')->findOrFail($charge_id);
             $chargeDB->update([
                 'date_schedule' => $requestValidated['date_schedule']
             ]);
 
             $chargeHistoricDB = auth()->user()->historicCharge()->create($requestValidated);
+
+            $eventDB = ChargeSchedule::query()->findOrFail($event_id);
+            $eventDB->update([
+                'charge_historic_id' => $chargeHistoricDB->id,
+                'charged' => 'Sim'
+            ]);
 
             if($chargeHistoricDB['success'] == 'Não'){
                 ChargeSchedule::query()->create([
@@ -77,7 +84,6 @@ class ChargesHistoricsRepository
                 'message' => 'Histórico cadastrado com sucesso !'
             ];
 
-
         } catch (Exception $exception){
 
             return [
@@ -86,7 +92,25 @@ class ChargesHistoricsRepository
                 'code' => 400,
                 'message' => 'Erro ao Cadastrar'
             ];
+        }
+    }
 
+    public function show($id)
+    {
+        try {
+            $chargeHistoricDB = ChargeHistoric::query()->findOrFail($id);
+
+            return [
+                'status' => 'success',
+                'data' => $chargeHistoricDB,
+                'code' => 200,
+            ];
+        }catch (Exception $exception){
+            return [
+                'status' => 'error',
+                'code' => 400,
+                'message' => 'Erro ao buscar o Produto'
+            ];
         }
     }
 
@@ -271,11 +295,29 @@ class ChargesHistoricsRepository
         try {
             $chargeScheduleDB = ChargeSchedule::query()->with('user');
 
+            if (isset($filterData['name']) && $filterData['name'] != null) {
+                $chargeScheduleDB->where('title', 'like', '%' . $filterData['name'] . '%');
+            }
+
+            if (isset($filterData['date_start']) && $filterData['date_start'] != null) {
+                $chargeScheduleDB->where('created_at', '>=', $filterData['date_start']);
+            }
+
+            if (isset($filterData['date_end']) && $filterData['date_end'] != null) {
+                $chargeScheduleDB->where('created_at', '<=', $filterData['date_end']);
+            }
+
             if(isset($filterData['user_id']) && $filterData['user_id'] != null ) {
                 $chargeScheduleDB->whereIn('user_id', $filterData['user_id']);
             }
-
-            $chargeScheduleDB = $chargeScheduleDB->get();
+            if(auth()->user()->can('tenant_view_schedule_user') && auth()->user()->can('tenant_view_schedule_all')){
+                $chargeScheduleDB = $chargeScheduleDB->get();
+            }else if(auth()->user()->can('tenant_view_schedule_user') && !auth()->user()->can('tenant_view_schedule_all')) {
+                $chargeScheduleDB->where('user_id', auth()->user()->id);
+                $chargeScheduleDB = $chargeScheduleDB->get();
+            } else if (auth()->user()->can('tenant_view_schedule_all') && !auth()->user()->can('tenant_view_schedule_user')) {
+                $chargeScheduleDB = $chargeScheduleDB->get();
+            }
 
             $return = [];
 
@@ -284,7 +326,7 @@ class ChargesHistoricsRepository
                 $return[$key]['id'] = $item->id;
                 $return[$key]['charge_id'] = $item->charge_id;
                 $return[$key]['charge_historic_id'] = $item->charge_historic_id;
-                $return[$key]['title' ]= $item->title;
+                $return[$key]['title' ] = $item->title;
                 $return[$key]['start'] = $item->start;
                 $return[$key]['user_id'] = $item->user_id;
                 $return[$key]['color'] = 'hsl('.$item->user->color.')';

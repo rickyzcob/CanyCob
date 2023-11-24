@@ -15,7 +15,7 @@ class Card extends Component
     public $filters;
 
     protected $listeners = [
-        'refreshTableReleases' => '$refresh',
+        'refreshCardSchedule' => '$refresh',
         'filterCardSchedule'
     ];
 

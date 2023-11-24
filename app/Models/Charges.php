@@ -60,4 +60,9 @@ class Charges extends Model
     {
         return $this->belongsTo(Agreements::class, 'agreement_id');
     }
+
+    public function totalAmountTypeReleases()
+    {
+        return $this->hasMany(ChargeAmountReleases::class, 'charge_id');
+    }
 }

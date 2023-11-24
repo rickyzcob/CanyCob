@@ -23,23 +23,27 @@
             <form wire:submit.prevent="save">
                 <div class="flex items-start justify-between border-b-2 mb-5 py-2">
                     Cadastrar nova Cobrança
+                    @if(!$isDisabled)
                     <x-button wire:click="openModal('tenant.charges.simulation.form', {'id': {{$charge['id']}} }, 2)" amber sm icon="plus-circle" label="Simular" />
+                    @endif
                 </div>
                 <div class="grid grid-cols-12 gap-4">
+                    @if($isDisabled)
                     <div class="md:col-span-4 col-span-12">
                         <x-select
+                            disabled
                             label="Tipo"
                             :options="['Unidade', 'Sócio']"
-                            wire:model="state.type"
+                            wire:model="state.contact"
                         />
-                        @error('type')
+                        @error('contact')
                         <div class="text-red-800 text-sm p-1">{{ $message }}</div>
                         @enderror
                     </div>
 
-                    @if($state['type'] == 'Sócio')
+                    @if($state['contact'] == 'Sócio')
                         <div class="md:col-span-8 col-span-12">
-                            <x-native-select wire:model="state.partner_id" label="Escolha a quem fazer a Cobrança" >
+                                <x-native-select wire:model.defer="state.partner_id" label="Escolha a quem fazer a Cobrança" disabled>
                                 <option value="">Escolha</option>
                                 @foreach($response->partners as $itemPartner)
                                     <option value="{{ $itemPartner['partner']['id'] }}"> {{$itemPartner['partner']['name']}}  </option>
@@ -52,7 +56,7 @@
                         </div>
                     @else
                         <div class="md:col-span-8 col-span-12">
-                            <x-input icon="user" wire:model.defer="state.name" label="Com quem Falou"/>
+                            <x-input icon="user" wire:model.defer="state.name" label="Com quem Falou" disabled/>
                             @error('name')
                             <div class="text-red-800 text-sm p-1">{{ $message }}</div>
                             @enderror
@@ -60,20 +64,22 @@
                     @endif
                     <div class="md:col-span-4 col-span-12">
                         <x-inputs.maskable
+                            disabled
                             icon="phone-outgoing"
                             mask="['(##) ####-####', '(##) #####-####']"
                             emitFormatted="True"
                             label="Telefone"
-                            wire:model.defer="state.phone"  />
+                            wire:model="state.phone"  />
                         @error('phone')
                         <div class="text-red-800 text-sm p-1">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="md:col-span-4 col-span-12">
                         <x-select
+                            disabled
                             label="Origem ?"
                             :options="['Ativo', 'Receptivo']"
-                            wire:model.defer="state.origin"
+                            wire:model="state.origin"
                         />
                         @error('origin')
                         <div class="text-red-800 text-sm p-1">{{ $message }}</div>
@@ -81,6 +87,7 @@
                     </div>
                     <div class="md:col-span-4 col-span-12">
                         <x-select
+                            disabled
                             label="Atendeu ?"
                             :options="['Sim', 'Não']"
                             wire:model="state.answered"
@@ -89,11 +96,9 @@
                         <div class="text-red-800 text-sm p-1">{{ $message }}</div>
                         @enderror
                     </div>
-
-
-
                     <div class="md:col-span-3 col-span-12">
                         <x-select
+                            disabled
                             label="Sucesso ?"
                             :options="['Sim', 'Não']"
                             wire:model="state.success"
@@ -105,6 +110,7 @@
                     @if($state['success'] == 'Não')
                         <div class="md:col-span-5 col-span-12">
                             <x-datetime-picker
+                                disabled
                                 label="Reagendar"
                                 parse-format="YYYY-MM-DD HH:mm"
                                 wire:model.defer="state.date_schedule"
@@ -116,6 +122,7 @@
                     @elseif($state['success'] == 'Sim' && auth()->user()->value_agreement > $charge['total_amount_corrected'])
                         <div class="md:col-span-5 col-span-12">
                             <x-datetime-picker
+                                disabled
                                 label="Data Conferencia"
                                 parse-format="YYYY-MM-DD HH:mm"
                                 wire:model.defer="state.date_conference"
@@ -128,7 +135,7 @@
 
                     <div class="md:col-span-12 col-span-12">
                         <div class="styled-2">
-                            <x-textarea wire:model="state.description" label="Descrição" />
+                            <x-textarea  wire:model="state.description" label="Descrição" disabled/>
                             @error('description')
                             <div class="text-red-800 text-sm p-1">{{ $message }}</div>
                             @enderror
@@ -136,8 +143,120 @@
                     </div>
 
                     <div class="col-span-12">
-                        <x-button type="submit" icon="check" positive label="Cadastrar" />
+                        <x-button type="submit"  icon="check" positive label="Cadastrar" disabled />
                     </div>
+
+                    @else
+                        <div class="md:col-span-4 col-span-12">
+                            <x-select
+                                label="Tipo"
+                                :options="['Unidade', 'Sócio']"
+                                wire:model="state.contact"
+                            />
+                            @error('contact')
+                            <div class="text-red-800 text-sm p-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        @if($state['contact'] == 'Sócio')
+                            <div class="md:col-span-8 col-span-12">
+                                <x-native-select wire:model="state.partner_id" label="Escolha a quem fazer a Cobrança">
+                                    <option value="">Escolha</option>
+                                    @foreach($response->partners as $itemPartner)
+                                        <option value="{{ $itemPartner['partner']['id'] }}"> {{$itemPartner['partner']['name']}}  </option>
+                                    @endforeach
+
+                                </x-native-select>
+                                @error('partner_id')
+                                <div class="text-red-800 text-sm p-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        @else
+                            <div class="md:col-span-8 col-span-12">
+                                <x-input icon="user" wire:model.defer="state.name" label="Com quem Falou" />
+                                @error('name')
+                                <div class="text-red-800 text-sm p-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        @endif
+                        <div class="md:col-span-4 col-span-12">
+                            <x-inputs.maskable
+                                icon="phone-outgoing"
+                                mask="['(##) ####-####', '(##) #####-####']"
+                                emitFormatted="True"
+                                label="Telefone"
+                                wire:model="state.phone"  />
+                            @error('phone')
+                            <div class="text-red-800 text-sm p-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="md:col-span-4 col-span-12">
+                            <x-select
+                                label="Origem ?"
+                                :options="['Ativo', 'Receptivo']"
+                                wire:model="state.origin"
+                            />
+                            @error('origin')
+                            <div class="text-red-800 text-sm p-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="md:col-span-4 col-span-12">
+                            <x-select
+                                label="Atendeu ?"
+                                :options="['Sim', 'Não']"
+                                wire:model="state.answered"
+                            />
+                            @error('answered')
+                            <div class="text-red-800 text-sm p-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="md:col-span-3 col-span-12">
+                            <x-select
+                                label="Sucesso ?"
+                                :options="['Sim', 'Não']"
+                                wire:model="state.success"
+                            />
+                            @error('success')
+                            <div class="text-red-800 text-sm p-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        @if($state['success'] == 'Não')
+                            <div class="md:col-span-5 col-span-12">
+                                <x-datetime-picker
+                                    label="Reagendar"
+                                    parse-format="YYYY-MM-DD HH:mm"
+                                    wire:model="state.date_schedule"
+                                />
+                                @error('date_schedule')
+                                <div class="text-red-800 text-sm p-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        @elseif($state['success'] == 'Sim' && auth()->user()->value_agreement > $charge['total_amount_corrected'])
+                            <div class="md:col-span-5 col-span-12">
+                                <x-datetime-picker
+                                    label="Data Conferencia"
+                                    parse-format="YYYY-MM-DD HH:mm"
+                                    wire:model.defer="state.date_conference"
+                                />
+                                @error('date_conference')
+                                <div class="text-red-800 text-sm p-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        @endif
+
+                        <div class="md:col-span-12 col-span-12">
+                            <div class="styled-2">
+                                <x-textarea  wire:model.defer="state.description" label="Descrição" />
+                                @error('description')
+                                <div class="text-red-800 text-sm p-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-span-12">
+                            <x-button type="submit"  icon="check" positive label="Cadastrar" />
+                        </div>
+                    @endif
                 </div>
             </form>
         </x-card>

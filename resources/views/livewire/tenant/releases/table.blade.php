@@ -17,7 +17,7 @@
         <tbody x-ref="tbody">
         @foreach($response->releases as $itemRelease)
             <tr>
-                <td> {{ $itemRelease['name'] }} </td>
+                <td> {{ $itemRelease['typeRelease']['name'] }} </td>
                 <td> @if ($itemRelease['franchising'])
                         {{ $itemRelease['franchising']['name'] }}
                     @else

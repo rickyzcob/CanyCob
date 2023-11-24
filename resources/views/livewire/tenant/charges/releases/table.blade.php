@@ -33,7 +33,10 @@
                 <th>Status</th>
             </tr>
             </thead>
-
+            <div style="display: none">
+                {{ $total = 0 }}
+                {{ $totalnew = 0 }}
+            </div>
             <tbody>
             @foreach($response->releases as $itemRelease)
                 <tr>
@@ -43,8 +46,21 @@
                     <td>{{ formatMoney($itemRelease['amount_corrected']) }}</td>
                     <td><x-badge color="{{$itemRelease['status']['color']}}" label="{{$itemRelease['status']['name']}}" /></td>
                 </tr>
+                <div style="display: none">{{$total += $itemRelease['amount']}}</div>
+                <div style="display: none">{{$totalnew +=  $itemRelease['amount_corrected']}}</div>
             @endforeach
             </tbody>
+
+            </tbody>
+            <tfoot>
+            <tr>
+                <th></th>
+                <th class="text-right font-weight-600">Total :</th>
+                <th class="text-left font-weight-600">R$ {{number_format($total, 2, ',','.')}}</th>
+                <th class="text-left font-weight-600">R$ {{number_format($totalnew, 2, ',','.')}}</th>
+                <th></th>
+            </tr>
+            </tfoot>
         </table>
         <div class="flex justify-between text-black gap-2 py-5 text-gray-600 text-sm">
             <div class="flex items-center gap-2">

@@ -27,4 +27,14 @@ class Releases extends Model
     {
         return $this->belongsTo(Agreement::class);
     }
+
+    public function charge()
+    {
+        return $this->belongsTo(Charges::class, 'charge_id');
+    }
+
+    public function typeRelease()
+    {
+        return $this->belongsTo(TypeReleases::class);
+    }
 }

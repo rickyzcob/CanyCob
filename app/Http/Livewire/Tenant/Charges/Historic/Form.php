@@ -21,7 +21,7 @@ class Form extends Component
         'phone' => '',
         'partner_id' => '',
         'date_schedule' => '',
-        'date_conference' => '',
+        'date_conference' => null,
         'type' => 'Unidade',
         'origin' => 'Ativo'
     ];
@@ -59,7 +59,7 @@ class Form extends Component
 
         if($this->state['success'] == 'Não'){
             $this->state['date_schedule'] = $current->addWeekday(2);
-        } else {
+        } elseif ($this->state['success'] == 'Sim') {
             $this->state['date_schedule'] = '';
         }
     }
@@ -75,6 +75,7 @@ class Form extends Component
 
         if($this->state['answered'] == 'Sim'){
             $this->state['success'] = '';
+            $this->state['date_conference'] = '';
         } else if($this->state['answered'] == 'Não'){
             $this->state['success'] = 'Não';
             $this->state['date_schedule'] = $current->addDays(1);
@@ -108,6 +109,8 @@ class Form extends Component
     public function save()
     {
         $request = $this->state;
+
+//        dd($request);
 
         $chargeHistoricRepository = new ChargesHistoricsRepository();
         $chargeHistoricReturnDB = $chargeHistoricRepository->create($request, $this->charge['id']);

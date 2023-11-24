@@ -288,6 +288,26 @@ class PermissionsSeeder extends Seeder
             ]);
         }
 
+        $group = GroupPermissions::create(['name' => 'Permissões - Agenda']);
+
+        $permissions = [
+            ['name' => 'tenant_add_schedule', 'label' => 'Adicionar'],
+            ['name' => 'tenant_edit_schedule', 'label' => 'Editar'],
+            ['name' => 'tenant_view_schedule', 'label' => 'Visualizar'],
+            ['name' => 'tenant_delete_schedule', 'label' => 'Deletar '],
+            ['name' => 'tenant_view_aschedule_all', 'label' => 'Visualizar Todos'],
+            ['name' => 'tenant_view_aschedule_user', 'label' => 'Visualizar Somente Usuário'],
+        ];
+
+        foreach ($permissions as $permission) {
+            Permission::create([
+                'group_permissions_id' => $group->id,
+                'name' => $permission['name'],
+                'label' => $permission['label']
+            ]);
+        }
+
+
 
 
         $group = GroupPermissions::create(['name' => 'Relatórios - Histórico Cobrança']);

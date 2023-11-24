@@ -8,4 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class ChargeAmountReleases extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['charge_id', 'type_release_id', 'value'];
+
+    public function charge()
+    {
+        return $this->belongsTo(Charges::class);
+    }
+    public function typeRelease()
+    {
+        return $this->belongsTo(TypeReleases::class);
+    }
 }

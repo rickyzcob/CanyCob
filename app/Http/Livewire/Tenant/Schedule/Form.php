@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Tenant\Schedule;
 
 use App\Http\Traits\WithModal;
 use App\Repositories\ChargeScheduleRepository;
-use App\Repositories\ChargesFranchisingRepository;
 use App\Repositories\ChargesHistoricsRepository;
 use App\Repositories\FranchisingRepository;
 use App\Repositories\PartnersRepository;
@@ -23,33 +22,42 @@ class Form extends Component
         'partner_id' => '',
         'date_schedule' => '',
         'date_conference' => '',
-        'type' => 'Unidade',
+        'contact' => 'Unidade',
         'origin' => 'Ativo'
     ];
 
     public $franchising;
+    public $event;
     public $charge;
+    public $isDisabled = false;
 
     public function mount($id = null)
     {
         if ($id){
             $chargeScheduleRepository = new ChargeScheduleRepository();
             $chargeScheduleReturnDB = $chargeScheduleRepository->show($id)['data'];
-            $this->charge = $chargeScheduleReturnDB;
 
-            $franchisingRepository = new FranchisingRepository();
+            $this->event = $chargeScheduleReturnDB;
+            $this->charge = $chargeScheduleReturnDB['charge'];
+
+            if(!empty($chargeScheduleReturnDB['historic'])) {
+                $this->state = $chargeScheduleReturnDB['historic']->toArray();
+                $this->state['type'] = $chargeScheduleReturnDB['historic']['type'];
+                $this->isDisabled = true;
+            }
+
             $this->franchising  = $chargeScheduleReturnDB['charge']['franchising'];
 
-            if($this->state['type'] == 'Unidade') {
+            if($this->state['contact'] == 'Unidade') {
                 $this->state['phone'] = $this->franchising['phone01'];
             }
         }
     }
     public function updatedStateType()
     {
-        if($this->state['type'] == 'Sócio'){
+        if($this->state['contact'] == 'Sócio'){
             $this->state['phone'] = '';
-        } elseif ($this->state['type'] == 'Unidade'){
+        } elseif ($this->state['contact'] == 'Unidade'){
             $this->state['phone'] = $this->getFranchising()['phone01'];
         }
     }
@@ -78,7 +86,7 @@ class Form extends Component
             $this->state['success'] = '';
         } else if($this->state['answered'] == 'Não'){
             $this->state['success'] = 'Não';
-            $this->state['date_schedule'] = $current->addDays(1);
+            $this->state['date_schedule'] = $current->addDays(2);
         }
     }
 
@@ -91,7 +99,7 @@ class Form extends Component
     }
     public function getPartnersByFranchising($franchising_id = null)
     {
-        if($this->state['type'] == 'Sócio'){
+        if($this->state['contact'] == 'Sócio'){
             $partnersRepository = new PartnersRepository();
             $partnerReturnDB =  $partnersRepository->getSelectPartnersByFranchising($this->franchising['id']);
             return $partnerReturnDB;
@@ -111,7 +119,10 @@ class Form extends Component
         $request = $this->state;
 
         $chargeHistoricRepository = new ChargesHistoricsRepository();
-        $chargeHistoricReturnDB = $chargeHistoricRepository->create($request, $this->charge['id']);
+        $chargeHistoricReturnDB = $chargeHistoricRepository->create($request, $this->event['id'], $this->event['charge_id']);
+
+        $chargesHistoricRepository = new ChargesHistoricsRepository();
+        $chargesHistoricReturnDB = $chargesHistoricRepository->getChargesBySchedule();
 
         if($chargeHistoricReturnDB['status'] == 'success') {
 
@@ -121,7 +132,8 @@ class Form extends Component
                 'icon'        => 'success'
             ]);
             $this->emit('closeModal');
-            $this->emit('refreshTableChargeHistoric');
+            $this->emit('refreshCardSchedule');
+            $this->dispatchBrowserEvent('schedule-updated', ['filter' =>  $chargesHistoricReturnDB]);
 
         } else if ($chargeHistoricReturnDB['status'] == 'error') {
             $this->notification([
