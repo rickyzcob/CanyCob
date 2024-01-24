@@ -9,7 +9,9 @@ class ReleasesRequest
     public function validate($request, $id = null)
     {
         $validator =  Validator::validate($request, [
-            'type_release_id' => 'required',
+            'type_release_id' => 'sometimes',
+            'type' => 'required',
+            'due_date' => 'required'
         ]);
 
         return $validator;

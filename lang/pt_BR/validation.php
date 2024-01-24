@@ -248,7 +248,11 @@ return [
         'origin' => 'origem',
         'date_conference' => 'data de conferencia',
         'date_schedule' => 'reagendar',
-        'today' => 'hoje'
+        'today' => 'hoje',
+        'code' => 'codigo',
+        'bank' => 'banco',
+        'agency' => 'agencia',
+        'count' => 'conta'
     ],
 
 ];

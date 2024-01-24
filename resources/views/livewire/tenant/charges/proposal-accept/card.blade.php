@@ -4,7 +4,7 @@
         <div class="flex items-start justify-between border-b-2 mb-2">
             <h1 class="text-base text-gray-600 font-semibold py-2">Termo de Aceite</h1>
             @if($response->proposal == null)
-                @can('add_proposal_accept_charges')
+                @can('tenant_add_proposal_accept_charges')
                 <x-button wire:click="openModal('tenant.charges.proposal-accept.form', {'id': {{$charge->id}} })" orange sm icon="plus-circle" label="Novo" />
                 @endcan
             @endif
@@ -21,21 +21,21 @@
                             <div class="text-[8px] leading-4 font-normal"><span class="text-xs leading-4 font-normal text-gray-500"> Aceita : {{ $response->proposal['accept'] }} </span> </div>
                         </div>
                         <div>
-                            @can('details_proposal_accept_charges')
+                            @can('tenant_details_proposal_accept_charges')
                             <x-button.circle sm a href="{{route('formalized.show', ['subdomain' => session('tenant')['subdomain'], 'reference' => $response->proposal['reference']])}}" target="_blank" positive icon="eye"  />
                             @endcan
-                            @can('send_email_proposal_accept_charges')
+                            @can('tenant_send_email_proposal_accept_charges')
                             <x-button.circle wire:click="sentProposalAcceptMail({{ $response->proposal['id'] }})" sm cyan icon="arrow-circle-up" spinner />
                             @endcan
                             @if(['status'] == 'Ativo')
-                                @can('block_proposal_accept_charges')
+                                @can('tenant_block_proposal_accept_charges')
                                 <x-button.circle wire:click="changeStatus({{ $response->proposal['id'] }}, 'Inativo')" sm black icon="ban" />
                             @else
                                 <x-button.circle sm wire:click="changeStatus({{ $response->proposal['id'] }}, 'Ativo')" teal icon="ban" />
-                                    @endcan
-                                @endif
+                                @endcan
+                            @endif
 {{--                            <x-butto    n.circle wire:click="openModal('tenant.charges.proposal.form', {'id': {{$charge['id']}} })" sm warning icon="pencil-alt" />--}}
-                            @can('delete_proposal_accept_charges')
+                            @can('tenant_delete_proposal_accept_charges')
                             <x-button.circle wire:click="openConfirmModal({{ $response->proposal['id'] }}, 'Apagar Registro' , 'Você tem certeza que deseja apagar a seguinte a proposta ?', 'confirmDeleteProposalFormal')" sm negative icon="x-circle" />
                             @endcan
                         </div>

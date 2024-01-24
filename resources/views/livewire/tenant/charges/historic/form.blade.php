@@ -1,6 +1,6 @@
 <div>
     <div class="flex flex-col gap-5">
-        <x-card>
+        <x-card cardClasses="h-80 border-l-4 border-green-500">
             <div class="flex items-start justify-between border-b-2 mb-5 ">
                 Dados do Franqueado
             </div>

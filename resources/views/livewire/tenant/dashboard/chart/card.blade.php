@@ -1,4 +1,5 @@
 <div>
+    @if(auth()->user()->type == 'Colaborador')
     <div x-data="{ tab : 'chargesPhone' }" id="tab_wrapper"
          class="grid grid-cols-3 text-gray-500 gap-5">
         <button :class="{ 'primary-color primary-text-color': tab === 'chargesPhone' }" @click.prevent="tab = 'chargesPhone'"
@@ -28,8 +29,6 @@
         </button>
 
         <div class="col-span-3 h-64">
-
-
             <div x-show="tab === 'chargesPhone'">
                 @livewire('tenant.dashboard.graphs.phone')
             </div>
@@ -42,9 +41,10 @@
                 @livewire('tenant.dashboard.graphs.whatsapp')
             </div>
         </div>
-
     </div>
-
+    @elseif(auth()->user()->type == 'Gestão')
+        @livewire('tenant.dashboard.graphs.users')
+        @endif
 </div>
 
 {{--<div class="col-span-12 justify-center ">--}}

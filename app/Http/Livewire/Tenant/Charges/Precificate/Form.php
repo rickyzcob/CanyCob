@@ -57,6 +57,7 @@ class Form extends Component
 
             $this->emit('refreshCardPrecification');
             $this->emit('refreshTableChargesReleases');
+            $this->emit('refreshCardTypeReleases');
 
         } else if ($releasesReturnDB['status'] == 'error') {
             $this->notification([
@@ -66,8 +67,6 @@ class Form extends Component
             ]);
             $this->emit('closeModal');
         }
-
-
     }
 
     public function render()

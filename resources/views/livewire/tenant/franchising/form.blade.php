@@ -5,7 +5,7 @@
                 {{ $franchising ? 'Atualizar' : 'Cadastrar' }}
             </div>
 
-            <div class="grid grid-cols-12 gap-4">
+            <div class="grid grid-cols-12 items-end gap-4">
                 <div class="md:col-span-6 col-span-12">
                     <x-input  wire:model.defer="state.name" label="Unidade"/>
                     @error('name')
@@ -76,15 +76,33 @@
                     </div>
                 </div>
 
-                <div class="md:col-span-3 col-span-12">
-                    <x-inputs.maskable
+                <div class="md:col-span-4 col-span-12">
+                    <x-input
+                        x-mask="99999-999"
                         icon="location-marker"
-                        mask="['#####-###']"
-                        wire:model.lazy="state.zip_code" label="CEP"/>
+                        wire:model.defer="state.zip_code" label="CEP">
+                        <x-slot name="append">
+                            <div class="absolute inset-y-0 right-0 flex items-center p-0.5">
+                                <x-button
+                                    class="h-full rounded-r-md"
+                                    wire:click.prevent="getDataByZipCode()"
+                                    icon="search"
+                                    primary
+                                    flat
+                                    squared
+                                />
+                            </div>
+                        </x-slot>
+                    </x-input>
+
                     @error('zip_code')
                     <div class="text-red-800 text-xs p-1">{{ $message }}</div>
                     @enderror
                 </div>
+
+{{--                <div class="md:col-span-1 col-span-12 py-1">--}}
+{{--                    <x-button sm warning icon="search" wire:click.prevent="getDataByZipCode()" />--}}
+{{--                </div>--}}
 
                 <div class="md:col-span-6 col-span-12">
                     <x-input wire:model="state.address" label="Endereço"/>
@@ -93,7 +111,7 @@
                     @enderror
                 </div>
 
-                <div class="md:col-span-3 col-span-12">
+                <div class="md:col-span-2 col-span-12">
                     <x-input wire:model.defer="state.number" label="Numero"/>
                     @error('number')
                     <div class="text-red-800 text-xs p-1">{{ $message }}</div>
@@ -197,5 +215,8 @@
     </x-card>
 </div>
 
+{{--@push('scripts')--}}
 
+{{--    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/mask@3.x.x/dist/cdn.min.js"></script>--}}
+{{--@endpush--}}
 

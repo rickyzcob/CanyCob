@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Tenant\Charges\Precificate;
 
 use App\Http\Traits\WithModal;
 use App\Repositories\ChargesFranchisingRepository;
+use App\Repositories\ChargesTypeReleasesRepository;
 use Livewire\Component;
 use WireUi\Traits\Actions;
 
@@ -11,7 +12,6 @@ class Card extends Component
 {
     use WithModal, Actions;
 
-    public $franchising;
     public $charge;
 
     protected $listeners = [
@@ -25,7 +25,6 @@ class Card extends Component
             $chargeFranchisingReturnDB = $chargeFranchisingRepository->showByReference($reference)['data'];
 
             $this->charge = $chargeFranchisingReturnDB;
-//            $this->charge_id = $id;
         }
     }
 
@@ -36,6 +35,14 @@ class Card extends Component
             $chargeFranchisingReturnDB = $chargeFranchisingRepository->show($this->charge['id'])['data'];
             return $chargeFranchisingReturnDB;
         }
+    }
+
+    public function getTypeReleases()
+    {
+        $chargeTypeReleasesRepository = new ChargesTypeReleasesRepository();
+        $chargeTypeReleasesReturnDB = $chargeTypeReleasesRepository->getTypeReleasesByCharge($this->charge['id'])['data'];
+
+        return $chargeTypeReleasesReturnDB;
     }
 
     public function getLastChargeHistoric()
@@ -52,6 +59,7 @@ class Card extends Component
     {
         $response = new \stdClass();
         $response->charge = $this->getInformationCharge();
+        $response->typeReleases = $this->getTypeReleases();
         $response->lastHistoric = $this->getLastChargeHistoric();
 
         return view('livewire.tenant.charges.precificate.card', ['response' => $response]);

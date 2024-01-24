@@ -21,7 +21,6 @@ class Table extends Component
 
     public function mount($reference = null, $charge_id = null)
     {
-
         $chargeFranchisingRepository = new ChargesFranchisingRepository();
         if($reference){
             $chargeFranchisingReturnDB = $chargeFranchisingRepository->showByReference($reference)['data'];

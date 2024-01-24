@@ -8,12 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class ChargeHistoric extends Model
 {
-    use HasFactory, TenantTrait;
+    use HasFactory;
 
     protected $fillable = ['charge_id', 'partner_id', 'contact', 'name', 'datetime', 'phone', 'email', 'type', 'success', 'description', 'origin', 'date_schedule', 'date_conference'];
 
     public function charge()
     {
         return $this->belongsTo(Charges::class);
+    }
+
+    public function partner()
+    {
+        return $this->belongsTo(Partners::class);
+
     }
 }

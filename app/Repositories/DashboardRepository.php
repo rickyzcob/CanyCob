@@ -128,12 +128,9 @@ class DashboardRepository
 
         if($chargesDB != null ){
             foreach ($chargesDB as $key => $itemCharge){
-
                     $return['totalEmail'][$key] = 0;
                     $return['day'][$key] = formatDate($itemCharge['datetime']) ;
-
                     $return['totalEmail'][$key] += $itemCharge['count'];
-
             }
         } else {
             $return['totalEmail'] = 0;
@@ -189,6 +186,70 @@ class DashboardRepository
             $return['day'] = 0;
         }
 
+        return $return;
+
+    }
+
+
+    public function getHistoricChargesByUser()
+    {
+        $date = \Carbon\Carbon::today()->subDays(10);
+        $mytime = Carbon::now();
+
+        $chargesDB = ChargeHistoric::select(
+//            'id',
+//            'charge_historics.tenant_id as tenant_id',
+            'datetime',
+            'charge_historics.phone as phone',
+            'charge_historics.email',
+            'charge_historics.user_id',
+            'charge_historics.created_at as date',
+            'charge_historics.type as type',
+            'users.name as users',
+            'users.tenant_id as tenant_id',
+
+
+            DB::raw('(SELECT COUNT(DISTINCT id) FROM charge_historics WHERE type = "Phone") AS countPhone'),
+            DB::raw('(SELECT COUNT(*) FROM charge_historics WHERE type = "Email") AS countEmail'),
+            DB::raw('(SELECT COUNT(*) FROM charge_historics WHERE type = "WhatsApp") AS countWhatsApp'))
+
+//            DB::raw("MONTHNAME(created_at) as month_name"),
+//            DB::raw("DAY(created_at) as day"))
+
+//            ->whereBetween('datetime', [$date, $mytime])
+            ->leftJoin('users', 'users.id', 'charge_historics.user_id')
+
+            ->groupBy('user_id')
+            ->orderBy('user_id','asc')
+            ->get();
+
+        $chargesDB = json_decode($chargesDB,true);
+
+        $return = [];
+
+        if($chargesDB != null ){
+            foreach ($chargesDB as $key => $itemCharge){
+                $return['countPhone'][$key] = 0;
+                $return['countEmail'][$key] = 0;
+                $return['countWhatsApp'][$key] = 0;
+
+                $explodeName = explode(" ", $itemCharge['users']);
+                $firstname = $explodeName[0];
+
+
+                $return['users'][$key] = $firstname;
+
+                $return['countPhone'][$key] = $itemCharge['countPhone'];
+                $return['countEmail'][$key] = $itemCharge['countEmail'];
+                $return['countWhatsApp'][$key] = $itemCharge['countWhatsApp'];
+            }
+        } else {
+            $return['countPhone'] = 0;
+            $return['countEmail'] = 0;
+            $return['totalWhatsapp'] = 0;
+        }
+
+//        dd($return);
         return $return;
 
     }

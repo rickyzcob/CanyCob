@@ -32,7 +32,7 @@ class Card extends Component
     public function getChargeByFranchising()
     {
         $franchisingRepository = new ChargesFranchisingRepository();
-        $franchisingReturnDB = $franchisingRepository->showByReference($this->reference)['data'];
+        $franchisingReturnDB = $franchisingRepository->show($this->charge->id)['data'];
 
         return $franchisingReturnDB;
     }
@@ -43,6 +43,16 @@ class Card extends Component
         $chargeStatusReturnDB = $chargeStatusRepository->getSelectStatusChargeByValueAgreement($this->charge->id );
 
         return $chargeStatusReturnDB;
+    }
+
+    public function getLastChargeHistoric()
+    {
+        if($this->charge){
+            $chargeFranchisingRepository = new ChargesFranchisingRepository();
+            $chargeFranchisingReturnDB = $chargeFranchisingRepository->getLastChargeHistoric($this->charge['id'])['data'];
+            return $chargeFranchisingReturnDB;
+        }
+
     }
 
     public function changeStatus($status_id = null)
@@ -78,6 +88,7 @@ class Card extends Component
         $response = new \stdClass();
         $response->status = $this->getStatusChargeByValueAgreement();
         $response->charge = $this->getChargeByFranchising();
+        $response->lastHistoric = $this->getLastChargeHistoric();
 
         return view('livewire.tenant.charges.top.card', ['response' => $response]);
     }

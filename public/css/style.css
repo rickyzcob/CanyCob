@@ -90,6 +90,7 @@ a:hover {
     transition: 0.3s;
     margin-right: 10px;
     margin-left: 10px;
+    margin-bottom: 20px;
     /*margin-bottom: 10px;*/
     /*padding-bottom: 10px;*/
     /*margin: 10px;*/
@@ -98,6 +99,34 @@ a:hover {
 p {
     font-size: small;
     color: gray;
+}
+
+.tables_price {
+    border-collapse: collapse;
+    overflow-x: auto;
+    width: 100%;
+}
+
+.tables_price th {
+    padding: 5px 5px 5px 5px;
+    text-align: left;
+    font-size: smaller;
+    background-color: var(--user-primary-color);
+    color: var(--text-primary-color);
+    overflow-x:auto;
+}
+
+.tables_price td {
+    color:gray;
+    font-size: small;
+    border-bottom: 1px solid #ddd;
+    padding: 5px 5px 5px 5px;
+}
+
+.tables_price tr:nth-child(even){
+    background-color: #f2f2f2;
+    padding-top: 12px;
+    padding-bottom: 12px;
 }
 
 .tables {
@@ -172,6 +201,16 @@ mini-stat-icon {
     height: 150px; /* You must set a specified height */
     margin-bottom: 70px;
     position: relative;
+}
+
+.scrollbar-information
+{
+    padding-right: 4px;
+    height: 136px;
+    width: auto;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    z-index: 10;
 }
 
 .scrollbar

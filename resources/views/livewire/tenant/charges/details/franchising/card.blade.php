@@ -6,7 +6,7 @@
                 <h1 class="text-base  py-1">Dados cadastrais</h1>
             </div>
             @if($charge['agreement'] == 0)
-                @can('edit_franchising_charges')
+                @can('tenant_edit_franchising_charges')
             <x-button.circle wire:click="openModal('tenant.franchising.form', {'id': {{$franchising['id']}} })" xs warning icon="pencil-alt" />
                 @endcan
             @endif
@@ -14,11 +14,10 @@
         <div class="flex items-start justify-between mb-2">
             <div class="justify-between items-center w-full">
                 <p> <span class="font-bold"> Razão Social : </span>{{$franchising['corporate_name']}}</p>
-                <p> <span class="font-bold"> Endereço : </span> {{$franchising['address']}} - {{$franchising['number']}} - {{$franchising['complement']}} - {{$franchising['zip_code']}} </p>
-                <p> <span class="font-bold"> Região : </span> {{$franchising['region']}} </p>
+                <p> <span class="font-bold"> Endereço : </span> {{$franchising['address']}} - {{$franchising['number']}} - {{$franchising['complement']}} - {{$franchising['zip_code']}} - {{$franchising['city']}} - {{$franchising['state']}}  </p>
                 <p> <span class="font-bold"> Telefones : </span> {{$franchising['phone01']}} - {{$franchising['phone02']}}</p>
                 <p> <span class="font-bold"> CNPJ : </span> {{$franchising['employer_number']}} <span class="font-bold"> Inscrição Estadual : </span> {{$franchising['state_registration']}} </p>
-                <p> <span class="font-bold"> {{$franchising['city']}} - {{$franchising['state']}}  </span>  </p>
+                <p> <span class="font-bold">  </span>  </p>
             </div>
         </div>
     </x-card>

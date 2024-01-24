@@ -9,9 +9,11 @@ use App\Models\Charges;
 use App\Models\ChargeSchedule;
 use App\Models\Fees;
 use App\Models\ImportReleasesHistoric;
+use App\Models\PaymentMehod;
 use App\Models\ProductSpecification;
 use App\Models\Releases;
 use App\Models\User;
+use App\Requests\PaymentMethodRequest;
 use App\Requests\ReleasesRequest;
 use App\Services\ReferenceService;
 use Carbon\Carbon;
@@ -71,6 +73,50 @@ class ReleasesRepository
         }
     }
 
+    public function create($request, $id)
+    {
+        $releasesRequest = new ReleasesRequest();
+        $requestValidated = $releasesRequest->validate($request);
+
+        $chargeAmountReleases = ChargeAmountReleases::query()->with('charge.franchising', 'typeRelease')->findOrFail($id);
+        $paymentMethodDB = PaymentMehod::query()->findOrFail($requestValidated['type']);
+
+        try {
+            $releasesDB = Releases::query()->create([
+                'tenant_id' => Auth::user()->tenant_id,
+                'type' => $paymentMethodDB['type'],
+                'bill' => $paymentMethodDB['bill'],
+                'type_release_id' => $chargeAmountReleases['type_release_id'],
+                'charge_id' => $chargeAmountReleases['charge_id'],
+                'franchising_id' => $chargeAmountReleases['charge']['franchising_id'],
+                'charge_amount_release_id' => $chargeAmountReleases['id'],
+                'amount' => $chargeAmountReleases['value_corrected'],
+                'amount_corrected' => $chargeAmountReleases['value_corrected'],
+                'employer_number' => $chargeAmountReleases['charge']['franchising']['employer_number'],
+                'status_id' => 10,
+                'due_date' => $requestValidated['due_date'],
+                'imported' => 'Sim'
+            ]);
+
+            return [
+                'status' => 'success',
+                'data' => $releasesDB,
+                'code' => 200,
+                'message' => 'Lançamento cadastrado com sucesso !'
+            ];
+
+
+        } catch (Exception $exception){
+
+            return [
+                'status' => 'error',
+                'data' => $exception,
+                'code' => 400,
+                'message' => 'Erro ao Cadastrar'
+            ];
+        }
+    }
+
     public function import($type_release_id, $file)
     {
 
@@ -123,7 +169,8 @@ class ReleasesRepository
                     ChargeAmountReleases::query()->create([
                         'charge_id' => $createChargeForReleases->id,
                         'type_release_id' => $type_release_id,
-                        'value' => 0
+                        'value' => 0,
+                        'value_corrected' => 0
                     ]);
                 }
                 $this->setDateAndTimeSchedule();
@@ -173,7 +220,6 @@ class ReleasesRepository
             foreach ($selectReleasesToAddChargeID as $itemChargeRelease) {
                 $itemChargeRelease->charge_id = $itemChargeRelease->charges_id;
                 $itemChargeRelease->type_release_id = $type_release_id;
-//                $itemChargeRelease->imported = 'Sim';
                 $itemChargeRelease->update();
             }
 
@@ -241,7 +287,6 @@ class ReleasesRepository
 
     public function historics($pageSize, $orderBy)
     {
-
         try {
             $importReleasesHistoricDB = ImportReleasesHistoric::query()->with('user');
 
@@ -330,6 +375,18 @@ class ReleasesRepository
                 $itemRelease->update();
             }
 
+            $chargeAmountReleases = ChargeAmountReleases::query()->where('charge_id', $charge_id)->get();
+
+            foreach($chargeAmountReleases as $itemRelease) {
+                $sumAmount =  Releases::query()->where('charge_id', $charge_id)->where('type_release_id', $itemRelease->type_release_id)->sum('amount');
+                $sumAmountCorrected =  Releases::query()->where('charge_id', $charge_id)->where('type_release_id', $itemRelease->type_release_id)->sum('amount_corrected');
+
+                $itemRelease->value = $sumAmount;
+                $itemRelease->value_corrected = $sumAmountCorrected;
+                $itemRelease->update();
+            }
+
+
 
             $feesDB = Charges::query()->with('releases')->findOrFail($charge_id);
             $feesDB->update([
@@ -387,26 +444,35 @@ class ReleasesRepository
 
         $chargeDB = Charges::query()->with('releases')->whereIn('id', $chargesIDDB)->get();
 
-        $chargeAmountReleaseDB = ChargeAmountReleases::query()->where('type_release_id', $type_release_id)->get();
+        foreach($chargeDB as $itemCharge) {
 
-        if($chargeAmountReleaseDB->count() === 0) {
-            foreach ($chargeDB as $itemCharge) {
-                $releaseTeste =  Releases::query()->where('charge_id', $itemCharge->id)->where('type_release_id', $type_release_id)->sum('amount_corrected');
-                ChargeAmountReleases::query()->create([
-                    'charge_id' => $itemCharge->id,
-                    'type_release_id' => $type_release_id,
-                    'value' => $releaseTeste
-                ]);
-            }
-        } else {
-            foreach ($chargeAmountReleaseDB as $itemRelease) {
-                $releaseTeste =  Releases::query()->where('charge_id', $itemRelease->charge_id)->where('type_release_id', $type_release_id)->sum('amount_corrected');
+            $chargeAmountReleaseDB = ChargeAmountReleases::query()->where('charge_id', $itemCharge->id)->where('type_release_id', $type_release_id)->get();
+
+            if($chargeAmountReleaseDB->count() === 0) {
+                foreach ($chargeDB as $itemCharge) {
+                    $sumAmount =  Releases::query()->where('charge_id', $itemCharge->id)->where('type_release_id', $type_release_id)->sum('amount');
+                    $sumAmountCorrected =  Releases::query()->where('charge_id', $itemCharge->id)->where('type_release_id', $type_release_id)->sum('amount_corrected');
+                    ChargeAmountReleases::query()->create([
+                        'charge_id' => $itemCharge->id,
+                        'type_release_id' => $type_release_id,
+                        'value' => $sumAmount,
+                        'value_corrected' => $sumAmountCorrected
+                    ]);
+                }
+            } else {
+                foreach ($chargeAmountReleaseDB as $itemRelease) {
+                    $sumAmount =  Releases::query()->where('charge_id', $itemRelease->charge_id)->where('type_release_id', $type_release_id)->sum('amount');
+                    $sumAmountCorrected =  Releases::query()->where('charge_id', $itemRelease->charge_id)->where('type_release_id', $type_release_id)->sum('amount_corrected');
 
                     $itemRelease->charge_id = $itemRelease->charge_id;
-                    $itemRelease->value = $releaseTeste;
+                    $itemRelease->value = $sumAmount;
+                    $itemRelease->value_corrected = $sumAmountCorrected;
                     $itemRelease->update();
+                }
             }
         }
+
+
 
         $releasesDB = Releases::query()->where('imported', 'Nao')->update([
             'imported' => 'Sim',

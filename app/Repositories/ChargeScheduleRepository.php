@@ -14,7 +14,7 @@ class ChargeScheduleRepository
     public function show($id)
     {
         try {
-            $chargeScheduleDB = ChargeSchedule::query()->with(['charge.franchising', 'historic', 'user'])->where('id', $id)->first();
+            $chargeScheduleDB = ChargeSchedule::query()->with(['charge.franchising', 'historic.partner', 'user' ])->where('id', $id)->first();
 
             return [
                 'status' => 'success',

@@ -11,6 +11,7 @@
          x-transition:leave-start="-translate-x-0"
          x-transition:leave-end="translate-x-full"
     >
+
         <div class="flex justify-end pt-2 p-2">
             <x-button.circle dark icon="x-circle" wire:click="closeModals()" />
         </div>
@@ -20,4 +21,5 @@
             </div>
         @endif
     </div>
+    {{--    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>--}}
 </div>

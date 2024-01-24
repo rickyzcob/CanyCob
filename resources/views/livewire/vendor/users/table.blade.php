@@ -44,6 +44,7 @@
                 <td><x-badge color="red" label="Black" /></td>
                 <td width="150px">
                     <div class="flex flex-wrap justify-items-center gap-x-2">
+                        <x-button.circle wire:click="openModal('vendor.users.indicators01', {'id': {{ $itemUser['id'] }} } )" info icon="view-list" />
                         @canany(['tenant_edit_user', 'admin_edit_user'])
                             <x-button.circle wire:click="openModal('vendor.users.form', {'id': {{ $itemUser['id'] }} } )" orange icon="pencil-alt" />
                         @endcanany

@@ -1,32 +1,53 @@
 <div>
-    <x-card cardClasses="md:h-52 border-l-4 border-blue-500">
+    <x-card cardClasses="border-l-4 border-blue-500">
         <div class="flex items-start justify-between border-b-2 mb-2">
-            <h1 class="text-base text-gray-600 font-semibold py-1">Informações</h1>
-            @if($response->charge['agreement'] == 0)
-                @can('change_precification_charges')
-                    <x-button wire:click="openModal('tenant.charges.precificate.form', {'charge_id': {{$response->charge['id']}} })" info xs icon="information-circle" label="Atualizar Valores"/>
-                @endcan
-            @endif
-        </div>
-        <div class="flex items-start justify-between mb-2">
-            <div class="justify-between items-center w-1/2">
-                <p> <span class="font-bold"> Valor Original : </span>{{formatMoney($response->charge['total_amount'])}}</p>
-                <p> <span class="font-bold"> Valor Corrigido : </span> {{formatMoney($response->charge['total_amount_corrected'])}} </p>
-                <p> <span class="font-bold"> Total de Cobranças : </span> {{ $response->charge['totalHistorics']->count('id')}} </p>
+            <div class="flex items-center text-base text-blue-500 font-bold gap-x-2">
+                <span class="material-icons text-base ">currency_exchange</span>
+                <h1 class="text-base  py-1">Valores por tipo de Lançamentos </h1>
             </div>
-            <div>
-                <p> <span class="font-bold"> Ultima Atualização : </span> {{formatDate($response->charge['updated_at'])}} </p>
-                <p> <span class="font-bold"> Total de Lançamentos : </span> {{ $response->charge['releases']->count('id') }} </p>
-                <p class="pb-3"> <span class="font-bold"> Propostas Emitidas: </span> {{ $response->charge['proposals']->count('id') }} </p>
+{{--            @if($charge['agreement'] == 0)--}}
+{{--                @can('change_precification_charges')--}}
+{{--                    <x-button wire:click="openModal('tenant.charges.precificate.form', {'charge_id': {{$response->charge['id']}} })" info xs icon="information-circle" label="Atualizar Valores"/>--}}
+{{--                @endcan--}}
+{{--            @endif--}}
+        </div>
+        <table class="tables_price">
+            <thead>
+            <tr>
+                <th width="450px">Tipo</th>
+                <th>Valor</th>
+                <th>Correção</th>
+                <th width="150px">Ações</th>
+             </tr>
+            </thead>
+            <div style="display: none">
+                {{ $total = 0 }}
+                {{ $totalnew = 0 }}
             </div>
-        </div>
-        <div class="flex items-start justify-between mb-2">
-            @if($response->lastHistoric)
-                <p> <span class="font-bold"> Última Cobrança : </span> {{formatDateAndTime($response->charge['historics'][0]['created_at'])}} via
-                    <span class="font-bold"> {{$response->charge['historics'][0]['type']}}  </span> </p>
-            @else
-                <p> <span class="font-bold"> Sem Histórico : </span> </p>
-            @endif
-        </div>
+            <tbody>
+            @foreach($response->typeReleases as $itemRelease)
+                <tr>
+                    <td><x-badge color="{{$itemRelease['typeRelease']['color']}}" label="Total em {{$itemRelease['typeRelease']['name']}}" /></td>
+                    <td>{{ formatMoney($itemRelease['value'] )}}</td>
+                    <td>{{ formatMoney($itemRelease['value_corrected']) }}</td>
+                    <td>
+                        <x-button wire:click="openModal('tenant.charges.precificate.form', {'charge_id': {{ $itemRelease['id']}} })" positive xs icon="currency-dollar" label="Gerar Pagamento"/>
+                    </td>
+                </tr>
+                <div style="display: none">{{$total += $itemRelease['value']}}</div>
+                <div style="display: none">{{$totalnew +=  $itemRelease['value_corrected']}}</div>
+            @endforeach
+            </tbody>
+
+            </tbody>
+            <tfoot>
+            <tr>
+                <th class="text-right font-weight-600"></th>
+                <th class="text-left font-weight-600">R$ {{number_format($total, 2, ',','.')}}</th>
+                <th class="text-left font-weight-600">R$ {{number_format($totalnew, 2, ',','.')}}</th>
+                <th class="text-right font-weight-600"></th>
+            </tr>
+            </tfoot>
+        </table>
     </x-card>
 </div>

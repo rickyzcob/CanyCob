@@ -24,7 +24,8 @@
                 </td>
                 <td width="150px">
                     <div class="flex flex-wrap justify-items-center gap-x-2">
-                        <x-button.circle warning wire:click="openModal('tenant.type-releases.form', {'id': {{ $itemTypeRelease['id'] }} } )" orange icon="pencil-alt" />
+                        <x-button.circle green wire:click="openModal('tenant.type-releases.payment-method.table', {'id': {{ $itemTypeRelease['id'] }} } )" icon="currency-dollar" />
+                        <x-button.circle warning wire:click="openModal('tenant.type-releases.form', {'id': {{ $itemTypeRelease['id'] }} } )" icon="pencil-alt" />
                         <x-button.circle negative icon="x-circle" wire:click="openConfirmModal({{ $itemTypeRelease['id'] }}, 'Apagar Registro' , 'Você tem certeza que deseja apagar o seguinte o registro, {{ $itemTypeRelease['name'] }} ?', 'confirmDeleteTypeReleases')" />
                     </div>
                 </td>

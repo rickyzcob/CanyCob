@@ -13,7 +13,7 @@ class AddressService
     {
         $countZip = strlen($postalCode);
 
-        if($countZip === 8) {
+        if($countZip === 9) {
             $client = new Client();
             $request = new Request('GET', 'https://viacep.com.br/ws/'.$postalCode.'/json/'); // create request
 

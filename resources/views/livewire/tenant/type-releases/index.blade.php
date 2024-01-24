@@ -11,7 +11,7 @@
         <div class="card p-5 gap-4 p-2">
             <div class="flex items-start justify-between  border-b-2 mb-2 ">
                 <h1 class="text-lg text-gray-600 font-semibold py-2">Status da Cobrança</h1>
-                <x-button icon="user-add" positive label="Cadastrar" x-data={}
+                <x-button icon="plus-circle" positive label="Cadastrar" x-data={}
                           x-on:click="livewire.emitTo('components.open-modal', 'showModal', 'tenant.type-releases.form', {'id' : null})">
                 </x-button>
             </div>

@@ -10,7 +10,7 @@ class Releases extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['tenant_id', 'type_release_id', 'name', 'employer_number', 'franchising_id', 'status_id', 'charge_id', 'agreement_id', 'account', 'issue_date', 'due_date', 'parcel', 'emp_tp_processo',
+    protected $fillable = ['tenant_id', 'type',  'bill', 'type_release_id', 'name', 'employer_number', 'franchising_id', 'status_id', 'charge_id', 'charge_amount_release_id', 'agreement_id', 'account', 'issue_date', 'due_date', 'parcel', 'emp_tp_processo',
         'month', 'amount', 'amount_corrected', 'amount_paid', 'recurrent', 'imported', 'franchisee', 'notes'];
 
     public function franchising()

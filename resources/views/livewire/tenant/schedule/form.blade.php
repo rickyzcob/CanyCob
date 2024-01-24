@@ -1,28 +1,15 @@
 <div>
     <div class="flex flex-col gap-5">
-        <x-card>
-            <div class="flex items-start justify-between border-b-2 mb-5 ">
-                Dados do Franqueado
-            </div>
-            <div class="flex flex-col items-start  mb-2">
-                <div class="justify-between items-center pb-2">
-                    <p> <span class="font-bold"> Telefones da franquia :</span> {{$franchising['phone01']}} - {{$franchising['phone02']}} </p>
-                </div>
-                <div class="justify-between items-center w-full">
-                    <p> <span class="font-bold"> Sócios da Unidade : </span>  </p>
-                    @foreach($franchising['partners'] as $itemPartner)
-                        <p> <span class="font-bold"> Nome : </span> {{$itemPartner['partner']['name'] ? $itemPartner['partner']['name'] : 'Sem Cadastro'}} -
-                            <span class="font-bold"> Telefone : </span>{{$itemPartner['partner']['phone'] ? $itemPartner['partner']['phone'] : 'Sem Cadastro'}} -
-                            <span class="font-bold"> Email : </span>{{$itemPartner['partner']['email'] ? $itemPartner['partner']['email'] : 'Sem Cadastro'}} </p>
-                    @endforeach
-                </div>
-            </div>
-        </x-card>
-
-        <x-card>
+        @if(!$isDisabled)
+        @livewire('tenant.charges.precificate.card', ['reference' => $charge['reference']])
+        @endif
+        <x-card cardClasses="border-l-4 border-green-500">
             <form wire:submit.prevent="save">
                 <div class="flex items-start justify-between border-b-2 mb-5 py-2">
-                    Cadastrar nova Cobrança
+                    <div class="flex items-center text-base text-green-500 font-bold gap-x-2">
+                        <span class="material-icons text-base ">add_box</span>
+                        <h1 class="text-base  py-1">Cadastrar nova Cobrança</h1>
+                    </div>
                     @if(!$isDisabled)
                     <x-button wire:click="openModal('tenant.charges.simulation.form', {'id': {{$charge['id']}} }, 2)" amber sm icon="plus-circle" label="Simular" />
                     @endif
@@ -44,10 +31,10 @@
                     @if($state['contact'] == 'Sócio')
                         <div class="md:col-span-8 col-span-12">
                                 <x-native-select wire:model.defer="state.partner_id" label="Escolha a quem fazer a Cobrança" disabled>
-                                <option value="">Escolha</option>
-                                @foreach($response->partners as $itemPartner)
-                                    <option value="{{ $itemPartner['partner']['id'] }}"> {{$itemPartner['partner']['name']}}  </option>
-                                @endforeach
+                                <option value="">{{$state['partner']['name']}}</option>
+{{--                                @foreach($response->partners as $itemPartner)--}}
+{{--                                    <option value="{{ $itemPartner['partner']['id'] }}"> {{$itemPartner['partner']['name']}}  </option>--}}
+{{--                                @endforeach--}}
 
                             </x-native-select>
                             @error('partner_id')

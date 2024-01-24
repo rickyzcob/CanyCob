@@ -67,7 +67,7 @@ class Form extends Component
         $current = carbon::now();
 
         if($this->state['success'] == 'Não'){
-            $this->state['date_schedule'] = $current->addWeekday(2);
+            $this->state['date_schedule'] = $current->addWeekday(2)->subHour(3);
         } else {
             $this->state['date_schedule'] = '';
         }
@@ -86,7 +86,7 @@ class Form extends Component
             $this->state['success'] = '';
         } else if($this->state['answered'] == 'Não'){
             $this->state['success'] = 'Não';
-            $this->state['date_schedule'] = $current->addDays(2);
+            $this->state['date_schedule'] = $current->addWeekday(2)->subHour(3);
         }
     }
 
@@ -136,8 +136,8 @@ class Form extends Component
             $this->dispatchBrowserEvent('schedule-updated', ['filter' =>  $chargesHistoricReturnDB]);
 
         } else if ($chargeHistoricReturnDB['status'] == 'error') {
-            $this->notification([
-                'title'       => 'Erro ao cadastrar !',
+            $this->dialog([
+                'title'       => 'Erro !',
                 'description' => $chargeHistoricReturnDB['message'],
                 'icon'        => 'error'
             ]);

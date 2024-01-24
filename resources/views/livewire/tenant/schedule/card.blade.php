@@ -20,8 +20,6 @@
 <link href='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.4.2/main.min.css' rel='stylesheet' />
 <link href='https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.4.2/main.min.css' rel='stylesheet' />
 
-
-
 <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.4.2/main.min.js'></script>
 
 
@@ -84,7 +82,6 @@
                 calendar.removeAllEvents();
                 calendar.addEventSource(data);
             }
-
     });
 </script>
 @endpush

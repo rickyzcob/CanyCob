@@ -54,6 +54,10 @@ class ChargesHistoricsRepository
 
         try {
 
+            $eventDB = ChargeSchedule::query()->findOrFail($event_id);
+
+            if (Carbon::now() >= Carbon::parse($eventDB['start'])) {
+
             $chargeDB = Charges::query()->with('franchising', 'attendant')->findOrFail($charge_id);
             $chargeDB->update([
                 'date_schedule' => $requestValidated['date_schedule']
@@ -61,7 +65,6 @@ class ChargesHistoricsRepository
 
             $chargeHistoricDB = auth()->user()->historicCharge()->create($requestValidated);
 
-            $eventDB = ChargeSchedule::query()->findOrFail($event_id);
             $eventDB->update([
                 'charge_historic_id' => $chargeHistoricDB->id,
                 'charged' => 'Sim'
@@ -83,6 +86,13 @@ class ChargesHistoricsRepository
                 'code' => 200,
                 'message' => 'Histórico cadastrado com sucesso !'
             ];
+            } else {
+                return [
+                    'status' => 'error',
+                    'code' => 400,
+                    'message' => 'Hoje não é o dia de cobrar esse evento, por favor tente novamente na data e hora que foi agendado!'
+                ];
+            }
 
         } catch (Exception $exception){
 
@@ -330,7 +340,6 @@ class ChargesHistoricsRepository
                 $return[$key]['start'] = $item->start;
                 $return[$key]['user_id'] = $item->user_id;
                 $return[$key]['color'] = 'hsl('.$item->user->color.')';
-
             }
 
             return $return;
@@ -339,7 +348,7 @@ class ChargesHistoricsRepository
             return [
                 'status' => 'error',
                 'code' => 400,
-                'message' => 'Erro ao fazer a simulação'
+                'message' => 'Erro na requisição'
             ];
         }
 

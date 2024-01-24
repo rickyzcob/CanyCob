@@ -1,5 +1,5 @@
 <div>
-    <x-card  cardClasses="md:h-52 border-l-4 border-blue-500">
+    <x-card  cardClasses="md:h-52 border-l-4 border-orange-400">
         <form wire:submit.prevent="save">
             <div class="flex items-start justify-between border-b-2 mb-5 ">
                 Reprecificar Valores

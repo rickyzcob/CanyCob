@@ -141,4 +141,5 @@ class TypeReleasesRepository
         $typeReleasesDB = TypeReleases::query()->whereStatus('Ativo')->get()->toarray();
         return $typeReleasesDB;
     }
+
 }

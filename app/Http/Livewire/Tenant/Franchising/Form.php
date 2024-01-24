@@ -85,7 +85,7 @@ class Form extends Component
         }
     }
 
-    public function updatedStateZipCode()
+    public function getDataByZipCode()
     {
         if($this->state['zip_code']){
             $addressService  = new AddressService();
@@ -129,6 +129,7 @@ class Form extends Component
             ]);
             $this->emit('closeModal');
             $this->emit('refreshTableFranchising');
+            $this->emit('refreshCardFranchising');
 
         } else if ($partnersReturnDB['status'] == 'error') {
             $this->notification([

@@ -69,7 +69,7 @@ class ChargesFranchisingRepository
     {
         try {
             $ChargeStatusDB = Charges::query()->with(
-                ['franchising', 'proposals', 'proposalAccept', 'releases','agreementByCharge','status', 'totalHistorics', 'historics'  => function ($query) use ($id) {
+                ['franchising', 'proposals', 'proposalAccept', 'releases','totalAmountTypeReleases', 'agreementByCharge','status', 'totalHistorics', 'historics'  => function ($query) use ($id) {
                 $query->where('charge_id', $id)->orderBy('created_at', 'DESC')->first();
             }])->where('id', $id)->first();
 

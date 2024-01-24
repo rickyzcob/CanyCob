@@ -9,7 +9,7 @@ class ChargeAmountReleases extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['charge_id', 'type_release_id', 'value'];
+    protected $fillable = ['charge_id', 'type_release_id', 'value', 'value_corrected'];
 
     public function charge()
     {
